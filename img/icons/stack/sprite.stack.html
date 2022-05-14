@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+		<title>SVG stack preview | svg-sprite</title>
+		<style>@charset "UTF-8";body{padding:0;margin:0;color:#666;background:#fafafa;font-family:Arial,Helvetica,sans-serif;font-size:1em;line-height:1.4}header{display:block;padding:3em 3em 2em 3em;background-color:#fff}header p{margin:2em 0 0 0}section{border-top:1px solid #eee;padding:2em 3em 0 3em}section ul{margin:0;padding:0}section li{display:inline;display:inline-block;background-color:#fff;position:relative;margin:0 2em 2em 0;vertical-align:top;border:1px solid #ccc;padding:1em 1em 3em 1em;cursor:default}.icon-box{margin:0;width:144px;height:144px;position:relative;background:#ccc url("data:image/gif;base64,R0lGODlhDAAMAIAAAMzMzP///yH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4wLWMwNjEgNjQuMTQwOTQ5LCAyMDEwLzEyLzA3LTEwOjU3OjAxICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1LjEgV2luZG93cyIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozQjk4OTI0MUY5NTIxMUUyQkJDMEI5NEFEM0Y1QTYwQyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozQjk4OTI0MkY5NTIxMUUyQkJDMEI5NEFEM0Y1QTYwQyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjNCOTg5MjNGRjk1MjExRTJCQkMwQjk0QUQzRjVBNjBDIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjNCOTg5MjQwRjk1MjExRTJCQkMwQjk0QUQzRjVBNjBDIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAAAAAAAsAAAAAAwADAAAAhaEH6mHmmzcgzJAUG/NVGrfOZ8YLlABADs=") top left repeat;border:1px solid #ccc;display:table-cell;vertical-align:middle;text-align:center}.icon{display:inline;display:inline-block}h1{margin-top:0}h2{margin:0;padding:0;font-size:1em;font-weight:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:absolute;left:1em;right:1em;bottom:1em}footer{display:block;margin:0;padding:0 3em 3em 3em}footer p{margin:0;font-size:.7em}footer a{color:#0f7595;margin-left:0}</style>
+
+<!--
+
+Sprite shape dimensions
+====================================================================================================
+You will need to set the sprite shape dimensions via CSS when you use them as stack SVGs, otherwise
+they would become a huge 100% in size. You may use the following dimension classes for doing so.
+They might well be outsourced to an external stylesheet of course.
+
+-->
+
+<style type="text/css">
+	.svg-arrow-dims { width: 11px; height: 7px; }
+	.svg-authorize-dims { width: 20px; height: 21px; }
+	.svg-dislike-dims { width: 16px; height: 15px; }
+	.svg-eye-dims { width: 18px; height: 19px; }
+	.svg-fc-dims { width: 7px; height: 14px; }
+	.svg-info-dims { width: 22px; height: 23px; }
+	.svg-mail-dims { width: 22px; height: 23px; }
+	.svg-min-arrow-dims { width: 9px; height: 5px; }
+	.svg-money-dims { width: 63px; height: 63px; }
+	.svg-new-dims { width: 22px; height: 22px; }
+	.svg-news-dims { width: 18px; height: 19px; }
+	.svg-ok-dims { width: 8px; height: 14px; }
+	.svg-rub-dims { width: 37px; height: 36px; }
+	.svg-sand-dims { width: 55px; height: 55px; }
+	.svg-search-dims { width: 24px; height: 25px; }
+	.svg-searching-dims { width: 36px; height: 37px; }
+	.svg-security-dims { width: 22px; height: 22px; }
+	.svg-star-dims { width: 16px; height: 15px; }
+	.svg-tg-dims { width: 15px; height: 13px; }
+	.svg-touch-dims { width: 54px; height: 54px; }
+	.svg-tw-dims { width: 14px; height: 12px; }
+	.svg-vk-dims { width: 16px; height: 10px; }
+	.svg-yt-dims { width: 16px; height: 14px; }
+</style>
+
+<!--
+====================================================================================================
+-->
+
+	</head>
+	<body>
+		<header>
+			<h1>SVG stack preview</h1>
+			<p>This preview features an SVG stack. Please have a look at the HTML source for further details and be aware of the following constraints:</p>
+			<ul>
+				<li>Your browser has to <a href="http://caniuse.com/#feat=svg-fragment" target="_blank" rel="noopener noreferrer">support SVG fragment identifiers</a> for SVG stacks to work.</li>
+				<li>Support for SVG fragment identifiers hasn't always been that decent. For older browsers you will have to use some prolyfill like <a href="https://github.com/preciousforever/SVG-Stacker/blob/master/fixsvgstack.jquery.js" target="_blank" rel="noopener noreferrer">fixsvgstack.jquery.js</a>.</li>
+			</ul>
+		</header>
+		<section>
+
+<!--
+
+SVG stack
+====================================================================================================
+These SVG images make use of fragment identifiers (IDs) to reference certain portions of the
+external sprite. By default, all shapes inside the sprite are hidden by CSS. The `:target` pseudo
+selector is used to show the very shape that is referenced by the fragment identifier.
+
+-->
+
+			<ul>
+
+				<li title="arrow">
+					<div class="icon-box">
+
+						<!-- arrow -->
+						<img src="../icons.svg#arrow" class="svg-arrow-dims" alt="arrow"/>
+
+					</div>
+					<h2>arrow</h2>
+				</li>
+				<li title="authorize">
+					<div class="icon-box">
+
+						<!-- authorize -->
+						<img src="../icons.svg#authorize" class="svg-authorize-dims" alt="authorize"/>
+
+					</div>
+					<h2>authorize</h2>
+				</li>
+				<li title="dislike">
+					<div class="icon-box">
+
+						<!-- dislike -->
+						<img src="../icons.svg#dislike" class="svg-dislike-dims" alt="dislike"/>
+
+					</div>
+					<h2>dislike</h2>
+				</li>
+				<li title="eye">
+					<div class="icon-box">
+
+						<!-- eye -->
+						<img src="../icons.svg#eye" class="svg-eye-dims" alt="eye"/>
+
+					</div>
+					<h2>eye</h2>
+				</li>
+				<li title="fc">
+					<div class="icon-box">
+
+						<!-- fc -->
+						<img src="../icons.svg#fc" class="svg-fc-dims" alt="fc"/>
+
+					</div>
+					<h2>fc</h2>
+				</li>
+				<li title="info">
+					<div class="icon-box">
+
+						<!-- info -->
+						<img src="../icons.svg#info" class="svg-info-dims" alt="info"/>
+
+					</div>
+					<h2>info</h2>
+				</li>
+				<li title="mail">
+					<div class="icon-box">
+
+						<!-- mail -->
+						<img src="../icons.svg#mail" class="svg-mail-dims" alt="mail"/>
+
+					</div>
+					<h2>mail</h2>
+				</li>
+				<li title="min-arrow">
+					<div class="icon-box">
+
+						<!-- min-arrow -->
+						<img src="../icons.svg#min-arrow" class="svg-min-arrow-dims" alt="min-arrow"/>
+
+					</div>
+					<h2>min-arrow</h2>
+				</li>
+				<li title="money">
+					<div class="icon-box">
+
+						<!-- money -->
+						<img src="../icons.svg#money" class="svg-money-dims" alt="money"/>
+
+					</div>
+					<h2>money</h2>
+				</li>
+				<li title="new">
+					<div class="icon-box">
+
+						<!-- new -->
+						<img src="../icons.svg#new" class="svg-new-dims" alt="new"/>
+
+					</div>
+					<h2>new</h2>
+				</li>
+				<li title="news">
+					<div class="icon-box">
+
+						<!-- news -->
+						<img src="../icons.svg#news" class="svg-news-dims" alt="news"/>
+
+					</div>
+					<h2>news</h2>
+				</li>
+				<li title="ok">
+					<div class="icon-box">
+
+						<!-- ok -->
+						<img src="../icons.svg#ok" class="svg-ok-dims" alt="ok"/>
+
+					</div>
+					<h2>ok</h2>
+				</li>
+				<li title="rub">
+					<div class="icon-box">
+
+						<!-- rub -->
+						<img src="../icons.svg#rub" class="svg-rub-dims" alt="rub"/>
+
+					</div>
+					<h2>rub</h2>
+				</li>
+				<li title="sand">
+					<div class="icon-box">
+
+						<!-- sand -->
+						<img src="../icons.svg#sand" class="svg-sand-dims" alt="sand"/>
+
+					</div>
+					<h2>sand</h2>
+				</li>
+				<li title="search">
+					<div class="icon-box">
+
+						<!-- search -->
+						<img src="../icons.svg#search" class="svg-search-dims" alt="search"/>
+
+					</div>
+					<h2>search</h2>
+				</li>
+				<li title="searching">
+					<div class="icon-box">
+
+						<!-- searching -->
+						<img src="../icons.svg#searching" class="svg-searching-dims" alt="searching"/>
+
+					</div>
+					<h2>searching</h2>
+				</li>
+				<li title="security">
+					<div class="icon-box">
+
+						<!-- security -->
+						<img src="../icons.svg#security" class="svg-security-dims" alt="security"/>
+
+					</div>
+					<h2>security</h2>
+				</li>
+				<li title="star">
+					<div class="icon-box">
+
+						<!-- star -->
+						<img src="../icons.svg#star" class="svg-star-dims" alt="star"/>
+
+					</div>
+					<h2>star</h2>
+				</li>
+				<li title="tg">
+					<div class="icon-box">
+
+						<!-- tg -->
+						<img src="../icons.svg#tg" class="svg-tg-dims" alt="tg"/>
+
+					</div>
+					<h2>tg</h2>
+				</li>
+				<li title="touch">
+					<div class="icon-box">
+
+						<!-- touch -->
+						<img src="../icons.svg#touch" class="svg-touch-dims" alt="touch"/>
+
+					</div>
+					<h2>touch</h2>
+				</li>
+				<li title="tw">
+					<div class="icon-box">
+
+						<!-- tw -->
+						<img src="../icons.svg#tw" class="svg-tw-dims" alt="tw"/>
+
+					</div>
+					<h2>tw</h2>
+				</li>
+				<li title="vk">
+					<div class="icon-box">
+
+						<!-- vk -->
+						<img src="../icons.svg#vk" class="svg-vk-dims" alt="vk"/>
+
+					</div>
+					<h2>vk</h2>
+				</li>
+				<li title="yt">
+					<div class="icon-box">
+
+						<!-- yt -->
+						<img src="../icons.svg#yt" class="svg-yt-dims" alt="yt"/>
+
+					</div>
+					<h2>yt</h2>
+				</li>
+			</ul>
+
+<!--
+====================================================================================================
+-->
+
+		</section>
+		<footer>
+			<p>Generated at Sat, 14 May 2022 06:40:48 GMT by <a href="https://github.com/svg-sprite/svg-sprite" target="_blank" rel="noopener noreferrer">svg-sprite</a>.</p>
+		</footer>
+	</body>
+</html>
