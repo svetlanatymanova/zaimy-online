@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.min.css?_v=20220603041013">
+    <link rel="stylesheet" href="css/style.min.css?_v=20220603141655">
     <title>Займы онлайн</title>
 </head>
 
@@ -185,11 +185,25 @@
                         <div class="section-search__inputs">
                             <div class="section-search__input input">
                                 <p class="input__title">Сумма</p>
-                                <input type="text" class="input__input">
+                                <div class="input__body">
+                                    <input min="0" max="1000000" step="500" value="0" class="input__input" id="num"
+                                        type="text">
+                                    <div class="input__container">
+                                        <input id="range" class="input__slider" type="range" min="0" max="1000000"
+                                            step="500" value="0">
+                                    </div>
+                                </div>
                             </div>
                             <div class="section-search__input input">
                                 <p class="input__title">Срок</p>
-                                <input type="text" class="input__input">
+                                <div class="input__body">
+                                    <input min="0" max="1000000" step="500" value="0" class="input__input" id="num_1"
+                                        type="text">
+                                    <div class="input__container">
+                                        <input id="range_1" class="input__slider" type="range" min="0" max="20" step="1"
+                                            value="0">
+                                    </div>
+                                </div>
                             </div>
                             <div class="section-search__input input">
                                 <p class="input__title">Компания</p>
@@ -1313,7 +1327,7 @@
     </div>
 </footer>
     </div>
-    <script src="js/app.min.js?_v=20220603041013"></script>
+    <script src="js/app.min.js?_v=20220603141655"></script>
 </body>
 
 </html>
