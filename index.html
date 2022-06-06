@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.min.css?_v=20220603141655">
+    <link rel="stylesheet" href="css/style.min.css?_v=20220606162056">
     <title>Займы онлайн</title>
 </head>
 
@@ -168,8 +168,14 @@
             </div>
 
             <section class="section-search">
-                <div class="container accordeon">
-                    <div class="button-link button-link-adaptiv accordeon__head">
+
+                <div data-spollers="902" class="container">
+
+                    <div class="section-search__title">
+                        <img src="img/icons/icons.svg#searching" alt="arrow">
+                        <span>Поиск выгодных предложений </span>
+                    </div>
+                    <div data-spoller class="button-link button-link-adaptiv">
                         <a class="button-link__link">
                             <svg>
                                 <use href="img/icons/icons-mono.svg#show-podbor"></use>
@@ -177,11 +183,7 @@
                             <span>Фильтры</span>
                         </a>
                     </div>
-                    <div class="section-search__title">
-                        <img src="img/icons/icons.svg#searching" alt="arrow">
-                        <span>Поиск выгодных предложений </span>
-                    </div>
-                    <div class="section-search__filter">
+                    <form class="spollers__body section-search__filter">
                         <div class="section-search__inputs">
                             <div class="section-search__input input">
                                 <p class="input__title">Сумма</p>
@@ -207,32 +209,52 @@
                             </div>
                             <div class="section-search__input input">
                                 <p class="input__title">Компания</p>
-                                <input type="text" class="input__input">
+                                <select name="#">
+                                    <option value="1" selected>Любая</option>
+                                    <option value="2">Займер</option>
+                                    <option value="3">Пример</option>
+                                    <option value="4">Пример</option>
+                                </select>
                             </div>
                         </div>
                         <div class="section-search__inputs">
                             <div class="section-search__input input">
                                 <p class="input__title">Способ получения</p>
-                                <input type="text" class="input__input">
+                                <select name="#">
+                                    <option value="1" selected>Любой</option>
+                                    <option value="2">На карту</option>
+                                    <option value="3">Наличными</option>
+                                    <option value="4">Юмани</option>
+                                    <option value="5">Qiwi</option>
+                                    <option value="6">Contact</option>
+                                    <option value="7">Золотая корона</option>
+                                    <option value="8">На банковский счет</option>
+                                    <option value="9">На дом</option>
+                                </select>
                             </div>
                             <div class="section-search__input input">
                                 <p class="input__title">Дополнительные условия</p>
-                                <input type="text" class="input__input">
+                                <select name="#">
+                                    <option value="1" selected>Нет</option>
+                                    <option value="2">Пример</option>
+                                    <option value="3">Пример</option>
+                                    <option value="4">Пример</option>
+                                </select>
                             </div>
                             <div class="section-search__buttons">
                                 <div class="section-search__button button-green">
-                                    <a href="#" class="section-search__link button-green__link">
+                                    <button href="#" class="section-search__link button-green__link">
                                         <span>Показать предложения</span>
-                                    </a>
+                                    </button>
                                 </div>
                                 <div class="section-search__button section-search__button-white button-white">
-                                    <a href="#" class="section-search__link button-white__link">
+                                    <button href="#" class="section-search__link button-white__link">
                                         <span>Сбросить</span>
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </section>
 
@@ -250,21 +272,23 @@
                         </div>
                         <div class="section-results__sort">
                             <div class="section-results__title">Сортировать по:</div>
-                            <div class="button-link">
-                                <a href="#" class="button-link__link">По популярности</a>
-                            </div>
-                            <div class="button-link">
-                                <a href="#" class="button-link__link">По сумме</a>
-                            </div>
-                            <div class="button-link">
-                                <a href="#" class="button-link__link">По сроку</a>
-                            </div>
-                            <div class="button-link">
-                                <a href="#" class="button-link__link">По процентной ставке</a>
-                            </div>
-                            <div class="button-link">
-                                <a href="#" class="button-link__link">По рейтингу </a>
-                            </div>
+                            <ul class="section-results__buttons">
+                                <li class="button-link">
+                                    <button id="sortPopular" class="button-link__link">По популярности</button>
+                                </li>
+                                <li class="button-link">
+                                    <button id="sortSum" class="button-link__link">По сумме</button>
+                                </li>
+                                <li class="button-link">
+                                    <button id="sortTime" class="button-link__link">По сроку</button>
+                                </li>
+                                <li class="button-link">
+                                    <button id="sortPercent" class="button-link__link">По процентной ставке</button>
+                                </li>
+                                <li class="button-link">
+                                    <button id="sortRating" class="button-link__link">По рейтингу </button>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <div class="section-results__column">
@@ -288,10 +312,10 @@
                                 <div class="main-subhead__icons">
                                     <div class="main-subhead__star star">
                                         <img src="img/icons/icons.svg#star" alt="star" class="star__icon">
-                                        <span class="star__value">3.5</span>
+                                        <span data-rating class="star__value">4.9</span>
                                     </div>
                                     <div class="main-subhead__feed">
-                                        <a href="#" class="main-subhead__link">Отзывы: 26</a>
+                                        <a data-popular href="#" class="main-subhead__link">Отзывы: 2</a>
                                     </div>
                                 </div>
                             </div>
@@ -304,11 +328,11 @@
                                     <div class="main-item__column">
                                         <div class="main-item__data">
                                             <div class="main-item__name">Сумма займа: </div>
-                                            <div class="main-item__value">30 000 ₽</div>
+                                            <div data-price class="main-item__value">30 000 ₽</div>
                                         </div>
                                         <div class="main-item__data">
                                             <div class="main-item__name">Срок займа: </div>
-                                            <div class="main-item__value">До 30 дней</div>
+                                            <div data-time class="main-item__value">До 90 дней</div>
                                         </div>
                                         <div class="main-item__data">
                                             <div class="main-item__name">Возраст: </div>
@@ -318,7 +342,7 @@
                                     <div class="main-item__column">
                                         <div class="main-item__data">
                                             <div class="main-item__name">Проц. ставка: </div>
-                                            <div class="main-item__value">От 0%</div>
+                                            <div data-percent class="main-item__value">От 9%</div>
                                         </div>
                                         <div class="main-item__data">
                                             <div class="main-item__name">Кред. история: </div>
@@ -489,10 +513,10 @@
                                 <div class="main-subhead__icons">
                                     <div class="main-subhead__star star">
                                         <img src="img/icons/icons.svg#star" alt="star" class="star__icon">
-                                        <span class="star__value">3.5</span>
+                                        <span data-rating class="star__value">3.5</span>
                                     </div>
                                     <div class="main-subhead__feed">
-                                        <a href="#" class="main-subhead__link">Отзывы: 26</a>
+                                        <a data-popular href="#" class="main-subhead__link">Отзывы: 17</a>
                                     </div>
                                 </div>
                             </div>
@@ -505,11 +529,11 @@
                                     <div class="main-item__column">
                                         <div class="main-item__data">
                                             <div class="main-item__name">Сумма займа: </div>
-                                            <div class="main-item__value">30 000 ₽</div>
+                                            <div data-price class="main-item__value">100 000 ₽</div>
                                         </div>
                                         <div class="main-item__data">
                                             <div class="main-item__name">Срок займа: </div>
-                                            <div class="main-item__value">До 30 дней</div>
+                                            <div data-time class="main-item__value">До 30 дней</div>
                                         </div>
                                         <div class="main-item__data">
                                             <div class="main-item__name">Возраст: </div>
@@ -519,7 +543,7 @@
                                     <div class="main-item__column">
                                         <div class="main-item__data">
                                             <div class="main-item__name">Проц. ставка: </div>
-                                            <div class="main-item__value">От 0%</div>
+                                            <div data-percent class="main-item__value">От 3%</div>
                                         </div>
                                         <div class="main-item__data">
                                             <div class="main-item__name">Кред. история: </div>
@@ -690,10 +714,10 @@
                                 <div class="main-subhead__icons">
                                     <div class="main-subhead__star star">
                                         <img src="img/icons/icons.svg#star" alt="star" class="star__icon">
-                                        <span class="star__value">3.5</span>
+                                        <span data-rating class="star__value">3</span>
                                     </div>
                                     <div class="main-subhead__feed">
-                                        <a href="#" class="main-subhead__link">Отзывы: 26</a>
+                                        <a data-popular href="#" class="main-subhead__link">Отзывы: 39</a>
                                     </div>
                                 </div>
                             </div>
@@ -706,11 +730,11 @@
                                     <div class="main-item__column">
                                         <div class="main-item__data">
                                             <div class="main-item__name">Сумма займа: </div>
-                                            <div class="main-item__value">30 000 ₽</div>
+                                            <div class="main-item__value" data-price>10 000 ₽</div>
                                         </div>
                                         <div class="main-item__data">
                                             <div class="main-item__name">Срок займа: </div>
-                                            <div class="main-item__value">До 30 дней</div>
+                                            <div data-time class="main-item__value">До 10 дней</div>
                                         </div>
                                         <div class="main-item__data">
                                             <div class="main-item__name">Возраст: </div>
@@ -720,7 +744,7 @@
                                     <div class="main-item__column">
                                         <div class="main-item__data">
                                             <div class="main-item__name">Проц. ставка: </div>
-                                            <div class="main-item__value">От 0%</div>
+                                            <div data-percent class="main-item__value">От 5%</div>
                                         </div>
                                         <div class="main-item__data">
                                             <div class="main-item__name">Кред. история: </div>
@@ -871,8 +895,408 @@
 
                             </div>
                         </div>
+                        <div class="item">
+                            <div class="item__head head-item">
+                                <p class="head-item__title">Займ в Займере (0% первый займ)</p>
+                                <div class="head-item__icons">
+                                    <div class="head-item__icon icon">
+                                        <img src="img/icons/icons.svg#up" class="icon__img" alt="up">
+                                        <span class="icon__title icon__title-blue">Займ 0%</span>
+                                    </div>
+                                    <div class="head-item__icon icon">
+                                        <img src="img/icons/icons.svg#security" class="icon__img" alt="up">
+                                        <span class="icon__title icon__title-green">Партнерский</span>
+                                    </div>
 
+                                </div>
+                            </div>
+                            <div class="item__subhead main-subhead">
+                                <div class="main-subhead__text">Лицензия ЦБ РФ: 651303532004088</div>
+                                <div class="main-subhead__icons">
+                                    <div class="main-subhead__star star">
+                                        <img src="img/icons/icons.svg#star" alt="star" class="star__icon">
+                                        <span data-rating class="star__value">4.2</span>
+                                    </div>
+                                    <div class="main-subhead__feed">
+                                        <a data-popular href="#" class="main-subhead__link">Отзывы: 16</a>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <div class="item__main main-item">
+                                <div class="main-item__img">
+                                    <picture><source srcset="img/company1.webp" type="image/webp"><img src="img/company1.jpg" alt="Company logo"></picture>
+                                </div>
+                                <div class="main-item__table">
+                                    <div class="main-item__column">
+                                        <div class="main-item__data">
+                                            <div class="main-item__name">Сумма займа: </div>
+                                            <div class="main-item__value" data-price>10 000 ₽</div>
+                                        </div>
+                                        <div class="main-item__data">
+                                            <div class="main-item__name">Срок займа: </div>
+                                            <div data-time class="main-item__value">До 180 дней</div>
+                                        </div>
+                                        <div class="main-item__data">
+                                            <div class="main-item__name">Возраст: </div>
+                                            <div class="main-item__value">18-75 лет</div>
+                                        </div>
+                                    </div>
+                                    <div class="main-item__column">
+                                        <div class="main-item__data">
+                                            <div class="main-item__name">Проц. ставка: </div>
+                                            <div data-percent class="main-item__value">От 10%</div>
+                                        </div>
+                                        <div class="main-item__data">
+                                            <div class="main-item__name">Кред. история: </div>
+                                            <div class="main-item__value">Любая</div>
+                                        </div>
+                                        <div class="main-item__data">
+                                            <div class="main-item__name">Решение: </div>
+                                            <div class="main-item__value">2 минуты </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="main-item__links links-item">
+                                    <div class="links-item__buttons">
+                                        <div class="links-item__button button-red">
+                                            <a href="#" class="links-item__link button-red__link">Оформить</a>
+                                        </div>
+                                        <div class="links-item__button button-blue">
+                                            <a href="#" class="links-item__link button-blue__link">Подробнее</a>
+                                        </div>
+                                        <div class="links-item__button links-item__button-mini button-blue">
+                                            <a href="#"
+                                                class="links-item__link button-blue__link button-blue__icon"><img
+                                                    class="links-item__icon" src="img/icons/icons.svg#add"
+                                                    alt="add"></a>
+                                        </div>
+                                    </div>
+                                    <div class="links-item__text text-item">
+                                        <div class="text-item__name">Займер</div>
+                                        <div class="text-item__number">8-800-7070-24-7</div>
+                                        <div class="text-item__page">zaymer.ru</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="item__footer footer-item accordeon">
+                                <nav class="footer-item__links">
+                                    <div class="footer-item__link">
+                                        <a href="#" class="footer-item__a">Первый займ под 0%</a>
+                                    </div>
+                                    <div class="footer-item__link">
+                                        <a href="#" class="footer-item__a">Моментальное решение</a>
+                                    </div>
+                                    <div class="footer-item__link">
+                                        <a href="#" class="footer-item__a">Без справок о доходах</a>
+                                    </div>
+                                    <div class="footer-item__link">
+                                        <a href="#" class="footer-item__a">С 18 лет</a>
+                                    </div>
+                                    <div class="footer-item__link">
+                                        <a href="#" class="footer-item__a">С любой КИ</a>
+                                    </div>
+                                </nav>
+                                <div class="footer-item__tabbut tabbut">
+                                    <a class="tabbut__link accordeon__head">
+                                        <span>Развернуть</span>
+                                        <svg class="tabbut__icon">
+                                            <use href="img/icons/icons.svg#min-arrow"></use>
+                                        </svg>
+                                    </a>
+                                </div>
+                                <div data-tabs class="footer-item__tabs tabs accordeon__content">
+                                    <nav data-tabs-titles class="tabs__nav">
+                                        <button class="tabs__title _tab-active">Условия</button>
+                                        <button class="tabs__title">Проценты</button>
+                                        <button class="tabs__title">Требования</button>
+                                    </nav>
+                                    <div data-tabs-body class="tabs__content">
+                                        <ul class="tabs__body">
+                                            <li>
+                                                <span class="tabs__key">Необходимые документы:</span>
+                                                <a href="#" class="tabs__link">Паспорт</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Пример_2</span>
+                                                <a href="#" class="tabs__link">Паспорт</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Возраст:</span>
+                                                <a href="#" class="tabs__link">От 18 до 75 лет</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Кредитная история:</span>
+                                                <a href="#" class="tabs__link">Любая</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Подтверждение личности:</span>
+                                                <span class="tabs__value">Может быть запрошено подтверждение
+                                                    через:
+                                                    <a href="#" class="tabs__link">- Фото или видео</a>
+                                                    <a href="#" class="tabs__link">- СНИЛС</a>
+                                                    <a href="#" class="tabs__link">- Госуслуги</a>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                        <ul class="tabs__body">
+                                            <li>
+                                                <span class="tabs__key">Возраст:</span>
+                                                <a href="#" class="tabs__link">От 18 до 75 лет</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Возраст:</span>
+                                                <a href="#" class="tabs__link">От 18 до 75 лет</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Возраст:</span>
+                                                <a href="#" class="tabs__link">От 18 до 75 лет</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Кредитная история:</span>
+                                                <a href="#" class="tabs__link">Любая</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Подтверждение личности:</span>
+                                                <span class="tabs__value">Может быть запрошено подтверждение
+                                                    через:
+                                                    <a href="#" class="tabs__link">- Фото или видео</a>
+                                                    <a href="#" class="tabs__link">- СНИЛС</a>
+                                                    <a href="#" class="tabs__link">- Госуслуги</a>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                        <ul class="tabs__body">
+                                            <li>
+                                                <span class="tabs__key">Необходимые документы:</span>
+                                                <a href="#" class="tabs__link">Паспорт</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Возраст:</span>
+                                                <a href="#" class="tabs__link">От 18 до 75 лет</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Кредитная история:</span>
+                                                <a href="#" class="tabs__link">Любая</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Подтверждение личности:</span>
+                                                <span class="tabs__value">Может быть запрошено подтверждение
+                                                    через:
+                                                    <a href="#" class="tabs__link">- Фото или видео</a>
+                                                    <a href="#" class="tabs__link">- СНИЛС</a>
+                                                    <a href="#" class="tabs__link">- Госуслуги</a>
+                                                </span>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="item__head head-item">
+                                <p class="head-item__title">Займ в Займере (0% первый займ)</p>
+                                <div class="head-item__icons">
+                                    <div class="head-item__icon icon">
+                                        <img src="img/icons/icons.svg#up" class="icon__img" alt="up">
+                                        <span class="icon__title icon__title-blue">Займ 0%</span>
+                                    </div>
+                                    <div class="head-item__icon icon">
+                                        <img src="img/icons/icons.svg#security" class="icon__img" alt="up">
+                                        <span class="icon__title icon__title-green">Партнерский</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="item__subhead main-subhead">
+                                <div class="main-subhead__text">Лицензия ЦБ РФ: 651303532004088</div>
+                                <div class="main-subhead__icons">
+                                    <div class="main-subhead__star star">
+                                        <img src="img/icons/icons.svg#star" alt="star" class="star__icon">
+                                        <span data-rating class="star__value">4.5</span>
+                                    </div>
+                                    <div class="main-subhead__feed">
+                                        <a data-popular href="#" class="main-subhead__link">Отзывы: 2</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item__main main-item">
+                                <div class="main-item__img">
+                                    <picture><source srcset="img/company1.webp" type="image/webp"><img src="img/company1.jpg" alt="Company logo"></picture>
+                                </div>
+                                <div class="main-item__table">
+                                    <div class="main-item__column">
+                                        <div class="main-item__data">
+                                            <div class="main-item__name">Сумма займа: </div>
+                                            <div data-price class="main-item__value">100 000 ₽</div>
+                                        </div>
+                                        <div class="main-item__data">
+                                            <div class="main-item__name">Срок займа: </div>
+                                            <div data-time class="main-item__value">До 30 дней</div>
+                                        </div>
+                                        <div class="main-item__data">
+                                            <div class="main-item__name">Возраст: </div>
+                                            <div class="main-item__value">18-75 лет</div>
+                                        </div>
+                                    </div>
+                                    <div class="main-item__column">
+                                        <div class="main-item__data">
+                                            <div class="main-item__name">Проц. ставка: </div>
+                                            <div data-percent class="main-item__value">От 9%</div>
+                                        </div>
+                                        <div class="main-item__data">
+                                            <div class="main-item__name">Кред. история: </div>
+                                            <div class="main-item__value">Любая</div>
+                                        </div>
+                                        <div class="main-item__data">
+                                            <div class="main-item__name">Решение: </div>
+                                            <div class="main-item__value">2 минуты </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="main-item__links links-item">
+                                    <div class="links-item__buttons">
+                                        <div class="links-item__button button-red">
+                                            <a href="#" class="links-item__link button-red__link">Оформить</a>
+                                        </div>
+                                        <div class="links-item__button button-blue">
+                                            <a href="#" class="links-item__link button-blue__link">Подробнее</a>
+                                        </div>
+                                        <div class="links-item__button links-item__button-mini button-blue">
+                                            <a href="#"
+                                                class="links-item__link button-blue__link button-blue__icon"><img
+                                                    class="links-item__icon" src="img/icons/icons.svg#add"
+                                                    alt="add"></a>
+                                        </div>
+                                    </div>
+                                    <div class="links-item__text text-item">
+                                        <div class="text-item__name">Займер</div>
+                                        <div class="text-item__number">8-800-7070-24-7</div>
+                                        <div class="text-item__page">zaymer.ru</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="item__footer footer-item accordeon">
+                                <nav class="footer-item__links">
+                                    <div class="footer-item__link">
+                                        <a href="#" class="footer-item__a">Первый займ под 0%</a>
+                                    </div>
+                                    <div class="footer-item__link">
+                                        <a href="#" class="footer-item__a">Моментальное решение</a>
+                                    </div>
+                                    <div class="footer-item__link">
+                                        <a href="#" class="footer-item__a">Без справок о доходах</a>
+                                    </div>
+                                    <div class="footer-item__link">
+                                        <a href="#" class="footer-item__a">С 18 лет</a>
+                                    </div>
+                                    <div class="footer-item__link">
+                                        <a href="#" class="footer-item__a">С любой КИ</a>
+                                    </div>
+                                </nav>
+                                <div class="footer-item__tabbut tabbut">
+                                    <a class="tabbut__link accordeon__head">
+                                        <span>Развернуть</span>
+                                        <svg class="tabbut__icon">
+                                            <use href="img/icons/icons.svg#min-arrow"></use>
+                                        </svg>
+                                    </a>
+                                </div>
+                                <div data-tabs class="footer-item__tabs tabs accordeon__content">
+                                    <nav data-tabs-titles class="tabs__nav">
+                                        <button class="tabs__title _tab-active">Условия</button>
+                                        <button class="tabs__title">Проценты</button>
+                                        <button class="tabs__title">Требования</button>
+                                    </nav>
+                                    <div data-tabs-body class="tabs__content">
+                                        <ul class="tabs__body">
+                                            <li>
+                                                <span class="tabs__key">Необходимые документы:</span>
+                                                <a href="#" class="tabs__link">Паспорт</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Пример_2</span>
+                                                <a href="#" class="tabs__link">Паспорт</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Возраст:</span>
+                                                <a href="#" class="tabs__link">От 18 до 75 лет</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Кредитная история:</span>
+                                                <a href="#" class="tabs__link">Любая</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Подтверждение личности:</span>
+                                                <span class="tabs__value">Может быть запрошено подтверждение
+                                                    через:
+                                                    <a href="#" class="tabs__link">- Фото или видео</a>
+                                                    <a href="#" class="tabs__link">- СНИЛС</a>
+                                                    <a href="#" class="tabs__link">- Госуслуги</a>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                        <ul class="tabs__body">
+                                            <li>
+                                                <span class="tabs__key">Возраст:</span>
+                                                <a href="#" class="tabs__link">От 18 до 75 лет</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Возраст:</span>
+                                                <a href="#" class="tabs__link">От 18 до 75 лет</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Возраст:</span>
+                                                <a href="#" class="tabs__link">От 18 до 75 лет</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Кредитная история:</span>
+                                                <a href="#" class="tabs__link">Любая</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Подтверждение личности:</span>
+                                                <span class="tabs__value">Может быть запрошено подтверждение
+                                                    через:
+                                                    <a href="#" class="tabs__link">- Фото или видео</a>
+                                                    <a href="#" class="tabs__link">- СНИЛС</a>
+                                                    <a href="#" class="tabs__link">- Госуслуги</a>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                        <ul class="tabs__body">
+                                            <li>
+                                                <span class="tabs__key">Необходимые документы:</span>
+                                                <a href="#" class="tabs__link">Паспорт</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Возраст:</span>
+                                                <a href="#" class="tabs__link">От 18 до 75 лет</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Кредитная история:</span>
+                                                <a href="#" class="tabs__link">Любая</a>
+                                            </li>
+                                            <li>
+                                                <span class="tabs__key">Подтверждение личности:</span>
+                                                <span class="tabs__value">Может быть запрошено подтверждение
+                                                    через:
+                                                    <a href="#" class="tabs__link">- Фото или видео</a>
+                                                    <a href="#" class="tabs__link">- СНИЛС</a>
+                                                    <a href="#" class="tabs__link">- Госуслуги</a>
+                                                </span>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                     <div class="section-results__number number">
                         <div class="number__buttons">
@@ -1327,7 +1751,7 @@
     </div>
 </footer>
     </div>
-    <script src="js/app.min.js?_v=20220603141655"></script>
+    <script src="js/app.min.js?_v=20220606162056"></script>
 </body>
 
 </html>
