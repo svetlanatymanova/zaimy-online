@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.min.css?_v=20220712033002">
+    <link rel="stylesheet" href="css/style.min.css?_v=20220713030846">
     <title>Займы онлайн</title>
 </head>
 
@@ -296,7 +296,7 @@
                                                 <input value="0" class="input__input" id="num" type="text">
                                                 <div class="input__container">
                                                     <input id="range" class="input__slider" type="range" min="0"
-                                                        max="1000000" step="500" value="0">
+                                                        max="1000000" step="1000" value="0">
                                                 </div>
                                             </div>
                                         </div>
@@ -305,8 +305,7 @@
                                             <div class="input__body">
                                                 <input value="0" class="input__input" id="num_1" type="text">
                                                 <div class="input__container">
-                                                    <input id="range_1" class="input__slider" type="range" min="0"
-                                                        max="20" step="1" value="0">
+                                                    <input id="range_1" class="input__slider" type="range" step="1" value="0">
                                                 </div>
                                             </div>
                                         </div>
@@ -316,21 +315,21 @@
                                         <div class="table__column">
                                             <div class="table__data">
                                                 <div class="table__key key">Вы берете:</div>
-                                                <div data-price class="table__value value">7000 ₽</div>
+                                                <div id="calc__sum1" data-price class="table__value value table__value-rub">0</div>
                                             </div>
                                             <div class="table__data">
                                                 <div class="table__key key">Вы отдаёте:</div>
-                                                <div data-time class="table__value value">7000 ₽</div>
+                                                <div id="calc__sum2" data-time class="table__value value table__value-rub">0</div>
                                             </div>
                                         </div>
                                         <div class="table__column">
                                             <div class="table__data">
                                                 <div class="table__key key">Вернуть до:</div>
-                                                <div data-percent class="table__value value">23.05.2022</div>
+                                                <div id="calc__data" data-percent class="table__value value">Выберите срок</div>
                                             </div>
                                             <div class="table__data">
                                                 <div class="table__key key">Проц. ставка:</div>
-                                                <div class="table__value value">От 0%</div>
+                                                <div id="calc__percent" class="table__value value">От 1%</div>
                                             </div>
                                         </div>
                                     </div>
@@ -359,7 +358,7 @@
                                             <div class="table__data">
                                                 <div class="table__key key">Срок займа:</div>
                                                 <div class="table__value value">
-                                                    <div class="table__content">
+                                                    <div id="term" class="table__content">
                                                         От 7 до 30 дней
                                                     </div>
                                                 </div>
@@ -1098,21 +1097,6 @@
                                     </div>
 
                                 </div>
-                                <div class="section-feed__number number">
-                                    <div class="number__buttons number__buttons-item">
-                                        <div class="tabbut number__tabbut">
-                                            <a href="#" class="tabbut__link tabbut__link-item">
-                                                <span>Предыдущий</span>
-                                            </a>
-                                        </div>
-                                        <div class="tabbut number__tabbut">
-                                            <a href="#" class="tabbut__link tabbut__link-item">
-                                                <span>Следующий</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="number__info"><span class="number__info-blue">2 </span>из 29</div>
-                                </div>
                             </section>
                             <section class="section-add">
                                 <h2>Добавить отзыв о Займере</h2>
@@ -1346,6 +1330,20 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="section-other__number number">
+                                    <div class="number__buttons number__buttons-item">
+                                        <div class="tabbut number__tabbut">
+                                            <a href="#" class="tabbut__link tabbut__link-item">
+                                                <span>Предыдущий</span>
+                                            </a>
+                                        </div>
+                                        <div class="tabbut number__tabbut">
+                                            <a href="#" class="tabbut__link tabbut__link-item">
+                                                <span>Следующий</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </section>
                         </div>
                     </div>
@@ -1448,7 +1446,7 @@
     </div>
 
 
-    <script src="js/app.min.js?_v=20220712033002"></script>
+    <script src="js/app.min.js?_v=20220713030846"></script>
 </body>
 
 </html>
