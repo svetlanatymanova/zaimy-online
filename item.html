@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.min.css?_v=20220713030846">
+    <link rel="stylesheet" href="css/style.min.css?_v=20220714043222">
     <title>Займы онлайн</title>
 </head>
 
@@ -293,19 +293,18 @@
                                         <div class="main-content__input input">
                                             <p class="input__title">Сумма</p>
                                             <div class="input__body">
-                                                <input value="0" class="input__input" id="num" type="text">
+                                                <input class="input__input" id="num" type="text">
                                                 <div class="input__container">
-                                                    <input id="range" class="input__slider" type="range" min="0"
-                                                        max="1000000" step="1000" value="0">
+                                                    <input id="range" class="input__slider" type="range" step="100">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="main-content__input input">
                                             <p class="input__title">Срок</p>
                                             <div class="input__body">
-                                                <input value="0" class="input__input" id="num_1" type="text">
+                                                <input class="input__input" id="num_1" type="text">
                                                 <div class="input__container">
-                                                    <input id="range_1" class="input__slider" type="range" step="1" value="0">
+                                                    <input id="range_1" class="input__slider" type="range" step="1">
                                                 </div>
                                             </div>
                                         </div>
@@ -347,11 +346,10 @@
                                     <div class="section-tarifes__table table">
                                         <div class="table__column">
                                             <div class="table__data">
-                                                <div class="table__key key">Максимальная сумма займа</div>
+                                                <div class="table__key key">Размер займа</div>
                                                 <div data-percent class="table__value value">
-                                                    <div class="table__content">
-                                                        Для новых клиентов — 15 000 ₽;
-                                                        Для постоянных — 30 000 ₽
+                                                    <div id="size" class="table__content">
+                                                        От 100 до 30000 рублей
                                                     </div>
                                                 </div>
                                             </div>
@@ -1446,7 +1444,7 @@
     </div>
 
 
-    <script src="js/app.min.js?_v=20220713030846"></script>
+    <script src="js/app.min.js?_v=20220714043222"></script>
 </body>
 
 </html>
