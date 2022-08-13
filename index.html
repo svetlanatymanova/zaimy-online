@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.min.css?_v=20220715010553">
+    <link rel="stylesheet" href="css/style.min.css?_v=20220808035444">
     <title>Займы онлайн</title>
 </head>
 
@@ -18,6 +18,21 @@
                 <img src="img/icons/icons.svg#logo" alt="logo">
                 <span>Займы Онлайн</span>
             </a>
+            <div class="header__line"></div>
+            <div class="header__currencies">
+                <div class="header__currency currency">
+                    <div class="currency__name"><span>USD</span> ЦБ</div>
+                    <div id="rate__usd" class="currency__rate">62.91</div>
+                </div>
+                <div class="header__currency currency">
+                    <div class="currency__name"><span>EUR</span> ЦБ</div>
+                    <div id="rate__eur" class="currency__rate">64.32</div>
+                </div>
+                <div class="header__currency currency">
+                    <div class="currency__name"><span>CNY</span> ЦБ</div>
+                    <div id="rate__cny" class="currency__rate">9.55</div>
+                </div>
+            </div>
 
             <form class="header__search" action="#" method="get">
                 <input type="search" class="header__search-input" placeholder="Поиск по сайту">
@@ -26,17 +41,67 @@
 
             <div class="header__content">
                 <nav class="header__buttons">
+                    <div class="header__button button-green">
+                        <a data-goto=".section-cards" href="#" class="header__link button-green__link">
+                            <span>Спросить эксперта</span>
+                        </a>
+                    </div>
                     <div class="header__button header__button-blue">
                         <a href="#" class="header__link button-blue-header button-blue__link">
                             <svg>
-                                <use href="img/icons/icons-mono.svg#authorize"></use>
+                                <use href="img/icons/icons-mono.svg#add"></use>
                             </svg>
-                            <span class="button-blue__title">Авторизация</span>
+                            <span class="button-blue__title">(3)</span>
                         </a>
                     </div>
-                    <div class="header__button button-green">
-                        <a data-goto=".section-cards" data-goto-header href="#" class="header__link button-green__link">
-                            <span>Как получить займ?</span>
+
+                </nav>
+
+            </div>
+            <div class="header__more more">
+                <svg>
+                    <use href="img/icons/icons-mono.svg#more"></use>
+                </svg>
+                <nav class="more__buttons">
+                    <div class="more__button">
+                        <a href="#" class="button-more">
+                            <svg>
+                                <use href="img/icons/icons-mono.svg#login"></use>
+                            </svg>
+                            <span>Войти</span>
+                        </a>
+                    </div>
+                    <div class="more__button">
+                        <a href="#" class="button-more">
+                            <svg>
+                                <use href="img/icons/icons-mono.svg#authorize"></use>
+                            </svg>
+                            <span>Зарегистрироваться</span>
+                        </a>
+                    </div>
+
+                    <div class="more__button">
+                        <a href="#" class="button-more">
+                            <svg>
+                                <use href="img/icons/icons.svg#finews"></use>
+                            </svg>
+                            <span>Финансовые новости</span>
+                        </a>
+                    </div>
+                    <div class="more__button">
+                        <a href="#" class="button-more">
+                            <svg>
+                                <use href="img/icons/icons-mono.svg#journal"></use>
+                            </svg>
+                            <span>Финансовый журнал</span>
+                        </a>
+                    </div>
+                    <div class="more__button">
+                        <a href="#" class="button-more">
+                            <svg>
+                                <use href="img/icons/icons-mono.svg#contacts"></use>
+                            </svg>
+                            <span>Контакты</span>
                         </a>
                     </div>
                 </nav>
@@ -1026,8 +1091,8 @@
                                 <div class="input__body">
                                     <input value="0" class="input__input" id="index__range-input" type="text">
                                     <div class="input__container">
-                                        <input id="index__range" class="input__slider" type="range" min="0" max="20" step="1"
-                                            value="0">
+                                        <input id="index__range" class="input__slider" type="range" min="0" max="20"
+                                            step="1" value="0">
                                     </div>
                                 </div>
                             </div>
@@ -1071,19 +1136,30 @@
                                         <span>Показать предложения</span>
                                     </button>
                                 </div>
-                                <div class="section-search__button section-search__button-white button-white">
-                                    <button class="section-search__link button-white__link">
+                                <div class="section-search__button">
+                                    <button class="section-search__link">
                                         <span>Сбросить</span>
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </form>
+                    <div class="section-search__links">
+                        <a href="#" class="section-search__button-search button-search">Займ на карту</a>
+                        <a href="#" class="section-search__button-search button-search">Новые</a>
+                        <a href="#" class="section-search__button-search button-search">Без отказа</a>
+                        <a href="#" class="section-search__button-search button-search">Долгосрочные</a>
+                        <a href="#" class="section-search__button-search button-search">Без процентов</a>
+                        <a href="#" class="section-search__button-search button-search">На Киви</a>
+                        <a href="#" class="section-search__button-search button-search">Без проверок</a>
+                        <a href="#" class="section-search__button-search button-search">Все</a>
+
+                    </div>
                 </div>
             </div>
 
             <div class="main__container container">
-                <h2 class="main__title title">Заголовок</h2>
+                <h2 class="main__title title">Займы на карту онлайн на сайте «Zajmy-na-kartu-onlajn.ru»</h2>
                 <div class="section-results">
                     <div class="section-results__head">
                         <div class="section-results__text">
@@ -1319,40 +1395,8 @@
 
                         </div>
                     </div>
-                    <div class="section-results__number number">
-                        <div class="number__buttons">
-                            <div class="tabbut number__tabbut">
-                                <a href="#" class="number__link tabbut__link">
-                                    <span>1</span>
-                                </a>
-                            </div>
-                            <div class="tabbu number__tabbut">
-                                <a href="#" class="number__link tabbut__link">
-                                    <span>2</span>
-                                </a>
-                            </div>
-                            <div class="tabbut number__tabbut">
-                                <a href="#" class="number__link tabbut__link">
-                                    <span>3</span>
-                                </a>
-                            </div>
-                            <div class="tabbut number__tabbut">
-                                <a href="#" class="number__link tabbut__link">
-                                    <span>4</span>
-                                </a>
-                            </div>
-                            <div class="tabbut number__tabbut">
-                                <a href="#" class="number__link tabbut__link">
-                                    <span>5</span>
-                                </a>
-                            </div>
-                            <div class="tabbut number__tabbut">
-                                <a href="#" class="tabbut__link">
-                                    <span>На последнюю</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="number__info"><span class="number__info-blue">1 </span>из 10</div>
+                    <div class="section-results__all">
+                        <a href="#" class="section-results__button button-all">Смотреть все займы</a>
                     </div>
                 </div>
                 <div class="section-cards">
@@ -1529,7 +1573,58 @@
                         </nav>
                     </div>
                 </div>
-
+                <section class="main__section-about section-about">
+                    <div class="title"></div>
+                    <div class="section-about__row">
+                        <div class="section-about__about-item about-item">
+                            <div class="about-item__icon">
+                                <svg>
+                                    <use href="img/icons/icons.svg#znko"></use>
+                                </svg>
+                            </div>
+                            <div class="about-item__title">#ЗНКО - не МФО</div>
+                            <div class="about-item__desc">Мы не выдаем займы или кредиты.
+                                Наш финансовый портал является бесплатным сервисом.
+                                Мы не принадлежим ни одной МФО или банку. Мнения наших экспертов независимы и
+                                объективны.</div>
+                        </div>
+                        <div class="section-about__about-item about-item">
+                            <div class="about-item__icon">
+                                <svg>
+                                    <use href="img/icons/icons.svg#compare"></use>
+                                </svg>
+                            </div>
+                            <div class="about-item__title">Независимый сервис сравнения</div>
+                            <div class="about-item__desc">Проект #ЗНКО создан с целью помочь вам найти и сравнить
+                                выгодные микрозаймы, кредиты, карты и другие банковские продукты.
+                                Сравнивайте и выбирайте лучшие предложения от микрофинансовых компаний и банков.</div>
+                        </div>
+                        <div class="section-about__about-item about-item">
+                            <div class="about-item__icon">
+                                <svg>
+                                    <use href="img/icons/icons.svg#experts"></use>
+                                </svg>
+                            </div>
+                            <div class="about-item__title">Экспертные статьи</div>
+                            <div class="about-item__desc">На нашем портале, вы всегда найдете полезную и актуальную
+                                информацию для заемщиков. Наши эксперты готовят руководства, пошаговые инструкции,
+                                обзоры.
+                                Вы можете бесплатно обратиться к ним и получить ответы на ваши вопросы.</div>
+                        </div>
+                        <div class="section-about__about-item about-item">
+                            <div class="about-item__icon">
+                                <svg>
+                                    <use href="img/icons/icons.svg#message"></use>
+                                </svg>
+                            </div>
+                            <div class="about-item__title">Отзывы заемщиков</div>
+                            <div class="about-item__desc">На проекте #ЗНКО ежедневно наши посетители делятся своими
+                                отзывами о микрофинансовых компаниях и банках России.
+                                Вы также можете поделиться своим личным опытом о работе с МФО и банком как клиент той
+                                компании.</div>
+                        </div>
+                    </div>
+                </section>
                 <div class="section-author">
                     <div class="section-author__content">
                         <div class="section-author__ava">
@@ -1776,7 +1871,7 @@
     </div>
 </footer>
     </div>
-    <script src="js/app.min.js?_v=20220715010553"></script>
+    <script src="js/app.min.js?_v=20220808035444"></script>
 </body>
 
 </html>

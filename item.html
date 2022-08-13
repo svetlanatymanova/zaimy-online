@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.min.css?_v=20220715010553">
+    <link rel="stylesheet" href="css/style.min.css?_v=20220808035444">
     <title>Займы онлайн</title>
 </head>
 
@@ -18,6 +18,21 @@
                 <img src="img/icons/icons.svg#logo" alt="logo">
                 <span>Займы Онлайн</span>
             </a>
+            <div class="header__line"></div>
+            <div class="header__currencies">
+                <div class="header__currency currency">
+                    <div class="currency__name"><span>USD</span> ЦБ</div>
+                    <div id="rate__usd" class="currency__rate">62.91</div>
+                </div>
+                <div class="header__currency currency">
+                    <div class="currency__name"><span>EUR</span> ЦБ</div>
+                    <div id="rate__eur" class="currency__rate">64.32</div>
+                </div>
+                <div class="header__currency currency">
+                    <div class="currency__name"><span>CNY</span> ЦБ</div>
+                    <div id="rate__cny" class="currency__rate">9.55</div>
+                </div>
+            </div>
 
             <form class="header__search" action="#" method="get">
                 <input type="search" class="header__search-input" placeholder="Поиск по сайту">
@@ -26,17 +41,67 @@
 
             <div class="header__content">
                 <nav class="header__buttons">
+                    <div class="header__button button-green">
+                        <a data-goto=".section-cards" href="#" class="header__link button-green__link">
+                            <span>Спросить эксперта</span>
+                        </a>
+                    </div>
                     <div class="header__button header__button-blue">
                         <a href="#" class="header__link button-blue-header button-blue__link">
                             <svg>
-                                <use href="img/icons/icons-mono.svg#authorize"></use>
+                                <use href="img/icons/icons-mono.svg#add"></use>
                             </svg>
-                            <span class="button-blue__title">Авторизация</span>
+                            <span class="button-blue__title">(3)</span>
                         </a>
                     </div>
-                    <div class="header__button button-green">
-                        <a data-goto=".section-cards" data-goto-header href="#" class="header__link button-green__link">
-                            <span>Как получить займ?</span>
+
+                </nav>
+
+            </div>
+            <div class="header__more more">
+                <svg>
+                    <use href="img/icons/icons-mono.svg#more"></use>
+                </svg>
+                <nav class="more__buttons">
+                    <div class="more__button">
+                        <a href="#" class="button-more">
+                            <svg>
+                                <use href="img/icons/icons-mono.svg#login"></use>
+                            </svg>
+                            <span>Войти</span>
+                        </a>
+                    </div>
+                    <div class="more__button">
+                        <a href="#" class="button-more">
+                            <svg>
+                                <use href="img/icons/icons-mono.svg#authorize"></use>
+                            </svg>
+                            <span>Зарегистрироваться</span>
+                        </a>
+                    </div>
+
+                    <div class="more__button">
+                        <a href="#" class="button-more">
+                            <svg>
+                                <use href="img/icons/icons.svg#finews"></use>
+                            </svg>
+                            <span>Финансовые новости</span>
+                        </a>
+                    </div>
+                    <div class="more__button">
+                        <a href="#" class="button-more">
+                            <svg>
+                                <use href="img/icons/icons-mono.svg#journal"></use>
+                            </svg>
+                            <span>Финансовый журнал</span>
+                        </a>
+                    </div>
+                    <div class="more__button">
+                        <a href="#" class="button-more">
+                            <svg>
+                                <use href="img/icons/icons-mono.svg#contacts"></use>
+                            </svg>
+                            <span>Контакты</span>
                         </a>
                     </div>
                 </nav>
@@ -1445,7 +1510,7 @@
     </div>
 
 
-    <script src="js/app.min.js?_v=20220715010553"></script>
+    <script src="js/app.min.js?_v=20220808035444"></script>
 </body>
 
 </html>
