@@ -5,113 +5,118 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.min.css?_v=20221017005050">
+    <link rel="stylesheet" href="css/style.min.css?_v=20230315005701">
     <title>Займы онлайн</title>
 </head>
 
 <body>
     <div class="wrapper">
         <header class="header">
-    <div class="container">
-        <div class="header__container">
-            <a href="#" class="header__logo">
-                <img src="img/icons/icons.svg#logo" alt="logo">
-                <span>Займы Онлайн</span>
-            </a>
-            <div class="header__line"></div>
-            <div class="header__currencies">
-                <div class="header__currency currency">
-                    <div class="currency__name"><span>USD</span> ЦБ</div>
-                    <div id="rate__usd" class="currency__rate">62.91</div>
+            <div class="container">
+                <div class="header__container">
+                    <div class="header-logo">
+                        <a href="#" class="header-logo__link">
+                            <img src="img/icons/icons.svg#logo" alt="logo">
+                            <div>Займы Онлайн</div>
+                        </a>
+                    </div>
+                    <div class="header__line"></div>
+                    <div class="header__currencies">
+                        <div class="header__currency currency">
+                            <div class="currency__name"><span>USD</span> ЦБ</div>
+                            <div id="rate__usd" class="currency__rate">62.91</div>
+                        </div>
+                        <div class="header__currency currency">
+                            <div class="currency__name"><span>EUR</span> ЦБ</div>
+                            <div id="rate__eur" class="currency__rate">64.32</div>
+                        </div>
+                        <div class="header__currency currency">
+                            <div class="currency__name"><span>CNY</span> ЦБ</div>
+                            <div id="rate__cny" class="currency__rate">9.55</div>
+                        </div>
+                    </div>
+
+                    <form class="header__search" action="#" method="get">
+                        <input type="search" class="header__search-input" placeholder="Поиск по сайту">
+                        <a href="#" class="header__search-link"> <img src="img/icons/icons.svg#search" alt="search"></a>
+                    </form>
+
+                    <div class="header__content">
+                        <nav class="header__buttons">
+                            <div class="header__button button-green">
+                                <a data-goto=".section-cards" href="#" class="header__link button-green__link">
+                                    <span>Спросить эксперта</span>
+                                </a>
+                            </div>
+                            <div class="header__button header__button-blue">
+                                <a href="#" class="header__link button-blue-header button-blue__link">
+                                    <svg>
+                                        <use href="img/icons/icons-mono.svg#add"></use>
+                                    </svg>
+                                    <span class="button-blue__title">(3)</span>
+                                </a>
+                            </div>
+
+                        </nav>
+
+                    </div>
+                    <div class="header__more more">
+
+                        <svg>
+                            <use href="img/icons/icons-mono.svg#more"></use>
+                        </svg>
+                        <div class="more__content">
+                            <nav class="more__buttons">
+                                <div class="more__button">
+                                    <a href="#" class="button-more">
+                                        <svg>
+                                            <use href="img/icons/icons-mono.svg#login"></use>
+                                        </svg>
+                                        <span>Войти</span>
+                                    </a>
+                                </div>
+                                <div class="more__button">
+                                    <a href="#" class="button-more">
+                                        <svg>
+                                            <use href="img/icons/icons-mono.svg#authorize"></use>
+                                        </svg>
+                                        <span>Зарегистрироваться</span>
+                                    </a>
+                                </div>
+
+                                <div class="more__button">
+                                    <a href="#" class="button-more">
+                                        <svg>
+                                            <use href="img/icons/icons.svg#finews"></use>
+                                        </svg>
+                                        <span>Финансовые новости</span>
+                                    </a>
+                                </div>
+                                <div class="more__button">
+                                    <a href="#" class="button-more">
+                                        <svg>
+                                            <use href="img/icons/icons-mono.svg#journal"></use>
+                                        </svg>
+                                        <span>Финансовый журнал</span>
+                                    </a>
+                                </div>
+                                <div class="more__button">
+                                    <a href="#" class="button-more">
+                                        <svg>
+                                            <use href="img/icons/icons-mono.svg#contacts"></use>
+                                        </svg>
+                                        <span>Контакты</span>
+                                    </a>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="header__burger">
+                        <span></span>
+                    </div>
                 </div>
-                <div class="header__currency currency">
-                    <div class="currency__name"><span>EUR</span> ЦБ</div>
-                    <div id="rate__eur" class="currency__rate">64.32</div>
-                </div>
-                <div class="header__currency currency">
-                    <div class="currency__name"><span>CNY</span> ЦБ</div>
-                    <div id="rate__cny" class="currency__rate">9.55</div>
-                </div>
             </div>
-
-            <form class="header__search" action="#" method="get">
-                <input type="search" class="header__search-input" placeholder="Поиск по сайту">
-                <a href="#" class="header__search-link"> <img src="img/icons/icons.svg#search" alt="search"></a>
-            </form>
-
-            <div class="header__content">
-                <nav class="header__buttons">
-                    <div class="header__button button-green">
-                        <a data-goto=".section-cards" href="#" class="header__link button-green__link">
-                            <span>Спросить эксперта</span>
-                        </a>
-                    </div>
-                    <div class="header__button header__button-blue">
-                        <a href="#" class="header__link button-blue-header button-blue__link">
-                            <svg>
-                                <use href="img/icons/icons-mono.svg#add"></use>
-                            </svg>
-                            <span class="button-blue__title">(3)</span>
-                        </a>
-                    </div>
-
-                </nav>
-
-            </div>
-            <div class="header__more more">
-                <svg>
-                    <use href="img/icons/icons-mono.svg#more"></use>
-                </svg>
-                <nav class="more__buttons">
-                    <div class="more__button">
-                        <a href="#" class="button-more">
-                            <svg>
-                                <use href="img/icons/icons-mono.svg#login"></use>
-                            </svg>
-                            <span>Войти</span>
-                        </a>
-                    </div>
-                    <div class="more__button">
-                        <a href="#" class="button-more">
-                            <svg>
-                                <use href="img/icons/icons-mono.svg#authorize"></use>
-                            </svg>
-                            <span>Зарегистрироваться</span>
-                        </a>
-                    </div>
-
-                    <div class="more__button">
-                        <a href="#" class="button-more">
-                            <svg>
-                                <use href="img/icons/icons.svg#finews"></use>
-                            </svg>
-                            <span>Финансовые новости</span>
-                        </a>
-                    </div>
-                    <div class="more__button">
-                        <a href="#" class="button-more">
-                            <svg>
-                                <use href="img/icons/icons-mono.svg#journal"></use>
-                            </svg>
-                            <span>Финансовый журнал</span>
-                        </a>
-                    </div>
-                    <div class="more__button">
-                        <a href="#" class="button-more">
-                            <svg>
-                                <use href="img/icons/icons-mono.svg#contacts"></use>
-                            </svg>
-                            <span>Контакты</span>
-                        </a>
-                    </div>
-                </nav>
-            </div>
-            <div class="header__burger">
-                <span></span>
-            </div>
-        </div>
-    </div>
-</header>
+        </header>
         <main class="main">
             <div class="main__menu">
                 <div class="container">
@@ -1222,7 +1227,10 @@
 
                             <div class="item__main main-item">
                                 <div class="main-item__img">
-                                    <picture><source srcset="img/company1.webp" type="image/webp"><img src="img/company1.jpg" alt="Company logo"></picture>
+                                    <picture>
+                                        <source srcset="img/company1.webp" type="image/webp"><img src="img/company1.jpg"
+                                            alt="Company logo">
+                                    </picture>
                                 </div>
                                 <div class="main-item__table table">
                                     <div class="table__column">
@@ -1464,7 +1472,10 @@
                                                 <span data-rating="" class="star__value">4.2</span>
                                             </div>
                                             <div class="item-better__img">
-                                                <picture><source srcset="img/company1.webp" type="image/webp"><img src="img/company1.jpg" alt=""></picture>
+                                                <picture>
+                                                    <source srcset="img/company1.webp" type="image/webp"><img
+                                                        src="img/company1.jpg" alt="">
+                                                </picture>
                                             </div>
                                             <div class="item-better__table">
                                                 <div class="item-better__data">
@@ -1518,7 +1529,10 @@
                                                 <span data-rating="" class="star__value">4.2</span>
                                             </div>
                                             <div class="item-better__img">
-                                                <picture><source srcset="img/company2.webp" type="image/webp"><img src="img/company2.jpg" alt=""></picture>
+                                                <picture>
+                                                    <source srcset="img/company2.webp" type="image/webp"><img
+                                                        src="img/company2.jpg" alt="">
+                                                </picture>
                                             </div>
                                             <div class="item-better__table">
                                                 <div class="item-better__data">
@@ -1572,7 +1586,10 @@
                                                 <span data-rating="" class="star__value">4.2</span>
                                             </div>
                                             <div class="item-better__img">
-                                                <picture><source srcset="img/company3.webp" type="image/webp"><img src="img/company3.jpg" alt=""></picture>
+                                                <picture>
+                                                    <source srcset="img/company3.webp" type="image/webp"><img
+                                                        src="img/company3.jpg" alt="">
+                                                </picture>
                                             </div>
                                             <div class="item-better__table">
                                                 <div class="item-better__data">
@@ -1626,7 +1643,10 @@
                                                 <span data-rating="" class="star__value">4.2</span>
                                             </div>
                                             <div class="item-better__img">
-                                                <picture><source srcset="img/company4.webp" type="image/webp"><img src="img/company4.jpg" alt=""></picture>
+                                                <picture>
+                                                    <source srcset="img/company4.webp" type="image/webp"><img
+                                                        src="img/company4.jpg" alt="">
+                                                </picture>
                                             </div>
                                             <div class="item-better__table">
                                                 <div class="item-better__data">
@@ -1684,7 +1704,10 @@
                                                 <span data-rating="" class="star__value">4.2</span>
                                             </div>
                                             <div class="item-better__img">
-                                                <picture><source srcset="img/company1.webp" type="image/webp"><img src="img/company1.jpg" alt=""></picture>
+                                                <picture>
+                                                    <source srcset="img/company1.webp" type="image/webp"><img
+                                                        src="img/company1.jpg" alt="">
+                                                </picture>
                                             </div>
                                             <div class="item-better__table">
                                                 <div class="item-better__data">
@@ -1738,7 +1761,10 @@
                                                 <span data-rating="" class="star__value">4.2</span>
                                             </div>
                                             <div class="item-better__img">
-                                                <picture><source srcset="img/company1.webp" type="image/webp"><img src="img/company1.jpg" alt=""></picture>
+                                                <picture>
+                                                    <source srcset="img/company1.webp" type="image/webp"><img
+                                                        src="img/company1.jpg" alt="">
+                                                </picture>
                                             </div>
                                             <div class="item-better__table">
                                                 <div class="item-better__data">
@@ -1792,7 +1818,10 @@
                                                 <span data-rating="" class="star__value">4.2</span>
                                             </div>
                                             <div class="item-better__img">
-                                                <picture><source srcset="img/company1.webp" type="image/webp"><img src="img/company1.jpg" alt=""></picture>
+                                                <picture>
+                                                    <source srcset="img/company1.webp" type="image/webp"><img
+                                                        src="img/company1.jpg" alt="">
+                                                </picture>
                                             </div>
                                             <div class="item-better__table">
                                                 <div class="item-better__data">
@@ -1846,7 +1875,10 @@
                                                 <span data-rating="" class="star__value">4.2</span>
                                             </div>
                                             <div class="item-better__img">
-                                                <picture><source srcset="img/company1.webp" type="image/webp"><img src="img/company1.jpg" alt=""></picture>
+                                                <picture>
+                                                    <source srcset="img/company1.webp" type="image/webp"><img
+                                                        src="img/company1.jpg" alt="">
+                                                </picture>
                                             </div>
                                             <div class="item-better__table">
                                                 <div class="item-better__data">
@@ -1904,7 +1936,10 @@
                                                 <span data-rating="" class="star__value">4.2</span>
                                             </div>
                                             <div class="item-better__img">
-                                                <picture><source srcset="img/company4.webp" type="image/webp"><img src="img/company4.jpg" alt=""></picture>
+                                                <picture>
+                                                    <source srcset="img/company4.webp" type="image/webp"><img
+                                                        src="img/company4.jpg" alt="">
+                                                </picture>
                                             </div>
                                             <div class="item-better__table">
                                                 <div class="item-better__data">
@@ -1958,7 +1993,10 @@
                                                 <span data-rating="" class="star__value">4.2</span>
                                             </div>
                                             <div class="item-better__img">
-                                                <picture><source srcset="img/company4.webp" type="image/webp"><img src="img/company4.jpg" alt=""></picture>
+                                                <picture>
+                                                    <source srcset="img/company4.webp" type="image/webp"><img
+                                                        src="img/company4.jpg" alt="">
+                                                </picture>
                                             </div>
                                             <div class="item-better__table">
                                                 <div class="item-better__data">
@@ -2012,7 +2050,10 @@
                                                 <span data-rating="" class="star__value">4.2</span>
                                             </div>
                                             <div class="item-better__img">
-                                                <picture><source srcset="img/company4.webp" type="image/webp"><img src="img/company4.jpg" alt=""></picture>
+                                                <picture>
+                                                    <source srcset="img/company4.webp" type="image/webp"><img
+                                                        src="img/company4.jpg" alt="">
+                                                </picture>
                                             </div>
                                             <div class="item-better__table">
                                                 <div class="item-better__data">
@@ -2066,7 +2107,10 @@
                                                 <span data-rating="" class="star__value">4.2</span>
                                             </div>
                                             <div class="item-better__img">
-                                                <picture><source srcset="img/company4.webp" type="image/webp"><img src="img/company4.jpg" alt=""></picture>
+                                                <picture>
+                                                    <source srcset="img/company4.webp" type="image/webp"><img
+                                                        src="img/company4.jpg" alt="">
+                                                </picture>
                                             </div>
                                             <div class="item-better__table">
                                                 <div class="item-better__data">
@@ -2170,7 +2214,7 @@
                         </div>
                     </div>
                 </section>
-                <div class="main__section-author section-author">
+                <section class="main__section-author section-author">
                     <div class="section-author__head-title head-title">
                         <div class="head-title__title title">Наши эксперты</div>
                         <a href="#" class="head-title__link">Все эксперты</a>
@@ -2178,7 +2222,10 @@
                     <div class="section-author__row">
                         <div class="section-author__content">
                             <div class="section-author__ava">
-                                <picture><source srcset="img/author.webp" type="image/webp"><img class="section-author__img" src="img/author.jpg" alt="author"></picture>
+                                <picture>
+                                    <source srcset="img/author.webp" type="image/webp"><img class="section-author__img"
+                                        src="img/author.jpg" alt="author">
+                                </picture>
                             </div>
                             <div class="section-author__text">
                                 <div class="section-author__title title">
@@ -2187,6 +2234,7 @@
                                 <div class="section-author__subtitle subtitle">
                                     Финансовый эксперт / Zajmy-na-kartu-onlajn.ru
                                     <p>В проекте с 2017 года</p>
+
                                 </div>
                                 <div class="section-author__mail subtitle-blue">
                                     <img src="img/icons/icons.svg#mail" alt="mail" class="subtitle-blue__icon">
@@ -2198,9 +2246,13 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="section-author__content">
                             <div class="section-author__ava">
-                                <picture><source srcset="img/author2.webp" type="image/webp"><img class="section-author__img" src="img/author2.jpg" alt="author"></picture>
+                                <picture>
+                                    <source srcset="img/author2.webp" type="image/webp"><img class="section-author__img"
+                                        src="img/author2.jpg" alt="author">
+                                </picture>
                             </div>
                             <div class="section-author__text">
                                 <div class="section-author__title title">
@@ -2221,9 +2273,10 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
-                </div>
+                </section>
 
                 <div class="main__section-feed section-feed">
                     <div class="section-feed__container">
@@ -2238,7 +2291,10 @@
                                                 <div class="item-slide__title">Веббанкир</div>
                                                 <div class="item-slide__body">
                                                     <div class="item-slide__ava">
-                                                        <picture><source srcset="img/ava.webp" type="image/webp"><img src="img/ava.jpg" alt="Аватарка"></picture>
+                                                        <picture>
+                                                            <source srcset="img/ava.webp" type="image/webp"><img
+                                                                src="img/ava.jpg" alt="Аватарка">
+                                                        </picture>
                                                     </div>
                                                     <div class="item-slide__info">
                                                         <div class="item-slide__name">
@@ -2259,7 +2315,10 @@
                                                 <div class="item-slide__title">Веббанкир</div>
                                                 <div class="item-slide__body">
                                                     <div class="item-slide__ava">
-                                                        <picture><source srcset="img/ava.webp" type="image/webp"><img src="img/ava.jpg" alt="Аватарка"></picture>
+                                                        <picture>
+                                                            <source srcset="img/ava.webp" type="image/webp"><img
+                                                                src="img/ava.jpg" alt="Аватарка">
+                                                        </picture>
                                                     </div>
                                                     <div class="item-slide__info">
 
@@ -2285,7 +2344,10 @@
                                                 <div class="item-slide__title">Веббанкир</div>
                                                 <div class="item-slide__body">
                                                     <div class="item-slide__ava">
-                                                        <picture><source srcset="img/ava.webp" type="image/webp"><img src="img/ava.jpg" alt="Аватарка"></picture>
+                                                        <picture>
+                                                            <source srcset="img/ava.webp" type="image/webp"><img
+                                                                src="img/ava.jpg" alt="Аватарка">
+                                                        </picture>
                                                     </div>
                                                     <div class="item-slide__info">
 
@@ -2307,7 +2369,10 @@
                                                 <div class="item-slide__title">Веббанкир</div>
                                                 <div class="item-slide__body">
                                                     <div class="item-slide__ava">
-                                                        <picture><source srcset="img/ava.webp" type="image/webp"><img src="img/ava.jpg" alt="Аватарка"></picture>
+                                                        <picture>
+                                                            <source srcset="img/ava.webp" type="image/webp"><img
+                                                                src="img/ava.jpg" alt="Аватарка">
+                                                        </picture>
                                                     </div>
                                                     <div class="item-slide__info">
 
@@ -2334,7 +2399,10 @@
                                                 <div class="item-slide__title">Веббанкир</div>
                                                 <div class="item-slide__body">
                                                     <div class="item-slide__ava">
-                                                        <picture><source srcset="img/ava.webp" type="image/webp"><img src="img/ava.jpg" alt="Аватарка"></picture>
+                                                        <picture>
+                                                            <source srcset="img/ava.webp" type="image/webp"><img
+                                                                src="img/ava.jpg" alt="Аватарка">
+                                                        </picture>
                                                     </div>
                                                     <div class="item-slide__info">
 
@@ -2356,7 +2424,10 @@
                                                 <div class="item-slide__title">Веббанкир</div>
                                                 <div class="item-slide__body">
                                                     <div class="item-slide__ava">
-                                                        <picture><source srcset="img/ava.webp" type="image/webp"><img src="img/ava.jpg" alt="Аватарка"></picture>
+                                                        <picture>
+                                                            <source srcset="img/ava.webp" type="image/webp"><img
+                                                                src="img/ava.jpg" alt="Аватарка">
+                                                        </picture>
                                                     </div>
                                                     <div class="item-slide__info">
 
@@ -2453,19 +2524,34 @@
                         <div class="top-links__title">Топ 5 займов</div>
                         <nav class="top-links__logos">
                             <a href="#" class="top-links__link">
-                                <picture><source srcset="img/company1.webp" type="image/webp"><img src="img/company1.jpg" alt="Company" class="top-links__img"></picture>
+                                <picture>
+                                    <source srcset="img/company1.webp" type="image/webp"><img src="img/company1.jpg"
+                                        alt="Company" class="top-links__img">
+                                </picture>
                             </a>
                             <a href="#" class="top-links__link">
-                                <picture><source srcset="img/company2.webp" type="image/webp"><img src="img/company2.jpg" alt="Company" class="top-links__img"></picture>
+                                <picture>
+                                    <source srcset="img/company2.webp" type="image/webp"><img src="img/company2.jpg"
+                                        alt="Company" class="top-links__img">
+                                </picture>
                             </a>
                             <a href="#" class="top-links__link">
-                                <picture><source srcset="img/company3.webp" type="image/webp"><img src="img/company3.jpg" alt="Company" class="top-links__img"></picture>
+                                <picture>
+                                    <source srcset="img/company3.webp" type="image/webp"><img src="img/company3.jpg"
+                                        alt="Company" class="top-links__img">
+                                </picture>
                             </a>
                             <a href="#" class="top-links__link">
-                                <picture><source srcset="img/company4.webp" type="image/webp"><img src="img/company4.jpg" alt="Company" class="top-links__img"></picture>
+                                <picture>
+                                    <source srcset="img/company4.webp" type="image/webp"><img src="img/company4.jpg"
+                                        alt="Company" class="top-links__img">
+                                </picture>
                             </a>
                             <a href="#" class="top-links__link">
-                                <picture><source srcset="img/company5.webp" type="image/webp"><img src="img/company5.jpg" alt="Company" class="top-links__img"></picture>
+                                <picture>
+                                    <source srcset="img/company5.webp" type="image/webp"><img src="img/company5.jpg"
+                                        alt="Company" class="top-links__img">
+                                </picture>
                             </a>
 
                         </nav>
@@ -2532,7 +2618,10 @@
                     <div class="article__content">
                         <div class="item-article">
                             <div class="item-article__picture">
-                                <picture><source srcset="img/article1.webp" type="image/webp"><img src="img/article1.jpg" alt="Обложка"></picture>
+                                <picture>
+                                    <source srcset="img/article1.webp" type="image/webp"><img src="img/article1.jpg"
+                                        alt="Обложка">
+                                </picture>
                             </div>
                             <div class="item-article__content">
                                 <a href="#" class="item-article__title">
@@ -2556,7 +2645,10 @@
                         </div>
                         <div class="item-article">
                             <div class="item-article__picture">
-                                <picture><source srcset="img/article2.webp" type="image/webp"><img src="img/article2.jpg" alt="Обложка"></picture>
+                                <picture>
+                                    <source srcset="img/article2.webp" type="image/webp"><img src="img/article2.jpg"
+                                        alt="Обложка">
+                                </picture>
                             </div>
                             <div class="item-article__content">
                                 <a href="#" class="item-article__title">
@@ -2582,7 +2674,10 @@
                         </div>
                         <div class="item-article">
                             <div class="item-article__picture">
-                                <picture><source srcset="img/article3.webp" type="image/webp"><img src="img/article3.jpg" alt="Обложка"></picture>
+                                <picture>
+                                    <source srcset="img/article3.webp" type="image/webp"><img src="img/article3.jpg"
+                                        alt="Обложка">
+                                </picture>
                             </div>
                             <div class="item-article__content">
                                 <a href="#" class="item-article__title">
@@ -2607,7 +2702,10 @@
                         </div>
                         <div class="item-article">
                             <div class="item-article__picture">
-                                <picture><source srcset="img/article2.webp" type="image/webp"><img src="img/article2.jpg" alt="Обложка"></picture>
+                                <picture>
+                                    <source srcset="img/article2.webp" type="image/webp"><img src="img/article2.jpg"
+                                        alt="Обложка">
+                                </picture>
                             </div>
                             <div class="item-article__content">
                                 <a href="#" class="item-article__title">
@@ -2856,112 +2954,112 @@
                 </div>
             </div>
 
-    </div>
-
-    </main>
-    <footer class="footer">
-    <div class="container">
-        <div class="footer__head head-footer">
-            <div class="head-footer__name">
-                <div class="head-footer__title footer-title">Быстрый поиск найдет лучший займ онлайн</div>
-                <div class="footer-right">
-                    <div class="footer-title">Социальные сети:</div>
-                    <div class="footer-right__buttons">
-                        <div class="footer-right__button">
-                            <a href="#" class="footer-right__link footer-right__link-vk">
-                                <svg class="footer-right__icon">
-                                    <use href="img/icons/icons.svg#vk"></use>
-                                </svg>
-                            </a>
+        </main>
+        <footer class="footer">
+            <div class="container">
+                <div class="footer__head head-footer">
+                    <div class="head-footer__name">
+                        <div class="head-footer__title footer-title">Быстрый поиск найдет лучший займ онлайн</div>
+                        <div class="footer-right">
+                            <div class="footer-title">Социальные сети:</div>
+                            <div class="footer-right__buttons">
+                                <div class="footer-right__button">
+                                    <a href="#" class="footer-right__link footer-right__link-vk">
+                                        <svg class="footer-right__icon">
+                                            <use href="img/icons/icons.svg#vk"></use>
+                                        </svg>
+                                    </a>
+                                </div>
+                                <div class="footer-right__button">
+                                    <a href="#" class="footer-right__link footer-right__link-fc">
+                                        <svg class="footer-right__icon">
+                                            <use href="img/icons/icons.svg#fc"></use>
+                                        </svg>
+                                    </a>
+                                </div>
+                                <div class="footer-right__button">
+                                    <a href="#" class="footer-right__link footer-right__link-ok">
+                                        <svg class="footer-right__icon">
+                                            <use href="img/icons/icons.svg#ok"></use>
+                                        </svg>
+                                    </a>
+                                </div>
+                                <div class="footer-right__button">
+                                    <a href="#" class="footer-right__link footer-right__link-tg">
+                                        <svg class="footer-right__icon">
+                                            <use href="img/icons/icons.svg#yt"></use>
+                                        </svg>
+                                    </a>
+                                </div>
+                                <div class="footer-right__button">
+                                    <a href="#" class="footer-right__link footer-right__link-tw">
+                                        <svg class="footer-right__icon">
+                                            <use href="img/icons/icons.svg#tw"></use>
+                                        </svg>
+                                    </a>
+                                </div>
+                                <div class="footer-right__button">
+                                    <a href="#" class="footer-right__link footer-right__link-yt">
+                                        <svg class="footer-right__icon">
+                                            <use href="img/icons/icons.svg#yt"></use>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="footer-right__button">
-                            <a href="#" class="footer-right__link footer-right__link-fc">
-                                <svg class="footer-right__icon">
-                                    <use href="img/icons/icons.svg#fc"></use>
-                                </svg>
-                            </a>
-                        </div>
-                        <div class="footer-right__button">
-                            <a href="#" class="footer-right__link footer-right__link-ok">
-                                <svg class="footer-right__icon">
-                                    <use href="img/icons/icons.svg#ok"></use>
-                                </svg>
-                            </a>
-                        </div>
-                        <div class="footer-right__button">
-                            <a href="#" class="footer-right__link footer-right__link-tg">
-                                <svg class="footer-right__icon">
-                                    <use href="img/icons/icons.svg#yt"></use>
-                                </svg>
-                            </a>
-                        </div>
-                        <div class="footer-right__button">
-                            <a href="#" class="footer-right__link footer-right__link-tw">
-                                <svg class="footer-right__icon">
-                                    <use href="img/icons/icons.svg#tw"></use>
-                                </svg>
-                            </a>
-                        </div>
-                        <div class="footer-right__button">
-                            <a href="#" class="footer-right__link footer-right__link-yt">
-                                <svg class="footer-right__icon">
-                                    <use href="img/icons/icons.svg#yt"></use>
-                                </svg>
-                            </a>
+                    </div>
+                    <div class="head-footer__sublinks">
+                        <a href="#" class="footer-sublink">Карта сайта</a>
+                        <a href="#" class="footer-sublink">Займы в других городах</a>
+                    </div>
+                </div>
+                <div class="footer__body">
+                    <nav class="footer-links">
+                        <a href="#" class="footer-links__item">О сайте</a>
+                        <a href="#" class="footer-links__item">Наши авторы</a>
+                        <a href="#" class="footer-links__item">Вопросы и ответы </a>
+                        <a href="#" class="footer-links__item">Блог</a>
+                        <a href="#" class="footer-links__item">Новости</a>
+                        <a href="#" class="footer-links__item">Контакты</a>
+                    </nav>
+                    <div class="footer-text">
+                        <img src="img/icons/icons.svg#info" alt="!" class="footer-text__icon">
+                        <div class="footer-text__p">
+                            Данное предложение – не обращение подрядчика. Всю подробную информацию следует узнать во
+                            время
+                            непосредственного контакта с кредиторами компании. Редакционный коллектив нашего сайта
+                            представляет своё мнение в статьях с информативными элементами. Компания не является
+                            ответственной
+                            за правдивость и объективность информации на сайте. Сайт не является собственностью
+                            финансовой фирмы и не реализует финансовых услуг. Такого рода услуги имеют право выполнять
+                            организации, разрешенные Центральным Банком РФ. Сайт имеет несколько направленностей,
+                            в том числе представление каталога знаков обслуживания, открыто представленных в реестрах
+                            Федерального института промышленной собственности. Правообладатели имеют исключительное
+                            право на пользование товарными знаками.
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="head-footer__sublinks">
-                <a href="#" class="footer-sublink">Карта сайта</a>
-                <a href="#" class="footer-sublink">Займы в других городах</a>
-            </div>
-        </div>
-        <div class="footer__body">
-            <nav class="footer-links">
-                <a href="#" class="footer-links__item">О сайте</a>
-                <a href="#" class="footer-links__item">Наши авторы</a>
-                <a href="#" class="footer-links__item">Вопросы и ответы </a>
-                <a href="#" class="footer-links__item">Блог</a>
-                <a href="#" class="footer-links__item">Новости</a>
-                <a href="#" class="footer-links__item">Контакты</a>
-            </nav>
-            <div class="footer-text">
-                <img src="img/icons/icons.svg#info" alt="!" class="footer-text__icon">
-                <div class="footer-text__p">
-                    Данное предложение – не обращение подрядчика. Всю подробную информацию следует узнать во время
-                    непосредственного контакта с кредиторами компании. Редакционный коллектив нашего сайта
-                    представляет своё мнение в статьях с информативными элементами. Компания не является ответственной
-                    за правдивость и объективность информации на сайте. Сайт не является собственностью
-                    финансовой фирмы и не реализует финансовых услуг. Такого рода услуги имеют право выполнять
-                    организации, разрешенные Центральным Банком РФ. Сайт имеет несколько направленностей,
-                    в том числе представление каталога знаков обслуживания, открыто представленных в реестрах
-                    Федерального института промышленной собственности. Правообладатели имеют исключительное
-                    право на пользование товарными знаками.
+                <div class="footer__foot foot-footer">
+                    <div class="foot-footer__text">
+                        <div class="foot-footer__title">©2017 - 2023 Займы-на-карту-онлайн.ru</div>
+                        <a href="#" class="footer-sublink">Сайт Займы на Карту Онлайн ру</a>
+                    </div>
+                    <div class="foot-footer__links">
+
+                        <a href="#" class="footer-sublink">
+                            <svg>
+                                <use href="img/icons/icons.svg#18"></use>
+                            </svg>
+                            Пользовательское соглашение
+                        </a>
+
+                        <a href="#" class="footer-sublink">Политика конфедициальности</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="footer__foot foot-footer">
-            <div class="foot-footer__text">
-                <div class="foot-footer__title">©2017 - 2022 Займы-на-карту-онлайн.ru</div>
-                <a href="#" class="footer-sublink">Сайт Займы на Карту Онлайн ру</a>
-            </div>
-            <div class="foot-footer__links">
-
-                <a href="#" class="footer-sublink">
-                    <svg>
-                        <use href="img/icons/icons.svg#18"></use>
-                    </svg>
-                    Пользовательское соглашение
-                </a>
-
-                <a href="#" class="footer-sublink">Политика конфедициальности</a>
-            </div>
-        </div>
+        </footer>
     </div>
-</footer>
-    </div>
-    <script src="js/app.min.js?_v=20221017005050"></script>
+    <script src="js/app.js"></script>
 
 </body>
 
