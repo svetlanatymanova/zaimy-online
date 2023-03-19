@@ -2973,9 +2973,7 @@
                     Te.parentElement.parentElement.classList.toggle("_active");
                 });
             }
-        Se.addEventListener("click", function (e) {
-            Se.classList.toggle("more-active");
-        });
+
     } else document.body.classList.add("_pc");
     if (document.querySelector(".wrapper").clientWidth <= 850) {
         let Ce = document.getElementById("menu");
