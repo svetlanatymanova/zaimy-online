@@ -1,3138 +1,4019 @@
 (() => {
     "use strict";
-    var e = /iPhone/i,
-        t = /iPod/i,
-        s = /iPad/i,
-        i = /\biOS-universal(?:.+)Mac\b/i,
-        n = /\bAndroid(?:.+)Mobile\b/i,
-        a = /Android/i,
-        l = /(?:SD4930UR|\bSilk(?:.+)Mobile\b)/i,
-        r = /Silk/i,
-        o = /Windows Phone/i,
-        c = /\bWindows(?:.+)ARM\b/i,
-        d = /BlackBerry/i,
-        u = /BB10/i,
-        p = /Opera Mini/i,
-        h = /\b(CriOS|Chrome)(?:.+)Mobile/i,
-        m = /Mobile(?:.+)Firefox\b/i,
-        f = function (e) {
-            return void 0 !== e && "MacIntel" === e.platform && "number" == typeof e.maxTouchPoints && e.maxTouchPoints > 1 && "undefined" == typeof MSStream;
-        };
-    let g = (e, t = 500, s = 0) => {
-        e.classList.contains("_slide") ||
-            (e.classList.add("_slide"),
-                (e.style.transitionProperty = "height, margin, padding"),
-                (e.style.transitionDuration = t + "ms"),
-                (e.style.height = `${e.offsetHeight}px`),
-                e.offsetHeight,
-                (e.style.overflow = "hidden"),
-                (e.style.height = s ? `${s}px` : "0px"),
-                (e.style.paddingTop = 0),
-                (e.style.paddingBottom = 0),
-                (e.style.marginTop = 0),
-                (e.style.marginBottom = 0),
-                window.setTimeout(() => {
-                    (e.hidden = !s),
-                        !s && e.style.removeProperty("height"),
-                        e.style.removeProperty("padding-top"),
-                        e.style.removeProperty("padding-bottom"),
-                        e.style.removeProperty("margin-top"),
-                        e.style.removeProperty("margin-bottom"),
-                        !s && e.style.removeProperty("overflow"),
-                        e.style.removeProperty("transition-duration"),
-                        e.style.removeProperty("transition-property"),
-                        e.classList.remove("_slide"),
-                        document.dispatchEvent(new CustomEvent("slideUpDone", { detail: { target: e } }));
-                }, t));
-    },
-        v = (e, t = 500, s = 0) => {
-            if (!e.classList.contains("_slide")) {
-                e.classList.add("_slide"), (e.hidden = !e.hidden && null), s && e.style.removeProperty("height");
-                let i = e.offsetHeight;
-                (e.style.overflow = "hidden"),
-                    (e.style.height = s ? `${s}px` : "0px"),
-                    (e.style.paddingTop = 0),
-                    (e.style.paddingBottom = 0),
-                    (e.style.marginTop = 0),
-                    (e.style.marginBottom = 0),
-                    e.offsetHeight,
-                    (e.style.transitionProperty = "height, margin, padding"),
-                    (e.style.transitionDuration = t + "ms"),
-                    (e.style.height = i + "px"),
-                    e.style.removeProperty("padding-top"),
-                    e.style.removeProperty("padding-bottom"),
-                    e.style.removeProperty("margin-top"),
-                    e.style.removeProperty("margin-bottom"),
-                    window.setTimeout(() => {
-                        e.style.removeProperty("height"),
-                            e.style.removeProperty("overflow"),
-                            e.style.removeProperty("transition-duration"),
-                            e.style.removeProperty("transition-property"),
-                            e.classList.remove("_slide"),
-                            document.dispatchEvent(new CustomEvent("slideDownDone", { detail: { target: e } }));
-                    }, t);
+    const flsModules = {};
+    function isWebp() {
+        function testWebP(callback) {
+            let webP = new Image;
+            webP.onload = webP.onerror = function() {
+                callback(2 == webP.height);
+            };
+            webP.src = "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA";
+        }
+        testWebP((function(support) {
+            let className = true === support ? "webp" : "no-webp";
+            document.documentElement.classList.add(className);
+        }));
+    }
+    let _slideUp = (target, duration = 500, showmore = 0) => {
+        if (!target.classList.contains("_slide")) {
+            target.classList.add("_slide");
+            target.style.transitionProperty = "height, margin, padding";
+            target.style.transitionDuration = duration + "ms";
+            target.style.height = `${target.offsetHeight}px`;
+            target.offsetHeight;
+            target.style.overflow = "hidden";
+            target.style.height = showmore ? `${showmore}px` : `0px`;
+            target.style.paddingTop = 0;
+            target.style.paddingBottom = 0;
+            target.style.marginTop = 0;
+            target.style.marginBottom = 0;
+            window.setTimeout((() => {
+                target.hidden = !showmore ? true : false;
+                !showmore ? target.style.removeProperty("height") : null;
+                target.style.removeProperty("padding-top");
+                target.style.removeProperty("padding-bottom");
+                target.style.removeProperty("margin-top");
+                target.style.removeProperty("margin-bottom");
+                !showmore ? target.style.removeProperty("overflow") : null;
+                target.style.removeProperty("transition-duration");
+                target.style.removeProperty("transition-property");
+                target.classList.remove("_slide");
+                document.dispatchEvent(new CustomEvent("slideUpDone", {
+                    detail: {
+                        target
+                    }
+                }));
+            }), duration);
+        }
+    };
+    let _slideDown = (target, duration = 500, showmore = 0) => {
+        if (!target.classList.contains("_slide")) {
+            target.classList.add("_slide");
+            target.hidden = target.hidden ? false : null;
+            showmore ? target.style.removeProperty("height") : null;
+            let height = target.offsetHeight;
+            target.style.overflow = "hidden";
+            target.style.height = showmore ? `${showmore}px` : `0px`;
+            target.style.paddingTop = 0;
+            target.style.paddingBottom = 0;
+            target.style.marginTop = 0;
+            target.style.marginBottom = 0;
+            target.offsetHeight;
+            target.style.transitionProperty = "height, margin, padding";
+            target.style.transitionDuration = duration + "ms";
+            target.style.height = height + "px";
+            target.style.removeProperty("padding-top");
+            target.style.removeProperty("padding-bottom");
+            target.style.removeProperty("margin-top");
+            target.style.removeProperty("margin-bottom");
+            window.setTimeout((() => {
+                target.style.removeProperty("height");
+                target.style.removeProperty("overflow");
+                target.style.removeProperty("transition-duration");
+                target.style.removeProperty("transition-property");
+                target.classList.remove("_slide");
+                document.dispatchEvent(new CustomEvent("slideDownDone", {
+                    detail: {
+                        target
+                    }
+                }));
+            }), duration);
+        }
+    };
+    let _slideToggle = (target, duration = 500) => {
+        if (target.hidden) return _slideDown(target, duration); else return _slideUp(target, duration);
+    };
+    let bodyLockStatus = true;
+    let bodyLockToggle = (delay = 500) => {
+        if (document.documentElement.classList.contains("lock")) bodyUnlock(delay); else bodyLock(delay);
+    };
+    let bodyUnlock = (delay = 500) => {
+        let body = document.querySelector("body");
+        if (bodyLockStatus) {
+            let lock_padding = document.querySelectorAll("[data-lp]");
+            setTimeout((() => {
+                for (let index = 0; index < lock_padding.length; index++) {
+                    const el = lock_padding[index];
+                    el.style.paddingRight = "0px";
+                }
+                body.style.paddingRight = "0px";
+                document.documentElement.classList.remove("lock");
+            }), delay);
+            bodyLockStatus = false;
+            setTimeout((function() {
+                bodyLockStatus = true;
+            }), delay);
+        }
+    };
+    let bodyLock = (delay = 500) => {
+        let body = document.querySelector("body");
+        if (bodyLockStatus) {
+            let lock_padding = document.querySelectorAll("[data-lp]");
+            for (let index = 0; index < lock_padding.length; index++) {
+                const el = lock_padding[index];
+                el.style.paddingRight = window.innerWidth - document.querySelector(".wrapper").offsetWidth + "px";
             }
-        },
-        S = (e, t = 500) => (e.hidden ? v(e, t) : g(e, t));
-    function b() {
-        document.querySelector(".header__content").classList.remove("header__content-active"), document.querySelector(".header__burger").classList.remove("header__burger-active");
-    }
-    function y(e) {
-        setTimeout(() => {
-            window.FLS && console.log(e);
-        }, 0);
-    }
-    function w(e, t) {
-        const s = Array.from(e).filter(function (e, s, i) {
-            if (e.dataset[t]) return e.dataset[t].split(",")[0];
-        });
-        if (s.length) {
-            const e = [];
-            s.forEach((s) => {
-                const i = {},
-                    n = s.dataset[t].split(",");
-                (i.value = n[0]), (i.type = n[1] ? n[1].trim() : "max"), (i.item = s), e.push(i);
-            });
-            let i = e.map(function (e) {
-                return "(" + e.type + "-width: " + e.value + "px)," + e.value + "," + e.type;
-            });
-            const n = [];
-            if (i.length)
-                return (
-                    i.forEach((t) => {
-                        const s = t.split(","),
-                            i = s[1],
-                            a = s[2],
-                            l = window.matchMedia(s[0]),
-                            r = e.filter(function (e) {
-                                if (e.value === i && e.type === a) return !0;
-                            });
-                        n.push({ itemsArray: r, matchMedia: l });
-                    }),
-                    n
-                );
+            body.style.paddingRight = window.innerWidth - document.querySelector(".wrapper").offsetWidth + "px";
+            document.documentElement.classList.add("lock");
+            bodyLockStatus = false;
+            setTimeout((function() {
+                bodyLockStatus = true;
+            }), delay);
         }
-    }
-    function T(e) {
-        return null !== e && "object" == typeof e && "constructor" in e && e.constructor === Object;
-    }
-    function C(e = {}, t = {}) {
-        Object.keys(t).forEach((s) => {
-            void 0 === e[s] ? (e[s] = t[s]) : T(t[s]) && T(e[s]) && Object.keys(t[s]).length > 0 && C(e[s], t[s]);
-        });
-    }
-    new (class {
-        constructor(e, t = null) {
-            if (
-                ((this.config = Object.assign({ init: !0, logging: !0 }, e)),
-                    (this.selectClasses = {
-                        classSelect: "select",
-                        classSelectBody: "select__body",
-                        classSelectTitle: "select__title",
-                        classSelectValue: "select__value",
-                        classSelectLabel: "select__label",
-                        classSelectInput: "select__input",
-                        classSelectText: "select__text",
-                        classSelectLink: "select__link",
-                        classSelectOptions: "select__options",
-                        classSelectOptionsScroll: "select__scroll",
-                        classSelectOption: "select__option",
-                        classSelectContent: "select__content",
-                        classSelectRow: "select__row",
-                        classSelectData: "select__asset",
-                        classSelectDisabled: "_select-disabled",
-                        classSelectTag: "_select-tag",
-                        classSelectOpen: "_select-open",
-                        classSelectActive: "_select-active",
-                        classSelectFocus: "_select-focus",
-                        classSelectMultiple: "_select-multiple",
-                        classSelectCheckBox: "_select-checkbox",
-                        classSelectOptionSelected: "_select-selected",
-                        classSelectPseudoLabel: "_select-pseudo-label",
-                    }),
-                    (this._this = this),
-                    this.config.init)
-            ) {
-                const e = t ? document.querySelectorAll(t) : document.querySelectorAll("select");
-                e.length ? (this.selectsInit(e), this.setLogging(`Проснулся, построил селектов: (${e.length})`)) : this.setLogging("Сплю, нет ни одного select zzZZZzZZz");
+    };
+    function spollers() {
+        const spollersArray = document.querySelectorAll("[data-spollers]");
+        if (spollersArray.length > 0) {
+            const spollersRegular = Array.from(spollersArray).filter((function(item, index, self) {
+                return !item.dataset.spollers.split(",")[0];
+            }));
+            if (spollersRegular.length) initSpollers(spollersRegular);
+            let mdQueriesArray = dataMediaQueries(spollersArray, "spollers");
+            if (mdQueriesArray && mdQueriesArray.length) mdQueriesArray.forEach((mdQueriesItem => {
+                mdQueriesItem.matchMedia.addEventListener("change", (function() {
+                    initSpollers(mdQueriesItem.itemsArray, mdQueriesItem.matchMedia);
+                }));
+                initSpollers(mdQueriesItem.itemsArray, mdQueriesItem.matchMedia);
+            }));
+            function initSpollers(spollersArray, matchMedia = false) {
+                spollersArray.forEach((spollersBlock => {
+                    spollersBlock = matchMedia ? spollersBlock.item : spollersBlock;
+                    if (matchMedia.matches || !matchMedia) {
+                        spollersBlock.classList.add("_spoller-init");
+                        initSpollerBody(spollersBlock);
+                        spollersBlock.addEventListener("click", setSpollerAction);
+                    } else {
+                        spollersBlock.classList.remove("_spoller-init");
+                        initSpollerBody(spollersBlock, false);
+                        spollersBlock.removeEventListener("click", setSpollerAction);
+                    }
+                }));
             }
-        }
-        getSelectClass(e) {
-            return `.${e}`;
-        }
-        getSelectElement(e, t) {
-            return { originalSelect: e.querySelector("select"), selectElement: e.querySelector(this.getSelectClass(t)) };
-        }
-        selectsInit(e) {
-            e.forEach((e, t) => {
-                this.selectInit(e, t + 1);
-            }),
-                document.addEventListener(
-                    "click",
-                    function (e) {
-                        this.selectsActions(e);
-                    }.bind(this)
-                ),
-                document.addEventListener(
-                    "keydown",
-                    function (e) {
-                        this.selectsActions(e);
-                    }.bind(this)
-                ),
-                document.addEventListener(
-                    "focusin",
-                    function (e) {
-                        this.selectsActions(e);
-                    }.bind(this)
-                ),
-                document.addEventListener(
-                    "focusout",
-                    function (e) {
-                        this.selectsActions(e);
-                    }.bind(this)
-                );
-        }
-        selectInit(e, t) {
-            const s = this;
-            let i = document.createElement("div");
-            i.classList.add(this.selectClasses.classSelect),
-                e.parentNode.insertBefore(i, e),
-                i.appendChild(e),
-                (e.hidden = !0),
-                t && (e.dataset.id = t),
-                this.getSelectPlaceholder(e) &&
-                ((e.dataset.placeholder = this.getSelectPlaceholder(e).value), this.getSelectPlaceholder(e).label.show) &&
-                this.getSelectElement(i, this.selectClasses.classSelectTitle).selectElement.insertAdjacentHTML(
-                    "afterbegin",
-                    `<span class="${this.selectClasses.classSelectLabel}">${this.getSelectPlaceholder(e).label.text ? this.getSelectPlaceholder(e).label.text : this.getSelectPlaceholder(e).value}</span>`
-                ),
-                i.insertAdjacentHTML("beforeend", `<div class="${this.selectClasses.classSelectBody}"><div hidden class="${this.selectClasses.classSelectOptions}"></div></div>`),
-                this.selectBuild(e),
-                (e.dataset.speed = e.dataset.speed ? e.dataset.speed : "150"),
-                e.addEventListener("change", function (e) {
-                    s.selectChange(e);
-                });
-        }
-        selectBuild(e) {
-            const t = e.parentElement;
-            (t.dataset.id = e.dataset.id),
-                e.dataset.classModif && t.classList.add(`select_${e.dataset.classModif}`),
-                e.multiple ? t.classList.add(this.selectClasses.classSelectMultiple) : t.classList.remove(this.selectClasses.classSelectMultiple),
-                e.hasAttribute("data-checkbox") && e.multiple ? t.classList.add(this.selectClasses.classSelectCheckBox) : t.classList.remove(this.selectClasses.classSelectCheckBox),
-                this.setSelectTitleValue(t, e),
-                this.setOptions(t, e),
-                e.hasAttribute("data-search") && this.searchActions(t),
-                e.hasAttribute("data-open") && this.selectAction(t),
-                this.selectDisabled(t, e);
-        }
-        selectsActions(e) {
-            const t = e.target,
-                s = e.type;
-            if (t.closest(this.getSelectClass(this.selectClasses.classSelect)) || t.closest(this.getSelectClass(this.selectClasses.classSelectTag))) {
-                const i = t.closest(".select") ? t.closest(".select") : document.querySelector(`.${this.selectClasses.classSelect}[data-id="${t.closest(this.getSelectClass(this.selectClasses.classSelectTag)).dataset.selectId}"]`),
-                    n = this.getSelectElement(i).originalSelect;
-                if ("click" === s) {
-                    if (!n.disabled)
-                        if (t.closest(this.getSelectClass(this.selectClasses.classSelectTag))) {
-                            const e = t.closest(this.getSelectClass(this.selectClasses.classSelectTag)),
-                                s = document.querySelector(`.${this.selectClasses.classSelect}[data-id="${e.dataset.selectId}"] .select__option[data-value="${e.dataset.value}"]`);
-                            this.optionAction(i, n, s);
-                        } else if (t.closest(this.getSelectClass(this.selectClasses.classSelectTitle))) this.selectAction(i);
-                        else if (t.closest(this.getSelectClass(this.selectClasses.classSelectOption))) {
-                            const e = t.closest(this.getSelectClass(this.selectClasses.classSelectOption));
-                            this.optionAction(i, n, e);
+            function initSpollerBody(spollersBlock, hideSpollerBody = true) {
+                let spollerTitles = spollersBlock.querySelectorAll("[data-spoller]");
+                if (spollerTitles.length) {
+                    spollerTitles = Array.from(spollerTitles).filter((item => item.closest("[data-spollers]") === spollersBlock));
+                    spollerTitles.forEach((spollerTitle => {
+                        if (hideSpollerBody) {
+                            spollerTitle.removeAttribute("tabindex");
+                            if (!spollerTitle.classList.contains("_spoller-active")) spollerTitle.nextElementSibling.hidden = true;
+                        } else {
+                            spollerTitle.setAttribute("tabindex", "-1");
+                            spollerTitle.nextElementSibling.hidden = false;
                         }
-                } else
-                    "focusin" === s || "focusout" === s
-                        ? t.closest(this.getSelectClass(this.selectClasses.classSelect)) && ("focusin" === s ? i.classList.add(this.selectClasses.classSelectFocus) : i.classList.remove(this.selectClasses.classSelectFocus))
-                        : "keydown" === s && "Escape" === e.code && this.selectsСlose();
-            } else this.selectsСlose();
+                    }));
+                }
+            }
+            function setSpollerAction(e) {
+                const el = e.target;
+                if (el.closest("[data-spoller]")) {
+                    const spollerTitle = el.closest("[data-spoller]");
+                    const spollersBlock = spollerTitle.closest("[data-spollers]");
+                    const oneSpoller = spollersBlock.hasAttribute("data-one-spoller");
+                    const spollerSpeed = spollersBlock.dataset.spollersSpeed ? parseInt(spollersBlock.dataset.spollersSpeed) : 500;
+                    if (!spollersBlock.querySelectorAll("._slide").length) {
+                        if (oneSpoller && !spollerTitle.classList.contains("_spoller-active")) hideSpollersBody(spollersBlock);
+                        spollerTitle.classList.toggle("_spoller-active");
+                        _slideToggle(spollerTitle.nextElementSibling, spollerSpeed);
+                    }
+                    e.preventDefault();
+                }
+            }
+            function hideSpollersBody(spollersBlock) {
+                const spollerActiveTitle = spollersBlock.querySelector("[data-spoller]._spoller-active");
+                const spollerSpeed = spollersBlock.dataset.spollersSpeed ? parseInt(spollersBlock.dataset.spollersSpeed) : 500;
+                if (spollerActiveTitle && !spollersBlock.querySelectorAll("._slide").length) {
+                    spollerActiveTitle.classList.remove("_spoller-active");
+                    _slideUp(spollerActiveTitle.nextElementSibling, spollerSpeed);
+                }
+            }
+            const spollersClose = document.querySelectorAll("[data-spoller-close]");
+            if (spollersClose.length) document.addEventListener("click", (function(e) {
+                const el = e.target;
+                if (!el.closest("[data-spollers]")) spollersClose.forEach((spollerClose => {
+                    const spollersBlock = spollerClose.closest("[data-spollers]");
+                    const spollerSpeed = spollersBlock.dataset.spollersSpeed ? parseInt(spollersBlock.dataset.spollersSpeed) : 500;
+                    spollerClose.classList.remove("_spoller-active");
+                    _slideUp(spollerClose.nextElementSibling, spollerSpeed);
+                }));
+            }));
         }
-        selectsСlose(e) {
-            const t = (e || document).querySelectorAll(`${this.getSelectClass(this.selectClasses.classSelect)}${this.getSelectClass(this.selectClasses.classSelectOpen)}`);
-            t.length &&
-                t.forEach((e) => {
-                    this.selectСlose(e);
+    }
+    function menuInit() {
+        if (document.querySelector(".icon-menu")) document.addEventListener("click", (function(e) {
+            if (bodyLockStatus && e.target.closest(".icon-menu")) {
+                bodyLockToggle();
+                document.documentElement.classList.toggle("menu-open");
+            }
+        }));
+    }
+    function menuClose() {
+        bodyUnlock();
+        document.documentElement.classList.remove("menu-open");
+    }
+    function showMore() {
+        window.addEventListener("load", (function(e) {
+            const showMoreBlocks = document.querySelectorAll("[data-showmore]");
+            let showMoreBlocksRegular;
+            let mdQueriesArray;
+            if (showMoreBlocks.length) {
+                showMoreBlocksRegular = Array.from(showMoreBlocks).filter((function(item, index, self) {
+                    return !item.dataset.showmoreMedia;
+                }));
+                showMoreBlocksRegular.length ? initItems(showMoreBlocksRegular) : null;
+                document.addEventListener("click", showMoreActions);
+                window.addEventListener("resize", showMoreActions);
+                mdQueriesArray = dataMediaQueries(showMoreBlocks, "showmoreMedia");
+                if (mdQueriesArray && mdQueriesArray.length) {
+                    mdQueriesArray.forEach((mdQueriesItem => {
+                        mdQueriesItem.matchMedia.addEventListener("change", (function() {
+                            initItems(mdQueriesItem.itemsArray, mdQueriesItem.matchMedia);
+                        }));
+                    }));
+                    initItemsMedia(mdQueriesArray);
+                }
+            }
+            function initItemsMedia(mdQueriesArray) {
+                mdQueriesArray.forEach((mdQueriesItem => {
+                    initItems(mdQueriesItem.itemsArray, mdQueriesItem.matchMedia);
+                }));
+            }
+            function initItems(showMoreBlocks, matchMedia) {
+                showMoreBlocks.forEach((showMoreBlock => {
+                    initItem(showMoreBlock, matchMedia);
+                }));
+            }
+            function initItem(showMoreBlock, matchMedia = false) {
+                showMoreBlock = matchMedia ? showMoreBlock.item : showMoreBlock;
+                let showMoreContent = showMoreBlock.querySelectorAll("[data-showmore-content]");
+                let showMoreButton = showMoreBlock.querySelectorAll("[data-showmore-button]");
+                showMoreContent = Array.from(showMoreContent).filter((item => item.closest("[data-showmore]") === showMoreBlock))[0];
+                showMoreButton = Array.from(showMoreButton).filter((item => item.closest("[data-showmore]") === showMoreBlock))[0];
+                const hiddenHeight = getHeight(showMoreBlock, showMoreContent);
+                if (matchMedia.matches || !matchMedia) if (hiddenHeight < getOriginalHeight(showMoreContent)) {
+                    _slideUp(showMoreContent, 0, hiddenHeight);
+                    showMoreButton.hidden = false;
+                } else {
+                    _slideDown(showMoreContent, 0, hiddenHeight);
+                    showMoreButton.hidden = true;
+                } else {
+                    _slideDown(showMoreContent, 0, hiddenHeight);
+                    showMoreButton.hidden = true;
+                }
+            }
+            function getHeight(showMoreBlock, showMoreContent) {
+                let hiddenHeight = 0;
+                const showMoreType = showMoreBlock.dataset.showmore ? showMoreBlock.dataset.showmore : "size";
+                if ("items" === showMoreType) {
+                    const showMoreTypeValue = showMoreContent.dataset.showmoreContent ? showMoreContent.dataset.showmoreContent : 3;
+                    const showMoreItems = showMoreContent.children;
+                    for (let index = 1; index < showMoreItems.length; index++) {
+                        const showMoreItem = showMoreItems[index - 1];
+                        hiddenHeight += showMoreItem.offsetHeight;
+                        if (index == showMoreTypeValue) break;
+                    }
+                } else {
+                    const showMoreTypeValue = showMoreContent.dataset.showmoreContent ? showMoreContent.dataset.showmoreContent : 150;
+                    hiddenHeight = showMoreTypeValue;
+                }
+                return hiddenHeight;
+            }
+            function getOriginalHeight(showMoreContent) {
+                let parentHidden;
+                let hiddenHeight = showMoreContent.offsetHeight;
+                showMoreContent.style.removeProperty("height");
+                if (showMoreContent.closest(`[hidden]`)) {
+                    parentHidden = showMoreContent.closest(`[hidden]`);
+                    parentHidden.hidden = false;
+                }
+                let originalHeight = showMoreContent.offsetHeight;
+                parentHidden ? parentHidden.hidden = true : null;
+                showMoreContent.style.height = `${hiddenHeight}px`;
+                return originalHeight;
+            }
+            function showMoreActions(e) {
+                const targetEvent = e.target;
+                const targetType = e.type;
+                if ("click" === targetType) {
+                    if (targetEvent.closest("[data-showmore-button]")) {
+                        const showMoreButton = targetEvent.closest("[data-showmore-button]");
+                        const showMoreBlock = showMoreButton.closest("[data-showmore]");
+                        const showMoreContent = showMoreBlock.querySelector("[data-showmore-content]");
+                        const showMoreSpeed = showMoreBlock.dataset.showmoreButton ? showMoreBlock.dataset.showmoreButton : "500";
+                        const hiddenHeight = getHeight(showMoreBlock, showMoreContent);
+                        if (!showMoreContent.classList.contains("_slide")) {
+                            showMoreBlock.classList.contains("_showmore-active") ? _slideUp(showMoreContent, showMoreSpeed, hiddenHeight) : _slideDown(showMoreContent, showMoreSpeed, hiddenHeight);
+                            showMoreBlock.classList.toggle("_showmore-active");
+                        }
+                    }
+                } else if ("resize" === targetType) {
+                    showMoreBlocksRegular && showMoreBlocksRegular.length ? initItems(showMoreBlocksRegular) : null;
+                    mdQueriesArray && mdQueriesArray.length ? initItemsMedia(mdQueriesArray) : null;
+                }
+            }
+        }));
+    }
+    function FLS(message) {
+        setTimeout((() => {
+            if (window.FLS) console.log(message);
+        }), 0);
+    }
+    function uniqArray(array) {
+        return array.filter((function(item, index, self) {
+            return self.indexOf(item) === index;
+        }));
+    }
+    function dataMediaQueries(array, dataSetValue) {
+        const media = Array.from(array).filter((function(item, index, self) {
+            if (item.dataset[dataSetValue]) return item.dataset[dataSetValue].split(",")[0];
+        }));
+        if (media.length) {
+            const breakpointsArray = [];
+            media.forEach((item => {
+                const params = item.dataset[dataSetValue];
+                const breakpoint = {};
+                const paramsArray = params.split(",");
+                breakpoint.value = paramsArray[0];
+                breakpoint.type = paramsArray[1] ? paramsArray[1].trim() : "max";
+                breakpoint.item = item;
+                breakpointsArray.push(breakpoint);
+            }));
+            let mdQueries = breakpointsArray.map((function(item) {
+                return "(" + item.type + "-width: " + item.value + "px)," + item.value + "," + item.type;
+            }));
+            mdQueries = uniqArray(mdQueries);
+            const mdQueriesArray = [];
+            if (mdQueries.length) {
+                mdQueries.forEach((breakpoint => {
+                    const paramsArray = breakpoint.split(",");
+                    const mediaBreakpoint = paramsArray[1];
+                    const mediaType = paramsArray[2];
+                    const matchMedia = window.matchMedia(paramsArray[0]);
+                    const itemsArray = breakpointsArray.filter((function(item) {
+                        if (item.value === mediaBreakpoint && item.type === mediaType) return true;
+                    }));
+                    mdQueriesArray.push({
+                        itemsArray,
+                        matchMedia
+                    });
+                }));
+                return mdQueriesArray;
+            }
+        }
+    }
+    let gotoBlock = (targetBlock, noHeader = false, speed = 500, offsetTop = 0) => {
+        const targetBlockElement = document.querySelector(targetBlock);
+        if (targetBlockElement) {
+            let headerItem = "";
+            let headerItemHeight = 0;
+            if (noHeader) {
+                headerItem = "header.header";
+                headerItemHeight = document.querySelector(headerItem).offsetHeight;
+            }
+            let options = {
+                speedAsDuration: true,
+                speed,
+                header: headerItem,
+                offset: offsetTop,
+                easing: "easeOutQuad"
+            };
+            document.documentElement.classList.contains("menu-open") ? menuClose() : null;
+            if ("undefined" !== typeof SmoothScroll) (new SmoothScroll).animateScroll(targetBlockElement, "", options); else {
+                let targetBlockElementPosition = targetBlockElement.getBoundingClientRect().top + scrollY;
+                targetBlockElementPosition = headerItemHeight ? targetBlockElementPosition - headerItemHeight : targetBlockElementPosition;
+                targetBlockElementPosition = offsetTop ? targetBlockElementPosition - offsetTop : targetBlockElementPosition;
+                window.scrollTo({
+                    top: targetBlockElementPosition,
+                    behavior: "smooth"
                 });
-        }
-        selectСlose(e) {
-            const t = this.getSelectElement(e).originalSelect,
-                s = this.getSelectElement(e, this.selectClasses.classSelectOptions).selectElement;
-            s.classList.contains("_slide") || (e.classList.remove(this.selectClasses.classSelectOpen), g(s, t.dataset.speed));
-        }
-        selectAction(e) {
-            const t = this.getSelectElement(e).originalSelect,
-                s = this.getSelectElement(e, this.selectClasses.classSelectOptions).selectElement;
-            if (t.closest("[data-one-select]")) {
-                const e = t.closest("[data-one-select]");
-                this.selectsСlose(e);
             }
-            s.classList.contains("_slide") || (e.classList.toggle(this.selectClasses.classSelectOpen), S(s, t.dataset.speed));
+            FLS(`[gotoBlock]: Юхуу...едем к ${targetBlock}`);
+        } else FLS(`[gotoBlock]: Ой ой..Такого блока нет на странице: ${targetBlock}`);
+    };
+    function formFieldsInit(options = {
+        viewPass: false
+    }) {
+        const formFields = document.querySelectorAll("input[placeholder],textarea[placeholder]");
+        if (formFields.length) formFields.forEach((formField => {
+            if (!formField.hasAttribute("data-placeholder-nohide")) formField.dataset.placeholder = formField.placeholder;
+        }));
+        document.body.addEventListener("focusin", (function(e) {
+            const targetElement = e.target;
+            if ("INPUT" === targetElement.tagName || "TEXTAREA" === targetElement.tagName) {
+                if (targetElement.dataset.placeholder) targetElement.placeholder = "";
+                if (!targetElement.hasAttribute("data-no-focus-classes")) {
+                    targetElement.classList.add("_form-focus");
+                    targetElement.parentElement.classList.add("_form-focus");
+                }
+                formValidate.removeError(targetElement);
+            }
+        }));
+        document.body.addEventListener("focusout", (function(e) {
+            const targetElement = e.target;
+            if ("INPUT" === targetElement.tagName || "TEXTAREA" === targetElement.tagName) {
+                if (targetElement.dataset.placeholder) targetElement.placeholder = targetElement.dataset.placeholder;
+                if (!targetElement.hasAttribute("data-no-focus-classes")) {
+                    targetElement.classList.remove("_form-focus");
+                    targetElement.parentElement.classList.remove("_form-focus");
+                }
+            }
+        }));
+        if (options.viewPass) document.addEventListener("click", (function(e) {
+            let targetElement = e.target;
+            if (targetElement.closest('[class*="__viewpass"]')) {
+                let inputType = targetElement.classList.contains("_viewpass-active") ? "password" : "text";
+                targetElement.parentElement.querySelector("input").setAttribute("type", inputType);
+                targetElement.classList.toggle("_viewpass-active");
+            }
+            if (targetElement.closest('[class*="__resetinput"]')) targetElement.parentElement.querySelector("input").value = "";
+        }));
+    }
+    let formValidate = {
+        getErrors(form) {
+            let error = 0;
+            let formRequiredItems = form.querySelectorAll("*[data-required]");
+            if (formRequiredItems.length) formRequiredItems.forEach((formRequiredItem => {
+                if (!formRequiredItem.disabled) error += this.validateInput(formRequiredItem);
+            }));
+            return error;
+        },
+        validateInput(formRequiredItem) {
+            let error = 0;
+            if ("email" == formRequiredItem.dataset.required) {
+                formRequiredItem.value = formRequiredItem.value.replace(" ", "");
+                if (this.emailTest(formRequiredItem)) {
+                    this.addError(formRequiredItem);
+                    error++;
+                } else this.removeError(formRequiredItem);
+            }
+            if ("radio" == formRequiredItem.dataset.required) {
+                function isCheck() {
+                    for (let i = 0; i < formRequiredItem.children.length; i += 2) if (formRequiredItem.children[i].checked) return true;
+                    return false;
+                }
+                if (!isCheck()) {
+                    this.addError(formRequiredItem);
+                    error++;
+                }
+            }
+            if ("repeat" == formRequiredItem.dataset.required) {
+                let main_el = document.querySelector(formRequiredItem.dataset.repeat).value;
+                let repeat_el = formRequiredItem.value;
+                if (main_el == repeat_el) this.removeError(formRequiredItem); else {
+                    this.addError(formRequiredItem);
+                    error++;
+                }
+            }
+            if ("" == formRequiredItem.dataset.required) if (!formRequiredItem.value.trim()) {
+                this.addError(formRequiredItem);
+                error++;
+            } else this.removeError(formRequiredItem);
+            return error;
+        },
+        addError(formRequiredItem) {
+            formRequiredItem.classList.add("_form-error");
+            formRequiredItem.parentElement.classList.add("_form-error");
+            let inputError = formRequiredItem.parentElement.querySelector(".form__error");
+            if (inputError) formRequiredItem.parentElement.removeChild(inputError);
+            if (formRequiredItem.dataset.error) formRequiredItem.parentElement.insertAdjacentHTML("beforeend", `<div class="form__error">${formRequiredItem.dataset.error}</div>`);
+        },
+        removeError(formRequiredItem) {
+            formRequiredItem.classList.remove("_form-error");
+            formRequiredItem.parentElement.classList.remove("_form-error");
+            if (formRequiredItem.parentElement.querySelector(".form__error")) formRequiredItem.parentElement.removeChild(formRequiredItem.parentElement.querySelector(".form__error"));
+        },
+        formClean(form) {
+            form.reset();
+            setTimeout((() => {
+                let inputs = form.querySelectorAll("input,textarea");
+                for (let index = 0; index < inputs.length; index++) {
+                    const el = inputs[index];
+                    el.parentElement.classList.remove("_form-focus");
+                    el.classList.remove("_form-focus");
+                    formValidate.removeError(el);
+                }
+                let checkboxes = form.querySelectorAll(".checkbox__input");
+                if (checkboxes.length > 0) for (let index = 0; index < checkboxes.length; index++) {
+                    const checkbox = checkboxes[index];
+                    checkbox.checked = false;
+                }
+                if (flsModules.select) {
+                    let selects = form.querySelectorAll(".select");
+                    if (selects.length) for (let index = 0; index < selects.length; index++) {
+                        const select = selects[index].querySelector("select");
+                        flsModules.select.selectBuild(select);
+                    }
+                }
+            }), 0);
+        },
+        emailTest(formRequiredItem) {
+            var re = /^[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i;
+            var myMail = formRequiredItem.value;
+            var valid = re.test(myMail);
+            if (valid) return false; else return true;
         }
-        setSelectTitleValue(e, t) {
-            const s = this.getSelectElement(e, this.selectClasses.classSelectBody).selectElement,
-                i = this.getSelectElement(e, this.selectClasses.classSelectTitle).selectElement;
-            i && i.remove(), s.insertAdjacentHTML("afterbegin", this.getSelectTitleValue(e, t));
+    };
+    function formSubmit(options = {
+        validate: true
+    }) {
+        const forms = document.forms;
+        if (forms.length) for (const form of forms) {
+            form.addEventListener("submit", (function(e) {
+                const form = e.target;
+                formSubmitAction(form, e);
+            }));
+            form.addEventListener("reset", (function(e) {
+                const form = e.target;
+                formValidate.formClean(form);
+            }));
         }
-        getSelectTitleValue(e, t) {
-            let s = this.getSelectedOptionsData(t, 2).html;
-            t.multiple &&
-                t.hasAttribute("data-tags") &&
-                ((s = this.getSelectedOptionsData(t)
-                    .elements.map((t) => `<span role="button" data-select-id="${e.dataset.id}" data-value="${t.value}" class="_select-tag">${this.getSelectElementContent(t)}</span>`)
-                    .join("")),
-                    t.dataset.tags && document.querySelector(t.dataset.tags) && ((document.querySelector(t.dataset.tags).innerHTML = s), t.hasAttribute("data-search") && (s = !1))),
-                (s = s.length ? s : t.dataset.placeholder ? t.dataset.placeholder : "");
-            let i = "",
-                n = "";
-            if (
-                (t.hasAttribute("data-pseudo-label") && ((i = t.dataset.pseudoLabel ? ` data-pseudo-label="${t.dataset.pseudoLabel}"` : ' data-pseudo-label="Заполните атрибут"'), (n = ` ${this.selectClasses.classSelectPseudoLabel}`)),
-                    this.getSelectedOptionsData(t).values.length ? e.classList.add(this.selectClasses.classSelectActive) : e.classList.remove(this.selectClasses.classSelectActive),
-                    t.hasAttribute("data-search"))
-            )
-                return `<div class="${this.selectClasses.classSelectTitle}"><span${i} class="${this.selectClasses.classSelectValue}"><input autocomplete="off" type="text" placeholder="${s}" data-placeholder="${s}" class="${this.selectClasses.classSelectInput}"></span></div>`;
-            {
-                const e = this.getSelectedOptionsData(t).elements.length && this.getSelectedOptionsData(t).elements[0].dataset.class ? ` ${this.getSelectedOptionsData(t).elements[0].dataset.class}` : "";
-                return `<button type="button" class="${this.selectClasses.classSelectTitle}"><span${i} class="${this.selectClasses.classSelectValue}${n}"><span class="${this.selectClasses.classSelectContent}${e}">${s}</span></span></button>`;
+        async function formSubmitAction(form, e) {
+            const error = !form.hasAttribute("data-no-validate") ? formValidate.getErrors(form) : 0;
+            if (0 === error) {
+                const ajax = form.hasAttribute("data-ajax");
+                if (ajax) {
+                    e.preventDefault();
+                    const formAction = form.getAttribute("action") ? form.getAttribute("action").trim() : "#";
+                    const formMethod = form.getAttribute("method") ? form.getAttribute("method").trim() : "GET";
+                    const formData = new FormData(form);
+                    form.classList.add("_sending");
+                    const response = await fetch(formAction, {
+                        method: formMethod,
+                        body: formData
+                    });
+                    if (response.ok) {
+                        let responseResult = await response.json();
+                        form.classList.remove("_sending");
+                        formSent(form, responseResult);
+                    } else {
+                        alert("Ошибка");
+                        form.classList.remove("_sending");
+                    }
+                } else if (form.hasAttribute("data-dev")) {
+                    e.preventDefault();
+                    formSent(form);
+                }
+            } else {
+                e.preventDefault();
+                const formError = form.querySelector("._form-error");
+                if (formError && form.hasAttribute("data-goto-error")) gotoBlock(formError, true, 1e3);
             }
         }
-        getSelectElementContent(e) {
-            const t = e.dataset.asset ? `${e.dataset.asset}` : "",
-                s = t.indexOf("img") >= 0 ? `<img src="${t}" alt="">` : t;
-            let i = "";
-            return (
-                (i += t ? `<span class="${this.selectClasses.classSelectRow}">` : ""),
-                (i += t ? `<span class="${this.selectClasses.classSelectData}">` : ""),
-                (i += t ? s : ""),
-                (i += t ? "</span>" : ""),
-                (i += t ? `<span class="${this.selectClasses.classSelectText}">` : ""),
-                (i += e.textContent),
-                (i += t ? "</span>" : ""),
-                (i += t ? "</span>" : ""),
-                i
-            );
+        function formSent(form, responseResult = ``) {
+            document.dispatchEvent(new CustomEvent("formSent", {
+                detail: {
+                    form
+                }
+            }));
+            setTimeout((() => {
+                if (flsModules.popup) {
+                    const popup = form.dataset.popupMessage;
+                    popup ? flsModules.popup.open(popup) : null;
+                }
+            }), 0);
+            formValidate.formClean(form);
+            formLogging(`Форма отправлена!`);
         }
-        getSelectPlaceholder(e) {
-            const t = Array.from(e.options).find((e) => !e.value);
-            if (t) return { value: t.textContent, show: t.hasAttribute("data-show"), label: { show: t.hasAttribute("data-label"), text: t.dataset.label } };
+        function formLogging(message) {
+            FLS(`[Формы]: ${message}`);
         }
-        getSelectedOptionsData(e, t) {
-            let s = [];
-            return (
-                e.multiple
-                    ? (s = Array.from(e.options)
-                        .filter((e) => e.value)
-                        .filter((e) => e.selected))
-                    : s.push(e.options[e.selectedIndex]),
-                { elements: s.map((e) => e), values: s.filter((e) => e.value).map((e) => e.value), html: s.map((e) => this.getSelectElementContent(e)) }
-            );
-        }
-        getOptions(e) {
-            let t = e.hasAttribute("data-scroll") ? "data-simplebar" : "",
-                s = e.dataset.scroll ? `style="max-height:${e.dataset.scroll}px"` : "",
-                i = Array.from(e.options);
-            if (i.length > 0) {
-                let n = "";
-                return (
-                    ((this.getSelectPlaceholder(e) && !this.getSelectPlaceholder(e).show) || e.multiple) && (i = i.filter((e) => e.value)),
-                    (n += t ? `<div ${t} ${s} class="${this.selectClasses.classSelectOptionsScroll}">` : ""),
-                    i.forEach((t) => {
-                        n += this.getOption(t, e);
-                    }),
-                    (n += t ? "</div>" : ""),
-                    n
-                );
-            }
-        }
-        getOption(e, t) {
-            const s = e.selected && t.multiple ? ` ${this.selectClasses.classSelectOptionSelected}` : "",
-                i = !e.selected || t.hasAttribute("data-show-selected") || t.multiple ? "" : "hidden",
-                n = e.dataset.class ? ` ${e.dataset.class}` : "",
-                a = !!e.dataset.href && e.dataset.href,
-                l = e.hasAttribute("data-href-blank") ? 'target="_blank"' : "";
-            let r = "";
-            return (
-                (r += a
-                    ? `<a ${l} ${i} href="${a}" data-value="${e.value}" class="${this.selectClasses.classSelectOption}${n}${s}">`
-                    : `<button ${i} class="${this.selectClasses.classSelectOption}${n}${s}" data-value="${e.value}" type="button">`),
-                (r += this.getSelectElementContent(e)),
-                (r += a ? "</a>" : "</button>"),
-                r
-            );
-        }
-        setOptions(e, t) {
-            this.getSelectElement(e, this.selectClasses.classSelectOptions).selectElement.innerHTML = this.getOptions(t);
-        }
-        optionAction(e, t, s) {
-            t.multiple
-                ? (s.classList.toggle(this.selectClasses.classSelectOptionSelected),
-                    this.getSelectedOptionsData(t).elements.forEach((e) => {
-                        e.removeAttribute("selected");
-                    }),
-                    e.querySelectorAll(this.getSelectClass(this.selectClasses.classSelectOptionSelected)).forEach((e) => {
-                        t.querySelector(`option[value="${e.dataset.value}"]`).setAttribute("selected", "selected");
-                    }))
-                : (t.hasAttribute("data-show-selected") ||
-                    (e.querySelector(`${this.getSelectClass(this.selectClasses.classSelectOption)}[hidden]`) && (e.querySelector(`${this.getSelectClass(this.selectClasses.classSelectOption)}[hidden]`).hidden = !1), (s.hidden = !0)),
-                    (t.value = s.hasAttribute("data-value") ? s.dataset.value : s.textContent),
-                    this.selectAction(e)),
-                this.setSelectTitleValue(e, t),
-                this.setSelectChange(t);
-        }
-        selectChange(e) {
-            const t = e.target;
-            this.selectBuild(t), this.setSelectChange(t);
-        }
-        selectDisabled(e, t) {
-            t.disabled
-                ? (e.classList.add(this.selectClasses.classSelectDisabled), (this.getSelectElement(e, this.selectClasses.classSelectTitle).selectElement.disabled = !0))
-                : (e.classList.remove(this.selectClasses.classSelectDisabled), (this.getSelectElement(e, this.selectClasses.classSelectTitle).selectElement.disabled = !1));
-        }
-        searchActions(e) {
-            this.getSelectElement(e).originalSelect;
-            const t = this.getSelectElement(e, this.selectClasses.classSelectInput).selectElement,
-                s = this.getSelectElement(e, this.selectClasses.classSelectOptions).selectElement,
-                i = s.querySelectorAll(`.${this.selectClasses.classSelectOption}`),
-                n = this;
-            t.addEventListener("input", function () {
-                i.forEach((e) => {
-                    e.textContent.toUpperCase().indexOf(t.value.toUpperCase()) >= 0 ? (e.hidden = !1) : (e.hidden = !0);
-                }),
-                    !0 === s.hidden && n.selectAction(e);
-            });
-        }
-        selectCallback(e, t) {
-            document.dispatchEvent(new CustomEvent("selectCallback", { detail: { select: t } }));
-        }
-        setLogging(e) {
-            this.config.logging && y(`[select]: ${e}`);
-        }
-    })({});
-    const E = {
+    }
+    function ssr_window_esm_isObject(obj) {
+        return null !== obj && "object" === typeof obj && "constructor" in obj && obj.constructor === Object;
+    }
+    function extend(target = {}, src = {}) {
+        Object.keys(src).forEach((key => {
+            if ("undefined" === typeof target[key]) target[key] = src[key]; else if (ssr_window_esm_isObject(src[key]) && ssr_window_esm_isObject(target[key]) && Object.keys(src[key]).length > 0) extend(target[key], src[key]);
+        }));
+    }
+    const ssrDocument = {
         body: {},
-        addEventListener() { },
-        removeEventListener() { },
-        activeElement: { blur() { }, nodeName: "" },
-        querySelector: () => null,
-        querySelectorAll: () => [],
-        getElementById: () => null,
-        createEvent: () => ({ initEvent() { } }),
-        createElement: () => ({ children: [], childNodes: [], style: {}, setAttribute() { }, getElementsByTagName: () => [] }),
-        createElementNS: () => ({}),
-        importNode: () => null,
-        location: { hash: "", host: "", hostname: "", href: "", origin: "", pathname: "", protocol: "", search: "" },
+        addEventListener() {},
+        removeEventListener() {},
+        activeElement: {
+            blur() {},
+            nodeName: ""
+        },
+        querySelector() {
+            return null;
+        },
+        querySelectorAll() {
+            return [];
+        },
+        getElementById() {
+            return null;
+        },
+        createEvent() {
+            return {
+                initEvent() {}
+            };
+        },
+        createElement() {
+            return {
+                children: [],
+                childNodes: [],
+                style: {},
+                setAttribute() {},
+                getElementsByTagName() {
+                    return [];
+                }
+            };
+        },
+        createElementNS() {
+            return {};
+        },
+        importNode() {
+            return null;
+        },
+        location: {
+            hash: "",
+            host: "",
+            hostname: "",
+            href: "",
+            origin: "",
+            pathname: "",
+            protocol: "",
+            search: ""
+        }
     };
-    function x() {
-        const e = "undefined" != typeof document ? document : {};
-        return C(e, E), e;
+    function ssr_window_esm_getDocument() {
+        const doc = "undefined" !== typeof document ? document : {};
+        extend(doc, ssrDocument);
+        return doc;
     }
-    const L = {
-        document: E,
-        navigator: { userAgent: "" },
-        location: { hash: "", host: "", hostname: "", href: "", origin: "", pathname: "", protocol: "", search: "" },
-        history: { replaceState() { }, pushState() { }, go() { }, back() { } },
-        CustomEvent: function () {
+    const ssrWindow = {
+        document: ssrDocument,
+        navigator: {
+            userAgent: ""
+        },
+        location: {
+            hash: "",
+            host: "",
+            hostname: "",
+            href: "",
+            origin: "",
+            pathname: "",
+            protocol: "",
+            search: ""
+        },
+        history: {
+            replaceState() {},
+            pushState() {},
+            go() {},
+            back() {}
+        },
+        CustomEvent: function CustomEvent() {
             return this;
         },
-        addEventListener() { },
-        removeEventListener() { },
-        getComputedStyle: () => ({ getPropertyValue: () => "" }),
-        Image() { },
-        Date() { },
+        addEventListener() {},
+        removeEventListener() {},
+        getComputedStyle() {
+            return {
+                getPropertyValue() {
+                    return "";
+                }
+            };
+        },
+        Image() {},
+        Date() {},
         screen: {},
-        setTimeout() { },
-        clearTimeout() { },
-        matchMedia: () => ({}),
-        requestAnimationFrame: (e) => ("undefined" == typeof setTimeout ? (e(), null) : setTimeout(e, 0)),
-        cancelAnimationFrame(e) {
-            "undefined" != typeof setTimeout && clearTimeout(e);
+        setTimeout() {},
+        clearTimeout() {},
+        matchMedia() {
+            return {};
         },
-    };
-    function M() {
-        const e = "undefined" != typeof window ? window : {};
-        return C(e, L), e;
-    }
-    class A extends Array {
-        constructor(e) {
-            "number" == typeof e
-                ? super(e)
-                : (super(...(e || [])),
-                    (function (e) {
-                        const t = e.__proto__;
-                        Object.defineProperty(e, "__proto__", {
-                            get: () => t,
-                            set(e) {
-                                t.__proto__ = e;
-                            },
-                        });
-                    })(this));
-        }
-    }
-    function $(e = []) {
-        const t = [];
-        return (
-            e.forEach((e) => {
-                Array.isArray(e) ? t.push(...$(e)) : t.push(e);
-            }),
-            t
-        );
-    }
-    function k(e, t) {
-        return Array.prototype.filter.call(e, t);
-    }
-    function _(e, t) {
-        const s = M(),
-            i = x();
-        let n = [];
-        if (!t && e instanceof A) return e;
-        if (!e) return new A(n);
-        if ("string" == typeof e) {
-            const s = e.trim();
-            if (s.indexOf("<") >= 0 && s.indexOf(">") >= 0) {
-                let e = "div";
-                0 === s.indexOf("<li") && (e = "ul"),
-                    0 === s.indexOf("<tr") && (e = "tbody"),
-                    (0 !== s.indexOf("<td") && 0 !== s.indexOf("<th")) || (e = "tr"),
-                    0 === s.indexOf("<tbody") && (e = "table"),
-                    0 === s.indexOf("<option") && (e = "select");
-                const t = i.createElement(e);
-                t.innerHTML = s;
-                for (let e = 0; e < t.childNodes.length; e += 1) n.push(t.childNodes[e]);
-            } else
-                n = (function (e, t) {
-                    if ("string" != typeof e) return [e];
-                    const s = [],
-                        i = t.querySelectorAll(e);
-                    for (let e = 0; e < i.length; e += 1) s.push(i[e]);
-                    return s;
-                })(e.trim(), t || i);
-        } else if (e.nodeType || e === s || e === i) n.push(e);
-        else if (Array.isArray(e)) {
-            if (e instanceof A) return e;
-            n = e;
-        }
-        return new A(
-            (function (e) {
-                const t = [];
-                for (let s = 0; s < e.length; s += 1) -1 === t.indexOf(e[s]) && t.push(e[s]);
-                return t;
-            })(n)
-        );
-    }
-    _.fn = A.prototype;
-    const P = "resize scroll".split(" ");
-    function O(e) {
-        return function (...t) {
-            if (void 0 === t[0]) {
-                for (let t = 0; t < this.length; t += 1) P.indexOf(e) < 0 && (e in this[t] ? this[t][e]() : _(this[t]).trigger(e));
-                return this;
+        requestAnimationFrame(callback) {
+            if ("undefined" === typeof setTimeout) {
+                callback();
+                return null;
             }
-            return this.on(e, ...t);
-        };
+            return setTimeout(callback, 0);
+        },
+        cancelAnimationFrame(id) {
+            if ("undefined" === typeof setTimeout) return;
+            clearTimeout(id);
+        }
+    };
+    function ssr_window_esm_getWindow() {
+        const win = "undefined" !== typeof window ? window : {};
+        extend(win, ssrWindow);
+        return win;
     }
-    O("click"),
-        O("blur"),
-        O("focus"),
-        O("focusin"),
-        O("focusout"),
-        O("keyup"),
-        O("keydown"),
-        O("keypress"),
-        O("submit"),
-        O("change"),
-        O("mousedown"),
-        O("mousemove"),
-        O("mouseup"),
-        O("mouseenter"),
-        O("mouseleave"),
-        O("mouseout"),
-        O("mouseover"),
-        O("touchstart"),
-        O("touchend"),
-        O("touchmove"),
-        O("resize"),
-        O("scroll");
-    const I = {
-        addClass: function (...e) {
-            const t = $(e.map((e) => e.split(" ")));
-            return (
-                this.forEach((e) => {
-                    e.classList.add(...t);
-                }),
-                this
-            );
-        },
-        removeClass: function (...e) {
-            const t = $(e.map((e) => e.split(" ")));
-            return (
-                this.forEach((e) => {
-                    e.classList.remove(...t);
-                }),
-                this
-            );
-        },
-        hasClass: function (...e) {
-            const t = $(e.map((e) => e.split(" ")));
-            return k(this, (e) => t.filter((t) => e.classList.contains(t)).length > 0).length > 0;
-        },
-        toggleClass: function (...e) {
-            const t = $(e.map((e) => e.split(" ")));
-            this.forEach((e) => {
-                t.forEach((t) => {
-                    e.classList.toggle(t);
+    function makeReactive(obj) {
+        const proto = obj.__proto__;
+        Object.defineProperty(obj, "__proto__", {
+            get() {
+                return proto;
+            },
+            set(value) {
+                proto.__proto__ = value;
+            }
+        });
+    }
+    class Dom7 extends Array {
+        constructor(items) {
+            if ("number" === typeof items) super(items); else {
+                super(...items || []);
+                makeReactive(this);
+            }
+        }
+    }
+    function arrayFlat(arr = []) {
+        const res = [];
+        arr.forEach((el => {
+            if (Array.isArray(el)) res.push(...arrayFlat(el)); else res.push(el);
+        }));
+        return res;
+    }
+    function arrayFilter(arr, callback) {
+        return Array.prototype.filter.call(arr, callback);
+    }
+    function arrayUnique(arr) {
+        const uniqueArray = [];
+        for (let i = 0; i < arr.length; i += 1) if (-1 === uniqueArray.indexOf(arr[i])) uniqueArray.push(arr[i]);
+        return uniqueArray;
+    }
+    function qsa(selector, context) {
+        if ("string" !== typeof selector) return [ selector ];
+        const a = [];
+        const res = context.querySelectorAll(selector);
+        for (let i = 0; i < res.length; i += 1) a.push(res[i]);
+        return a;
+    }
+    function dom7_esm_$(selector, context) {
+        const window = ssr_window_esm_getWindow();
+        const document = ssr_window_esm_getDocument();
+        let arr = [];
+        if (!context && selector instanceof Dom7) return selector;
+        if (!selector) return new Dom7(arr);
+        if ("string" === typeof selector) {
+            const html = selector.trim();
+            if (html.indexOf("<") >= 0 && html.indexOf(">") >= 0) {
+                let toCreate = "div";
+                if (0 === html.indexOf("<li")) toCreate = "ul";
+                if (0 === html.indexOf("<tr")) toCreate = "tbody";
+                if (0 === html.indexOf("<td") || 0 === html.indexOf("<th")) toCreate = "tr";
+                if (0 === html.indexOf("<tbody")) toCreate = "table";
+                if (0 === html.indexOf("<option")) toCreate = "select";
+                const tempParent = document.createElement(toCreate);
+                tempParent.innerHTML = html;
+                for (let i = 0; i < tempParent.childNodes.length; i += 1) arr.push(tempParent.childNodes[i]);
+            } else arr = qsa(selector.trim(), context || document);
+        } else if (selector.nodeType || selector === window || selector === document) arr.push(selector); else if (Array.isArray(selector)) {
+            if (selector instanceof Dom7) return selector;
+            arr = selector;
+        }
+        return new Dom7(arrayUnique(arr));
+    }
+    dom7_esm_$.fn = Dom7.prototype;
+    function addClass(...classes) {
+        const classNames = arrayFlat(classes.map((c => c.split(" "))));
+        this.forEach((el => {
+            el.classList.add(...classNames);
+        }));
+        return this;
+    }
+    function removeClass(...classes) {
+        const classNames = arrayFlat(classes.map((c => c.split(" "))));
+        this.forEach((el => {
+            el.classList.remove(...classNames);
+        }));
+        return this;
+    }
+    function toggleClass(...classes) {
+        const classNames = arrayFlat(classes.map((c => c.split(" "))));
+        this.forEach((el => {
+            classNames.forEach((className => {
+                el.classList.toggle(className);
+            }));
+        }));
+    }
+    function hasClass(...classes) {
+        const classNames = arrayFlat(classes.map((c => c.split(" "))));
+        return arrayFilter(this, (el => classNames.filter((className => el.classList.contains(className))).length > 0)).length > 0;
+    }
+    function attr(attrs, value) {
+        if (1 === arguments.length && "string" === typeof attrs) {
+            if (this[0]) return this[0].getAttribute(attrs);
+            return;
+        }
+        for (let i = 0; i < this.length; i += 1) if (2 === arguments.length) this[i].setAttribute(attrs, value); else for (const attrName in attrs) {
+            this[i][attrName] = attrs[attrName];
+            this[i].setAttribute(attrName, attrs[attrName]);
+        }
+        return this;
+    }
+    function removeAttr(attr) {
+        for (let i = 0; i < this.length; i += 1) this[i].removeAttribute(attr);
+        return this;
+    }
+    function transform(transform) {
+        for (let i = 0; i < this.length; i += 1) this[i].style.transform = transform;
+        return this;
+    }
+    function transition(duration) {
+        for (let i = 0; i < this.length; i += 1) this[i].style.transitionDuration = "string" !== typeof duration ? `${duration}ms` : duration;
+        return this;
+    }
+    function on(...args) {
+        let [eventType, targetSelector, listener, capture] = args;
+        if ("function" === typeof args[1]) {
+            [eventType, listener, capture] = args;
+            targetSelector = void 0;
+        }
+        if (!capture) capture = false;
+        function handleLiveEvent(e) {
+            const target = e.target;
+            if (!target) return;
+            const eventData = e.target.dom7EventData || [];
+            if (eventData.indexOf(e) < 0) eventData.unshift(e);
+            if (dom7_esm_$(target).is(targetSelector)) listener.apply(target, eventData); else {
+                const parents = dom7_esm_$(target).parents();
+                for (let k = 0; k < parents.length; k += 1) if (dom7_esm_$(parents[k]).is(targetSelector)) listener.apply(parents[k], eventData);
+            }
+        }
+        function handleEvent(e) {
+            const eventData = e && e.target ? e.target.dom7EventData || [] : [];
+            if (eventData.indexOf(e) < 0) eventData.unshift(e);
+            listener.apply(this, eventData);
+        }
+        const events = eventType.split(" ");
+        let j;
+        for (let i = 0; i < this.length; i += 1) {
+            const el = this[i];
+            if (!targetSelector) for (j = 0; j < events.length; j += 1) {
+                const event = events[j];
+                if (!el.dom7Listeners) el.dom7Listeners = {};
+                if (!el.dom7Listeners[event]) el.dom7Listeners[event] = [];
+                el.dom7Listeners[event].push({
+                    listener,
+                    proxyListener: handleEvent
                 });
-            });
-        },
-        attr: function (e, t) {
-            if (1 === arguments.length && "string" == typeof e) return this[0] ? this[0].getAttribute(e) : void 0;
-            for (let s = 0; s < this.length; s += 1)
-                if (2 === arguments.length) this[s].setAttribute(e, t);
-                else for (const t in e) (this[s][t] = e[t]), this[s].setAttribute(t, e[t]);
-            return this;
-        },
-        removeAttr: function (e) {
-            for (let t = 0; t < this.length; t += 1) this[t].removeAttribute(e);
-            return this;
-        },
-        transform: function (e) {
-            for (let t = 0; t < this.length; t += 1) this[t].style.transform = e;
-            return this;
-        },
-        transition: function (e) {
-            for (let t = 0; t < this.length; t += 1) this[t].style.transitionDuration = "string" != typeof e ? `${e}ms` : e;
-            return this;
-        },
-        on: function (...e) {
-            let [t, s, i, n] = e;
-            function a(e) {
-                const t = e.target;
-                if (!t) return;
-                const n = e.target.dom7EventData || [];
-                if ((n.indexOf(e) < 0 && n.unshift(e), _(t).is(s))) i.apply(t, n);
-                else {
-                    const e = _(t).parents();
-                    for (let t = 0; t < e.length; t += 1) _(e[t]).is(s) && i.apply(e[t], n);
-                }
+                el.addEventListener(event, handleEvent, capture);
+            } else for (j = 0; j < events.length; j += 1) {
+                const event = events[j];
+                if (!el.dom7LiveListeners) el.dom7LiveListeners = {};
+                if (!el.dom7LiveListeners[event]) el.dom7LiveListeners[event] = [];
+                el.dom7LiveListeners[event].push({
+                    listener,
+                    proxyListener: handleLiveEvent
+                });
+                el.addEventListener(event, handleLiveEvent, capture);
             }
-            function l(e) {
-                const t = (e && e.target && e.target.dom7EventData) || [];
-                t.indexOf(e) < 0 && t.unshift(e), i.apply(this, t);
-            }
-            "function" == typeof e[1] && (([t, i, n] = e), (s = void 0)), n || (n = !1);
-            const r = t.split(" ");
-            let o;
-            for (let e = 0; e < this.length; e += 1) {
-                const t = this[e];
-                if (s)
-                    for (o = 0; o < r.length; o += 1) {
-                        const e = r[o];
-                        t.dom7LiveListeners || (t.dom7LiveListeners = {}), t.dom7LiveListeners[e] || (t.dom7LiveListeners[e] = []), t.dom7LiveListeners[e].push({ listener: i, proxyListener: a }), t.addEventListener(e, a, n);
-                    }
-                else
-                    for (o = 0; o < r.length; o += 1) {
-                        const e = r[o];
-                        t.dom7Listeners || (t.dom7Listeners = {}), t.dom7Listeners[e] || (t.dom7Listeners[e] = []), t.dom7Listeners[e].push({ listener: i, proxyListener: l }), t.addEventListener(e, l, n);
-                    }
-            }
-            return this;
-        },
-        off: function (...e) {
-            let [t, s, i, n] = e;
-            "function" == typeof e[1] && (([t, i, n] = e), (s = void 0)), n || (n = !1);
-            const a = t.split(" ");
-            for (let e = 0; e < a.length; e += 1) {
-                const t = a[e];
-                for (let e = 0; e < this.length; e += 1) {
-                    const a = this[e];
-                    let l;
-                    if ((!s && a.dom7Listeners ? (l = a.dom7Listeners[t]) : s && a.dom7LiveListeners && (l = a.dom7LiveListeners[t]), l && l.length))
-                        for (let e = l.length - 1; e >= 0; e -= 1) {
-                            const s = l[e];
-                            (i && s.listener === i) || (i && s.listener && s.listener.dom7proxy && s.listener.dom7proxy === i)
-                                ? (a.removeEventListener(t, s.proxyListener, n), l.splice(e, 1))
-                                : i || (a.removeEventListener(t, s.proxyListener, n), l.splice(e, 1));
-                        }
-                }
-            }
-            return this;
-        },
-        trigger: function (...e) {
-            const t = M(),
-                s = e[0].split(" "),
-                i = e[1];
-            for (let n = 0; n < s.length; n += 1) {
-                const a = s[n];
-                for (let s = 0; s < this.length; s += 1) {
-                    const n = this[s];
-                    if (t.CustomEvent) {
-                        const s = new t.CustomEvent(a, { detail: i, bubbles: !0, cancelable: !0 });
-                        (n.dom7EventData = e.filter((e, t) => t > 0)), n.dispatchEvent(s), (n.dom7EventData = []), delete n.dom7EventData;
+        }
+        return this;
+    }
+    function off(...args) {
+        let [eventType, targetSelector, listener, capture] = args;
+        if ("function" === typeof args[1]) {
+            [eventType, listener, capture] = args;
+            targetSelector = void 0;
+        }
+        if (!capture) capture = false;
+        const events = eventType.split(" ");
+        for (let i = 0; i < events.length; i += 1) {
+            const event = events[i];
+            for (let j = 0; j < this.length; j += 1) {
+                const el = this[j];
+                let handlers;
+                if (!targetSelector && el.dom7Listeners) handlers = el.dom7Listeners[event]; else if (targetSelector && el.dom7LiveListeners) handlers = el.dom7LiveListeners[event];
+                if (handlers && handlers.length) for (let k = handlers.length - 1; k >= 0; k -= 1) {
+                    const handler = handlers[k];
+                    if (listener && handler.listener === listener) {
+                        el.removeEventListener(event, handler.proxyListener, capture);
+                        handlers.splice(k, 1);
+                    } else if (listener && handler.listener && handler.listener.dom7proxy && handler.listener.dom7proxy === listener) {
+                        el.removeEventListener(event, handler.proxyListener, capture);
+                        handlers.splice(k, 1);
+                    } else if (!listener) {
+                        el.removeEventListener(event, handler.proxyListener, capture);
+                        handlers.splice(k, 1);
                     }
                 }
             }
+        }
+        return this;
+    }
+    function trigger(...args) {
+        const window = ssr_window_esm_getWindow();
+        const events = args[0].split(" ");
+        const eventData = args[1];
+        for (let i = 0; i < events.length; i += 1) {
+            const event = events[i];
+            for (let j = 0; j < this.length; j += 1) {
+                const el = this[j];
+                if (window.CustomEvent) {
+                    const evt = new window.CustomEvent(event, {
+                        detail: eventData,
+                        bubbles: true,
+                        cancelable: true
+                    });
+                    el.dom7EventData = args.filter(((data, dataIndex) => dataIndex > 0));
+                    el.dispatchEvent(evt);
+                    el.dom7EventData = [];
+                    delete el.dom7EventData;
+                }
+            }
+        }
+        return this;
+    }
+    function transitionEnd(callback) {
+        const dom = this;
+        function fireCallBack(e) {
+            if (e.target !== this) return;
+            callback.call(this, e);
+            dom.off("transitionend", fireCallBack);
+        }
+        if (callback) dom.on("transitionend", fireCallBack);
+        return this;
+    }
+    function dom7_esm_outerWidth(includeMargins) {
+        if (this.length > 0) {
+            if (includeMargins) {
+                const styles = this.styles();
+                return this[0].offsetWidth + parseFloat(styles.getPropertyValue("margin-right")) + parseFloat(styles.getPropertyValue("margin-left"));
+            }
+            return this[0].offsetWidth;
+        }
+        return null;
+    }
+    function dom7_esm_outerHeight(includeMargins) {
+        if (this.length > 0) {
+            if (includeMargins) {
+                const styles = this.styles();
+                return this[0].offsetHeight + parseFloat(styles.getPropertyValue("margin-top")) + parseFloat(styles.getPropertyValue("margin-bottom"));
+            }
+            return this[0].offsetHeight;
+        }
+        return null;
+    }
+    function offset() {
+        if (this.length > 0) {
+            const window = ssr_window_esm_getWindow();
+            const document = ssr_window_esm_getDocument();
+            const el = this[0];
+            const box = el.getBoundingClientRect();
+            const body = document.body;
+            const clientTop = el.clientTop || body.clientTop || 0;
+            const clientLeft = el.clientLeft || body.clientLeft || 0;
+            const scrollTop = el === window ? window.scrollY : el.scrollTop;
+            const scrollLeft = el === window ? window.scrollX : el.scrollLeft;
+            return {
+                top: box.top + scrollTop - clientTop,
+                left: box.left + scrollLeft - clientLeft
+            };
+        }
+        return null;
+    }
+    function styles() {
+        const window = ssr_window_esm_getWindow();
+        if (this[0]) return window.getComputedStyle(this[0], null);
+        return {};
+    }
+    function css(props, value) {
+        const window = ssr_window_esm_getWindow();
+        let i;
+        if (1 === arguments.length) if ("string" === typeof props) {
+            if (this[0]) return window.getComputedStyle(this[0], null).getPropertyValue(props);
+        } else {
+            for (i = 0; i < this.length; i += 1) for (const prop in props) this[i].style[prop] = props[prop];
             return this;
-        },
-        transitionEnd: function (e) {
-            const t = this;
-            return (
-                e &&
-                t.on("transitionend", function s(i) {
-                    i.target === this && (e.call(this, i), t.off("transitionend", s));
-                }),
-                this
-            );
-        },
-        outerWidth: function (e) {
-            if (this.length > 0) {
-                if (e) {
-                    const e = this.styles();
-                    return this[0].offsetWidth + parseFloat(e.getPropertyValue("margin-right")) + parseFloat(e.getPropertyValue("margin-left"));
-                }
-                return this[0].offsetWidth;
+        }
+        if (2 === arguments.length && "string" === typeof props) {
+            for (i = 0; i < this.length; i += 1) this[i].style[props] = value;
+            return this;
+        }
+        return this;
+    }
+    function each(callback) {
+        if (!callback) return this;
+        this.forEach(((el, index) => {
+            callback.apply(el, [ el, index ]);
+        }));
+        return this;
+    }
+    function filter(callback) {
+        const result = arrayFilter(this, callback);
+        return dom7_esm_$(result);
+    }
+    function html(html) {
+        if ("undefined" === typeof html) return this[0] ? this[0].innerHTML : null;
+        for (let i = 0; i < this.length; i += 1) this[i].innerHTML = html;
+        return this;
+    }
+    function dom7_esm_text(text) {
+        if ("undefined" === typeof text) return this[0] ? this[0].textContent.trim() : null;
+        for (let i = 0; i < this.length; i += 1) this[i].textContent = text;
+        return this;
+    }
+    function is(selector) {
+        const window = ssr_window_esm_getWindow();
+        const document = ssr_window_esm_getDocument();
+        const el = this[0];
+        let compareWith;
+        let i;
+        if (!el || "undefined" === typeof selector) return false;
+        if ("string" === typeof selector) {
+            if (el.matches) return el.matches(selector);
+            if (el.webkitMatchesSelector) return el.webkitMatchesSelector(selector);
+            if (el.msMatchesSelector) return el.msMatchesSelector(selector);
+            compareWith = dom7_esm_$(selector);
+            for (i = 0; i < compareWith.length; i += 1) if (compareWith[i] === el) return true;
+            return false;
+        }
+        if (selector === document) return el === document;
+        if (selector === window) return el === window;
+        if (selector.nodeType || selector instanceof Dom7) {
+            compareWith = selector.nodeType ? [ selector ] : selector;
+            for (i = 0; i < compareWith.length; i += 1) if (compareWith[i] === el) return true;
+            return false;
+        }
+        return false;
+    }
+    function index() {
+        let child = this[0];
+        let i;
+        if (child) {
+            i = 0;
+            while (null !== (child = child.previousSibling)) if (1 === child.nodeType) i += 1;
+            return i;
+        }
+        return;
+    }
+    function eq(index) {
+        if ("undefined" === typeof index) return this;
+        const length = this.length;
+        if (index > length - 1) return dom7_esm_$([]);
+        if (index < 0) {
+            const returnIndex = length + index;
+            if (returnIndex < 0) return dom7_esm_$([]);
+            return dom7_esm_$([ this[returnIndex] ]);
+        }
+        return dom7_esm_$([ this[index] ]);
+    }
+    function append(...els) {
+        let newChild;
+        const document = ssr_window_esm_getDocument();
+        for (let k = 0; k < els.length; k += 1) {
+            newChild = els[k];
+            for (let i = 0; i < this.length; i += 1) if ("string" === typeof newChild) {
+                const tempDiv = document.createElement("div");
+                tempDiv.innerHTML = newChild;
+                while (tempDiv.firstChild) this[i].appendChild(tempDiv.firstChild);
+            } else if (newChild instanceof Dom7) for (let j = 0; j < newChild.length; j += 1) this[i].appendChild(newChild[j]); else this[i].appendChild(newChild);
+        }
+        return this;
+    }
+    function prepend(newChild) {
+        const document = ssr_window_esm_getDocument();
+        let i;
+        let j;
+        for (i = 0; i < this.length; i += 1) if ("string" === typeof newChild) {
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = newChild;
+            for (j = tempDiv.childNodes.length - 1; j >= 0; j -= 1) this[i].insertBefore(tempDiv.childNodes[j], this[i].childNodes[0]);
+        } else if (newChild instanceof Dom7) for (j = 0; j < newChild.length; j += 1) this[i].insertBefore(newChild[j], this[i].childNodes[0]); else this[i].insertBefore(newChild, this[i].childNodes[0]);
+        return this;
+    }
+    function next(selector) {
+        if (this.length > 0) {
+            if (selector) {
+                if (this[0].nextElementSibling && dom7_esm_$(this[0].nextElementSibling).is(selector)) return dom7_esm_$([ this[0].nextElementSibling ]);
+                return dom7_esm_$([]);
             }
-            return null;
-        },
-        outerHeight: function (e) {
-            if (this.length > 0) {
-                if (e) {
-                    const e = this.styles();
-                    return this[0].offsetHeight + parseFloat(e.getPropertyValue("margin-top")) + parseFloat(e.getPropertyValue("margin-bottom"));
-                }
-                return this[0].offsetHeight;
+            if (this[0].nextElementSibling) return dom7_esm_$([ this[0].nextElementSibling ]);
+            return dom7_esm_$([]);
+        }
+        return dom7_esm_$([]);
+    }
+    function nextAll(selector) {
+        const nextEls = [];
+        let el = this[0];
+        if (!el) return dom7_esm_$([]);
+        while (el.nextElementSibling) {
+            const next = el.nextElementSibling;
+            if (selector) {
+                if (dom7_esm_$(next).is(selector)) nextEls.push(next);
+            } else nextEls.push(next);
+            el = next;
+        }
+        return dom7_esm_$(nextEls);
+    }
+    function prev(selector) {
+        if (this.length > 0) {
+            const el = this[0];
+            if (selector) {
+                if (el.previousElementSibling && dom7_esm_$(el.previousElementSibling).is(selector)) return dom7_esm_$([ el.previousElementSibling ]);
+                return dom7_esm_$([]);
             }
-            return null;
-        },
-        styles: function () {
-            const e = M();
-            return this[0] ? e.getComputedStyle(this[0], null) : {};
-        },
-        offset: function () {
-            if (this.length > 0) {
-                const e = M(),
-                    t = x(),
-                    s = this[0],
-                    i = s.getBoundingClientRect(),
-                    n = t.body,
-                    a = s.clientTop || n.clientTop || 0,
-                    l = s.clientLeft || n.clientLeft || 0,
-                    r = s === e ? e.scrollY : s.scrollTop,
-                    o = s === e ? e.scrollX : s.scrollLeft;
-                return { top: i.top + r - a, left: i.left + o - l };
+            if (el.previousElementSibling) return dom7_esm_$([ el.previousElementSibling ]);
+            return dom7_esm_$([]);
+        }
+        return dom7_esm_$([]);
+    }
+    function prevAll(selector) {
+        const prevEls = [];
+        let el = this[0];
+        if (!el) return dom7_esm_$([]);
+        while (el.previousElementSibling) {
+            const prev = el.previousElementSibling;
+            if (selector) {
+                if (dom7_esm_$(prev).is(selector)) prevEls.push(prev);
+            } else prevEls.push(prev);
+            el = prev;
+        }
+        return dom7_esm_$(prevEls);
+    }
+    function dom7_esm_parent(selector) {
+        const parents = [];
+        for (let i = 0; i < this.length; i += 1) if (null !== this[i].parentNode) if (selector) {
+            if (dom7_esm_$(this[i].parentNode).is(selector)) parents.push(this[i].parentNode);
+        } else parents.push(this[i].parentNode);
+        return dom7_esm_$(parents);
+    }
+    function parents(selector) {
+        const parents = [];
+        for (let i = 0; i < this.length; i += 1) {
+            let parent = this[i].parentNode;
+            while (parent) {
+                if (selector) {
+                    if (dom7_esm_$(parent).is(selector)) parents.push(parent);
+                } else parents.push(parent);
+                parent = parent.parentNode;
             }
-            return null;
-        },
-        css: function (e, t) {
-            const s = M();
-            let i;
-            if (1 === arguments.length) {
-                if ("string" != typeof e) {
-                    for (i = 0; i < this.length; i += 1) for (const t in e) this[i].style[t] = e[t];
-                    return this;
-                }
-                if (this[0]) return s.getComputedStyle(this[0], null).getPropertyValue(e);
-            }
-            if (2 === arguments.length && "string" == typeof e) {
-                for (i = 0; i < this.length; i += 1) this[i].style[e] = t;
+        }
+        return dom7_esm_$(parents);
+    }
+    function closest(selector) {
+        let closest = this;
+        if ("undefined" === typeof selector) return dom7_esm_$([]);
+        if (!closest.is(selector)) closest = closest.parents(selector).eq(0);
+        return closest;
+    }
+    function find(selector) {
+        const foundElements = [];
+        for (let i = 0; i < this.length; i += 1) {
+            const found = this[i].querySelectorAll(selector);
+            for (let j = 0; j < found.length; j += 1) foundElements.push(found[j]);
+        }
+        return dom7_esm_$(foundElements);
+    }
+    function children(selector) {
+        const children = [];
+        for (let i = 0; i < this.length; i += 1) {
+            const childNodes = this[i].children;
+            for (let j = 0; j < childNodes.length; j += 1) if (!selector || dom7_esm_$(childNodes[j]).is(selector)) children.push(childNodes[j]);
+        }
+        return dom7_esm_$(children);
+    }
+    function remove() {
+        for (let i = 0; i < this.length; i += 1) if (this[i].parentNode) this[i].parentNode.removeChild(this[i]);
+        return this;
+    }
+    const noTrigger = "resize scroll".split(" ");
+    function shortcut(name) {
+        function eventHandler(...args) {
+            if ("undefined" === typeof args[0]) {
+                for (let i = 0; i < this.length; i += 1) if (noTrigger.indexOf(name) < 0) if (name in this[i]) this[i][name](); else dom7_esm_$(this[i]).trigger(name);
                 return this;
             }
-            return this;
-        },
-        each: function (e) {
-            return e
-                ? (this.forEach((t, s) => {
-                    e.apply(t, [t, s]);
-                }),
-                    this)
-                : this;
-        },
-        html: function (e) {
-            if (void 0 === e) return this[0] ? this[0].innerHTML : null;
-            for (let t = 0; t < this.length; t += 1) this[t].innerHTML = e;
-            return this;
-        },
-        text: function (e) {
-            if (void 0 === e) return this[0] ? this[0].textContent.trim() : null;
-            for (let t = 0; t < this.length; t += 1) this[t].textContent = e;
-            return this;
-        },
-        is: function (e) {
-            const t = M(),
-                s = x(),
-                i = this[0];
-            let n, a;
-            if (!i || void 0 === e) return !1;
-            if ("string" == typeof e) {
-                if (i.matches) return i.matches(e);
-                if (i.webkitMatchesSelector) return i.webkitMatchesSelector(e);
-                if (i.msMatchesSelector) return i.msMatchesSelector(e);
-                for (n = _(e), a = 0; a < n.length; a += 1) if (n[a] === i) return !0;
-                return !1;
-            }
-            if (e === s) return i === s;
-            if (e === t) return i === t;
-            if (e.nodeType || e instanceof A) {
-                for (n = e.nodeType ? [e] : e, a = 0; a < n.length; a += 1) if (n[a] === i) return !0;
-                return !1;
-            }
-            return !1;
-        },
-        index: function () {
-            let e,
-                t = this[0];
-            if (t) {
-                for (e = 0; null !== (t = t.previousSibling);) 1 === t.nodeType && (e += 1);
-                return e;
-            }
-        },
-        eq: function (e) {
-            if (void 0 === e) return this;
-            const t = this.length;
-            if (e > t - 1) return _([]);
-            if (e < 0) {
-                const s = t + e;
-                return _(s < 0 ? [] : [this[s]]);
-            }
-            return _([this[e]]);
-        },
-        append: function (...e) {
-            let t;
-            const s = x();
-            for (let i = 0; i < e.length; i += 1) {
-                t = e[i];
-                for (let e = 0; e < this.length; e += 1)
-                    if ("string" == typeof t) {
-                        const i = s.createElement("div");
-                        for (i.innerHTML = t; i.firstChild;) this[e].appendChild(i.firstChild);
-                    } else if (t instanceof A) for (let s = 0; s < t.length; s += 1) this[e].appendChild(t[s]);
-                    else this[e].appendChild(t);
-            }
-            return this;
-        },
-        prepend: function (e) {
-            const t = x();
-            let s, i;
-            for (s = 0; s < this.length; s += 1)
-                if ("string" == typeof e) {
-                    const n = t.createElement("div");
-                    for (n.innerHTML = e, i = n.childNodes.length - 1; i >= 0; i -= 1) this[s].insertBefore(n.childNodes[i], this[s].childNodes[0]);
-                } else if (e instanceof A) for (i = 0; i < e.length; i += 1) this[s].insertBefore(e[i], this[s].childNodes[0]);
-                else this[s].insertBefore(e, this[s].childNodes[0]);
-            return this;
-        },
-        next: function (e) {
-            return this.length > 0 ? (e ? (this[0].nextElementSibling && _(this[0].nextElementSibling).is(e) ? _([this[0].nextElementSibling]) : _([])) : this[0].nextElementSibling ? _([this[0].nextElementSibling]) : _([])) : _([]);
-        },
-        nextAll: function (e) {
-            const t = [];
-            let s = this[0];
-            if (!s) return _([]);
-            for (; s.nextElementSibling;) {
-                const i = s.nextElementSibling;
-                e ? _(i).is(e) && t.push(i) : t.push(i), (s = i);
-            }
-            return _(t);
-        },
-        prev: function (e) {
-            if (this.length > 0) {
-                const t = this[0];
-                return e ? (t.previousElementSibling && _(t.previousElementSibling).is(e) ? _([t.previousElementSibling]) : _([])) : t.previousElementSibling ? _([t.previousElementSibling]) : _([]);
-            }
-            return _([]);
-        },
-        prevAll: function (e) {
-            const t = [];
-            let s = this[0];
-            if (!s) return _([]);
-            for (; s.previousElementSibling;) {
-                const i = s.previousElementSibling;
-                e ? _(i).is(e) && t.push(i) : t.push(i), (s = i);
-            }
-            return _(t);
-        },
-        parent: function (e) {
-            const t = [];
-            for (let s = 0; s < this.length; s += 1) null !== this[s].parentNode && (e ? _(this[s].parentNode).is(e) && t.push(this[s].parentNode) : t.push(this[s].parentNode));
-            return _(t);
-        },
-        parents: function (e) {
-            const t = [];
-            for (let s = 0; s < this.length; s += 1) {
-                let i = this[s].parentNode;
-                for (; i;) e ? _(i).is(e) && t.push(i) : t.push(i), (i = i.parentNode);
-            }
-            return _(t);
-        },
-        closest: function (e) {
-            let t = this;
-            return void 0 === e ? _([]) : (t.is(e) || (t = t.parents(e).eq(0)), t);
-        },
-        find: function (e) {
-            const t = [];
-            for (let s = 0; s < this.length; s += 1) {
-                const i = this[s].querySelectorAll(e);
-                for (let e = 0; e < i.length; e += 1) t.push(i[e]);
-            }
-            return _(t);
-        },
-        children: function (e) {
-            const t = [];
-            for (let s = 0; s < this.length; s += 1) {
-                const i = this[s].children;
-                for (let s = 0; s < i.length; s += 1) (e && !_(i[s]).is(e)) || t.push(i[s]);
-            }
-            return _(t);
-        },
-        filter: function (e) {
-            return _(k(this, e));
-        },
-        remove: function () {
-            for (let e = 0; e < this.length; e += 1) this[e].parentNode && this[e].parentNode.removeChild(this[e]);
-            return this;
-        },
-    };
-    Object.keys(I).forEach((e) => {
-        Object.defineProperty(_.fn, e, { value: I[e], writable: !0 });
-    });
-    const D = _;
-    function q(e, t = 0) {
-        return setTimeout(e, t);
+            return this.on(name, ...args);
+        }
+        return eventHandler;
     }
-    function z() {
+    shortcut("click");
+    shortcut("blur");
+    shortcut("focus");
+    shortcut("focusin");
+    shortcut("focusout");
+    shortcut("keyup");
+    shortcut("keydown");
+    shortcut("keypress");
+    shortcut("submit");
+    shortcut("change");
+    shortcut("mousedown");
+    shortcut("mousemove");
+    shortcut("mouseup");
+    shortcut("mouseenter");
+    shortcut("mouseleave");
+    shortcut("mouseout");
+    shortcut("mouseover");
+    shortcut("touchstart");
+    shortcut("touchend");
+    shortcut("touchmove");
+    shortcut("resize");
+    shortcut("scroll");
+    const Methods = {
+        addClass,
+        removeClass,
+        hasClass,
+        toggleClass,
+        attr,
+        removeAttr,
+        transform,
+        transition,
+        on,
+        off,
+        trigger,
+        transitionEnd,
+        outerWidth: dom7_esm_outerWidth,
+        outerHeight: dom7_esm_outerHeight,
+        styles,
+        offset,
+        css,
+        each,
+        html,
+        text: dom7_esm_text,
+        is,
+        index,
+        eq,
+        append,
+        prepend,
+        next,
+        nextAll,
+        prev,
+        prevAll,
+        parent: dom7_esm_parent,
+        parents,
+        closest,
+        find,
+        children,
+        filter,
+        remove
+    };
+    Object.keys(Methods).forEach((methodName => {
+        Object.defineProperty(dom7_esm_$.fn, methodName, {
+            value: Methods[methodName],
+            writable: true
+        });
+    }));
+    const dom = dom7_esm_$;
+    function deleteProps(obj) {
+        const object = obj;
+        Object.keys(object).forEach((key => {
+            try {
+                object[key] = null;
+            } catch (e) {}
+            try {
+                delete object[key];
+            } catch (e) {}
+        }));
+    }
+    function utils_nextTick(callback, delay) {
+        if (void 0 === delay) delay = 0;
+        return setTimeout(callback, delay);
+    }
+    function utils_now() {
         return Date.now();
     }
-    function B(e) {
-        return "object" == typeof e && null !== e && e.constructor && "Object" === Object.prototype.toString.call(e).slice(8, -1);
+    function utils_getComputedStyle(el) {
+        const window = ssr_window_esm_getWindow();
+        let style;
+        if (window.getComputedStyle) style = window.getComputedStyle(el, null);
+        if (!style && el.currentStyle) style = el.currentStyle;
+        if (!style) style = el.style;
+        return style;
     }
-    function N(...e) {
-        const t = Object(e[0]),
-            s = ["__proto__", "constructor", "prototype"];
-        for (let n = 1; n < e.length; n += 1) {
-            const a = e[n];
-            if (null != a && ((i = a), !("undefined" != typeof window && void 0 !== window.HTMLElement ? i instanceof HTMLElement : i && (1 === i.nodeType || 11 === i.nodeType)))) {
-                const e = Object.keys(Object(a)).filter((e) => s.indexOf(e) < 0);
-                for (let s = 0, i = e.length; s < i; s += 1) {
-                    const i = e[s],
-                        n = Object.getOwnPropertyDescriptor(a, i);
-                    void 0 !== n && n.enumerable && (B(t[i]) && B(a[i]) ? (a[i].__swiper__ ? (t[i] = a[i]) : N(t[i], a[i])) : !B(t[i]) && B(a[i]) ? ((t[i] = {}), a[i].__swiper__ ? (t[i] = a[i]) : N(t[i], a[i])) : (t[i] = a[i]));
-                }
-            }
-        }
-        var i;
-        return t;
-    }
-    function G(e, t, s) {
-        e.style.setProperty(t, s);
-    }
-    function H({ swiper: e, targetPosition: t, side: s }) {
-        const i = M(),
-            n = -e.translate;
-        let a,
-            l = null;
-        const r = e.params.speed;
-        (e.wrapperEl.style.scrollSnapType = "none"), i.cancelAnimationFrame(e.cssModeFrameID);
-        const o = t > n ? "next" : "prev",
-            c = (e, t) => ("next" === o && e >= t) || ("prev" === o && e <= t),
-            d = () => {
-                (a = new Date().getTime()), null === l && (l = a);
-                const o = Math.max(Math.min((a - l) / r, 1), 0),
-                    u = 0.5 - Math.cos(o * Math.PI) / 2;
-                let p = n + u * (t - n);
-                if ((c(p, t) && (p = t), e.wrapperEl.scrollTo({ [s]: p }), c(p, t)))
-                    return (
-                        (e.wrapperEl.style.overflow = "hidden"),
-                        (e.wrapperEl.style.scrollSnapType = ""),
-                        setTimeout(() => {
-                            (e.wrapperEl.style.overflow = ""), e.wrapperEl.scrollTo({ [s]: p });
-                        }),
-                        void i.cancelAnimationFrame(e.cssModeFrameID)
-                    );
-                e.cssModeFrameID = i.requestAnimationFrame(d);
-            };
-        d();
-    }
-    let j, V, F;
-    function W() {
-        return (
-            j ||
-            (j = (function () {
-                const e = M(),
-                    t = x();
-                return {
-                    smoothScroll: t.documentElement && "scrollBehavior" in t.documentElement.style,
-                    touch: !!("ontouchstart" in e || (e.DocumentTouch && t instanceof e.DocumentTouch)),
-                    passiveListener: (function () {
-                        let t = !1;
-                        try {
-                            const s = Object.defineProperty({}, "passive", {
-                                get() {
-                                    t = !0;
-                                },
-                            });
-                            e.addEventListener("testPassiveListener", null, s);
-                        } catch (e) { }
-                        return t;
-                    })(),
-                    gestures: "ongesturestart" in e,
-                };
-            })()),
-            j
-        );
-    }
-    const R = {
-        on(e, t, s) {
-            const i = this;
-            if (!i.eventsListeners || i.destroyed) return i;
-            if ("function" != typeof t) return i;
-            const n = s ? "unshift" : "push";
-            return (
-                e.split(" ").forEach((e) => {
-                    i.eventsListeners[e] || (i.eventsListeners[e] = []), i.eventsListeners[e][n](t);
-                }),
-                i
-            );
-        },
-        once(e, t, s) {
-            const i = this;
-            if (!i.eventsListeners || i.destroyed) return i;
-            if ("function" != typeof t) return i;
-            function n(...s) {
-                i.off(e, n), n.__emitterProxy && delete n.__emitterProxy, t.apply(i, s);
-            }
-            return (n.__emitterProxy = t), i.on(e, n, s);
-        },
-        onAny(e, t) {
-            const s = this;
-            if (!s.eventsListeners || s.destroyed) return s;
-            if ("function" != typeof e) return s;
-            const i = t ? "unshift" : "push";
-            return s.eventsAnyListeners.indexOf(e) < 0 && s.eventsAnyListeners[i](e), s;
-        },
-        offAny(e) {
-            const t = this;
-            if (!t.eventsListeners || t.destroyed) return t;
-            if (!t.eventsAnyListeners) return t;
-            const s = t.eventsAnyListeners.indexOf(e);
-            return s >= 0 && t.eventsAnyListeners.splice(s, 1), t;
-        },
-        off(e, t) {
-            const s = this;
-            return !s.eventsListeners || s.destroyed
-                ? s
-                : s.eventsListeners
-                    ? (e.split(" ").forEach((e) => {
-                        void 0 === t
-                            ? (s.eventsListeners[e] = [])
-                            : s.eventsListeners[e] &&
-                            s.eventsListeners[e].forEach((i, n) => {
-                                (i === t || (i.__emitterProxy && i.__emitterProxy === t)) && s.eventsListeners[e].splice(n, 1);
-                            });
-                    }),
-                        s)
-                    : s;
-        },
-        emit(...e) {
-            const t = this;
-            if (!t.eventsListeners || t.destroyed) return t;
-            if (!t.eventsListeners) return t;
-            let s, i, n;
-            return (
-                "string" == typeof e[0] || Array.isArray(e[0]) ? ((s = e[0]), (i = e.slice(1, e.length)), (n = t)) : ((s = e[0].events), (i = e[0].data), (n = e[0].context || t)),
-                i.unshift(n),
-                (Array.isArray(s) ? s : s.split(" ")).forEach((e) => {
-                    t.eventsAnyListeners &&
-                        t.eventsAnyListeners.length &&
-                        t.eventsAnyListeners.forEach((t) => {
-                            t.apply(n, [e, ...i]);
-                        }),
-                        t.eventsListeners &&
-                        t.eventsListeners[e] &&
-                        t.eventsListeners[e].forEach((e) => {
-                            e.apply(n, i);
-                        });
-                }),
-                t
-            );
-        },
-    },
-        Y = {
-            updateSize: function () {
-                const e = this;
-                let t, s;
-                const i = e.$el;
-                (t = void 0 !== e.params.width && null !== e.params.width ? e.params.width : i[0].clientWidth),
-                    (s = void 0 !== e.params.height && null !== e.params.height ? e.params.height : i[0].clientHeight),
-                    (0 === t && e.isHorizontal()) ||
-                    (0 === s && e.isVertical()) ||
-                    ((t = t - parseInt(i.css("padding-left") || 0, 10) - parseInt(i.css("padding-right") || 0, 10)),
-                        (s = s - parseInt(i.css("padding-top") || 0, 10) - parseInt(i.css("padding-bottom") || 0, 10)),
-                        Number.isNaN(t) && (t = 0),
-                        Number.isNaN(s) && (s = 0),
-                        Object.assign(e, { width: t, height: s, size: e.isHorizontal() ? t : s }));
-            },
-            updateSlides: function () {
-                const e = this;
-                function t(t) {
-                    return e.isHorizontal()
-                        ? t
-                        : {
-                            width: "height",
-                            "margin-top": "margin-left",
-                            "margin-bottom ": "margin-right",
-                            "margin-left": "margin-top",
-                            "margin-right": "margin-bottom",
-                            "padding-left": "padding-top",
-                            "padding-right": "padding-bottom",
-                            marginRight: "marginBottom",
-                        }[t];
-                }
-                function s(e, s) {
-                    return parseFloat(e.getPropertyValue(t(s)) || 0);
-                }
-                const i = e.params,
-                    { $wrapperEl: n, size: a, rtlTranslate: l, wrongRTL: r } = e,
-                    o = e.virtual && i.virtual.enabled,
-                    c = o ? e.virtual.slides.length : e.slides.length,
-                    d = n.children(`.${e.params.slideClass}`),
-                    u = o ? e.virtual.slides.length : d.length;
-                let p = [];
-                const h = [],
-                    m = [];
-                let f = i.slidesOffsetBefore;
-                "function" == typeof f && (f = i.slidesOffsetBefore.call(e));
-                let g = i.slidesOffsetAfter;
-                "function" == typeof g && (g = i.slidesOffsetAfter.call(e));
-                const v = e.snapGrid.length,
-                    S = e.slidesGrid.length;
-                let b = i.spaceBetween,
-                    y = -f,
-                    w = 0,
-                    T = 0;
-                if (void 0 === a) return;
-                "string" == typeof b && b.indexOf("%") >= 0 && (b = (parseFloat(b.replace("%", "")) / 100) * a),
-                    (e.virtualSize = -b),
-                    l ? d.css({ marginLeft: "", marginBottom: "", marginTop: "" }) : d.css({ marginRight: "", marginBottom: "", marginTop: "" }),
-                    i.centeredSlides && i.cssMode && (G(e.wrapperEl, "--swiper-centered-offset-before", ""), G(e.wrapperEl, "--swiper-centered-offset-after", ""));
-                const C = i.grid && i.grid.rows > 1 && e.grid;
-                let E;
-                C && e.grid.initSlides(u);
-                const x = "auto" === i.slidesPerView && i.breakpoints && Object.keys(i.breakpoints).filter((e) => void 0 !== i.breakpoints[e].slidesPerView).length > 0;
-                for (let n = 0; n < u; n += 1) {
-                    E = 0;
-                    const l = d.eq(n);
-                    if ((C && e.grid.updateSlide(n, l, u, t), "none" !== l.css("display"))) {
-                        if ("auto" === i.slidesPerView) {
-                            x && (d[n].style[t("width")] = "");
-                            const a = getComputedStyle(l[0]),
-                                r = l[0].style.transform,
-                                o = l[0].style.webkitTransform;
-                            if ((r && (l[0].style.transform = "none"), o && (l[0].style.webkitTransform = "none"), i.roundLengths)) E = e.isHorizontal() ? l.outerWidth(!0) : l.outerHeight(!0);
-                            else {
-                                const e = s(a, "width"),
-                                    t = s(a, "padding-left"),
-                                    i = s(a, "padding-right"),
-                                    n = s(a, "margin-left"),
-                                    r = s(a, "margin-right"),
-                                    o = a.getPropertyValue("box-sizing");
-                                if (o && "border-box" === o) E = e + n + r;
-                                else {
-                                    const { clientWidth: s, offsetWidth: a } = l[0];
-                                    E = e + t + i + n + r + (a - s);
-                                }
-                            }
-                            r && (l[0].style.transform = r), o && (l[0].style.webkitTransform = o), i.roundLengths && (E = Math.floor(E));
-                        } else (E = (a - (i.slidesPerView - 1) * b) / i.slidesPerView), i.roundLengths && (E = Math.floor(E)), d[n] && (d[n].style[t("width")] = `${E}px`);
-                        d[n] && (d[n].swiperSlideSize = E),
-                            m.push(E),
-                            i.centeredSlides
-                                ? ((y = y + E / 2 + w / 2 + b),
-                                    0 === w && 0 !== n && (y = y - a / 2 - b),
-                                    0 === n && (y = y - a / 2 - b),
-                                    Math.abs(y) < 0.001 && (y = 0),
-                                    i.roundLengths && (y = Math.floor(y)),
-                                    T % i.slidesPerGroup == 0 && p.push(y),
-                                    h.push(y))
-                                : (i.roundLengths && (y = Math.floor(y)), (T - Math.min(e.params.slidesPerGroupSkip, T)) % e.params.slidesPerGroup == 0 && p.push(y), h.push(y), (y = y + E + b)),
-                            (e.virtualSize += E + b),
-                            (w = E),
-                            (T += 1);
-                    }
-                }
-                if (
-                    ((e.virtualSize = Math.max(e.virtualSize, a) + g),
-                        l && r && ("slide" === i.effect || "coverflow" === i.effect) && n.css({ width: `${e.virtualSize + i.spaceBetween}px` }),
-                        i.setWrapperSize && n.css({ [t("width")]: `${e.virtualSize + i.spaceBetween}px` }),
-                        C && e.grid.updateWrapperSize(E, p, t),
-                        !i.centeredSlides)
-                ) {
-                    const t = [];
-                    for (let s = 0; s < p.length; s += 1) {
-                        let n = p[s];
-                        i.roundLengths && (n = Math.floor(n)), p[s] <= e.virtualSize - a && t.push(n);
-                    }
-                    (p = t), Math.floor(e.virtualSize - a) - Math.floor(p[p.length - 1]) > 1 && p.push(e.virtualSize - a);
-                }
-                if ((0 === p.length && (p = [0]), 0 !== i.spaceBetween)) {
-                    const s = e.isHorizontal() && l ? "marginLeft" : t("marginRight");
-                    d.filter((e, t) => !i.cssMode || t !== d.length - 1).css({ [s]: `${b}px` });
-                }
-                if (i.centeredSlides && i.centeredSlidesBounds) {
-                    let e = 0;
-                    m.forEach((t) => {
-                        e += t + (i.spaceBetween ? i.spaceBetween : 0);
-                    }),
-                        (e -= i.spaceBetween);
-                    const t = e - a;
-                    p = p.map((e) => (e < 0 ? -f : e > t ? t + g : e));
-                }
-                if (i.centerInsufficientSlides) {
-                    let e = 0;
-                    if (
-                        (m.forEach((t) => {
-                            e += t + (i.spaceBetween ? i.spaceBetween : 0);
-                        }),
-                            (e -= i.spaceBetween),
-                            e < a)
-                    ) {
-                        const t = (a - e) / 2;
-                        p.forEach((e, s) => {
-                            p[s] = e - t;
-                        }),
-                            h.forEach((e, s) => {
-                                h[s] = e + t;
-                            });
-                    }
-                }
-                if ((Object.assign(e, { slides: d, snapGrid: p, slidesGrid: h, slidesSizesGrid: m }), i.centeredSlides && i.cssMode && !i.centeredSlidesBounds)) {
-                    G(e.wrapperEl, "--swiper-centered-offset-before", -p[0] + "px"), G(e.wrapperEl, "--swiper-centered-offset-after", e.size / 2 - m[m.length - 1] / 2 + "px");
-                    const t = -e.snapGrid[0],
-                        s = -e.slidesGrid[0];
-                    (e.snapGrid = e.snapGrid.map((e) => e + t)), (e.slidesGrid = e.slidesGrid.map((e) => e + s));
-                }
-                if (
-                    (u !== c && e.emit("slidesLengthChange"),
-                        p.length !== v && (e.params.watchOverflow && e.checkOverflow(), e.emit("snapGridLengthChange")),
-                        h.length !== S && e.emit("slidesGridLengthChange"),
-                        i.watchSlidesProgress && e.updateSlidesOffset(),
-                        !(o || i.cssMode || ("slide" !== i.effect && "fade" !== i.effect)))
-                ) {
-                    const t = `${i.containerModifierClass}backface-hidden`,
-                        s = e.$el.hasClass(t);
-                    u <= i.maxBackfaceHiddenSlides ? s || e.$el.addClass(t) : s && e.$el.removeClass(t);
-                }
-            },
-            updateAutoHeight: function (e) {
-                const t = this,
-                    s = [],
-                    i = t.virtual && t.params.virtual.enabled;
-                let n,
-                    a = 0;
-                "number" == typeof e ? t.setTransition(e) : !0 === e && t.setTransition(t.params.speed);
-                const l = (e) => (i ? t.slides.filter((t) => parseInt(t.getAttribute("data-swiper-slide-index"), 10) === e)[0] : t.slides.eq(e)[0]);
-                if ("auto" !== t.params.slidesPerView && t.params.slidesPerView > 1)
-                    if (t.params.centeredSlides)
-                        (t.visibleSlides || D([])).each((e) => {
-                            s.push(e);
-                        });
-                    else
-                        for (n = 0; n < Math.ceil(t.params.slidesPerView); n += 1) {
-                            const e = t.activeIndex + n;
-                            if (e > t.slides.length && !i) break;
-                            s.push(l(e));
-                        }
-                else s.push(l(t.activeIndex));
-                for (n = 0; n < s.length; n += 1)
-                    if (void 0 !== s[n]) {
-                        const e = s[n].offsetHeight;
-                        a = e > a ? e : a;
-                    }
-                (a || 0 === a) && t.$wrapperEl.css("height", `${a}px`);
-            },
-            updateSlidesOffset: function () {
-                const e = this,
-                    t = e.slides;
-                for (let s = 0; s < t.length; s += 1) t[s].swiperSlideOffset = e.isHorizontal() ? t[s].offsetLeft : t[s].offsetTop;
-            },
-            updateSlidesProgress: function (e = (this && this.translate) || 0) {
-                const t = this,
-                    s = t.params,
-                    { slides: i, rtlTranslate: n, snapGrid: a } = t;
-                if (0 === i.length) return;
-                void 0 === i[0].swiperSlideOffset && t.updateSlidesOffset();
-                let l = -e;
-                n && (l = e), i.removeClass(s.slideVisibleClass), (t.visibleSlidesIndexes = []), (t.visibleSlides = []);
-                for (let e = 0; e < i.length; e += 1) {
-                    const r = i[e];
-                    let o = r.swiperSlideOffset;
-                    s.cssMode && s.centeredSlides && (o -= i[0].swiperSlideOffset);
-                    const c = (l + (s.centeredSlides ? t.minTranslate() : 0) - o) / (r.swiperSlideSize + s.spaceBetween),
-                        d = (l - a[0] + (s.centeredSlides ? t.minTranslate() : 0) - o) / (r.swiperSlideSize + s.spaceBetween),
-                        u = -(l - o),
-                        p = u + t.slidesSizesGrid[e];
-                    ((u >= 0 && u < t.size - 1) || (p > 1 && p <= t.size) || (u <= 0 && p >= t.size)) && (t.visibleSlides.push(r), t.visibleSlidesIndexes.push(e), i.eq(e).addClass(s.slideVisibleClass)),
-                        (r.progress = n ? -c : c),
-                        (r.originalProgress = n ? -d : d);
-                }
-                t.visibleSlides = D(t.visibleSlides);
-            },
-            updateProgress: function (e) {
-                const t = this;
-                if (void 0 === e) {
-                    const s = t.rtlTranslate ? -1 : 1;
-                    e = (t && t.translate && t.translate * s) || 0;
-                }
-                const s = t.params,
-                    i = t.maxTranslate() - t.minTranslate();
-                let { progress: n, isBeginning: a, isEnd: l } = t;
-                const r = a,
-                    o = l;
-                0 === i ? ((n = 0), (a = !0), (l = !0)) : ((n = (e - t.minTranslate()) / i), (a = n <= 0), (l = n >= 1)),
-                    Object.assign(t, { progress: n, isBeginning: a, isEnd: l }),
-                    (s.watchSlidesProgress || (s.centeredSlides && s.autoHeight)) && t.updateSlidesProgress(e),
-                    a && !r && t.emit("reachBeginning toEdge"),
-                    l && !o && t.emit("reachEnd toEdge"),
-                    ((r && !a) || (o && !l)) && t.emit("fromEdge"),
-                    t.emit("progress", n);
-            },
-            updateSlidesClasses: function () {
-                const e = this,
-                    { slides: t, params: s, $wrapperEl: i, activeIndex: n, realIndex: a } = e,
-                    l = e.virtual && s.virtual.enabled;
-                let r;
-                t.removeClass(`${s.slideActiveClass} ${s.slideNextClass} ${s.slidePrevClass} ${s.slideDuplicateActiveClass} ${s.slideDuplicateNextClass} ${s.slideDuplicatePrevClass}`),
-                    (r = l ? e.$wrapperEl.find(`.${s.slideClass}[data-swiper-slide-index="${n}"]`) : t.eq(n)),
-                    r.addClass(s.slideActiveClass),
-                    s.loop &&
-                    (r.hasClass(s.slideDuplicateClass)
-                        ? i.children(`.${s.slideClass}:not(.${s.slideDuplicateClass})[data-swiper-slide-index="${a}"]`).addClass(s.slideDuplicateActiveClass)
-                        : i.children(`.${s.slideClass}.${s.slideDuplicateClass}[data-swiper-slide-index="${a}"]`).addClass(s.slideDuplicateActiveClass));
-                let o = r.nextAll(`.${s.slideClass}`).eq(0).addClass(s.slideNextClass);
-                s.loop && 0 === o.length && ((o = t.eq(0)), o.addClass(s.slideNextClass));
-                let c = r.prevAll(`.${s.slideClass}`).eq(0).addClass(s.slidePrevClass);
-                s.loop && 0 === c.length && ((c = t.eq(-1)), c.addClass(s.slidePrevClass)),
-                    s.loop &&
-                    (o.hasClass(s.slideDuplicateClass)
-                        ? i.children(`.${s.slideClass}:not(.${s.slideDuplicateClass})[data-swiper-slide-index="${o.attr("data-swiper-slide-index")}"]`).addClass(s.slideDuplicateNextClass)
-                        : i.children(`.${s.slideClass}.${s.slideDuplicateClass}[data-swiper-slide-index="${o.attr("data-swiper-slide-index")}"]`).addClass(s.slideDuplicateNextClass),
-                        c.hasClass(s.slideDuplicateClass)
-                            ? i.children(`.${s.slideClass}:not(.${s.slideDuplicateClass})[data-swiper-slide-index="${c.attr("data-swiper-slide-index")}"]`).addClass(s.slideDuplicatePrevClass)
-                            : i.children(`.${s.slideClass}.${s.slideDuplicateClass}[data-swiper-slide-index="${c.attr("data-swiper-slide-index")}"]`).addClass(s.slideDuplicatePrevClass)),
-                    e.emitSlidesClasses();
-            },
-            updateActiveIndex: function (e) {
-                const t = this,
-                    s = t.rtlTranslate ? t.translate : -t.translate,
-                    { slidesGrid: i, snapGrid: n, params: a, activeIndex: l, realIndex: r, snapIndex: o } = t;
-                let c,
-                    d = e;
-                if (void 0 === d) {
-                    for (let e = 0; e < i.length; e += 1) void 0 !== i[e + 1] ? (s >= i[e] && s < i[e + 1] - (i[e + 1] - i[e]) / 2 ? (d = e) : s >= i[e] && s < i[e + 1] && (d = e + 1)) : s >= i[e] && (d = e);
-                    a.normalizeSlideIndex && (d < 0 || void 0 === d) && (d = 0);
-                }
-                if (n.indexOf(s) >= 0) c = n.indexOf(s);
-                else {
-                    const e = Math.min(a.slidesPerGroupSkip, d);
-                    c = e + Math.floor((d - e) / a.slidesPerGroup);
-                }
-                if ((c >= n.length && (c = n.length - 1), d === l)) return void (c !== o && ((t.snapIndex = c), t.emit("snapIndexChange")));
-                const u = parseInt(t.slides.eq(d).attr("data-swiper-slide-index") || d, 10);
-                Object.assign(t, { snapIndex: c, realIndex: u, previousIndex: l, activeIndex: d }),
-                    t.emit("activeIndexChange"),
-                    t.emit("snapIndexChange"),
-                    r !== u && t.emit("realIndexChange"),
-                    (t.initialized || t.params.runCallbacksOnInit) && t.emit("slideChange");
-            },
-            updateClickedSlide: function (e) {
-                const t = this,
-                    s = t.params,
-                    i = D(e).closest(`.${s.slideClass}`)[0];
-                let n,
-                    a = !1;
-                if (i)
-                    for (let e = 0; e < t.slides.length; e += 1)
-                        if (t.slides[e] === i) {
-                            (a = !0), (n = e);
-                            break;
-                        }
-                if (!i || !a) return (t.clickedSlide = void 0), void (t.clickedIndex = void 0);
-                (t.clickedSlide = i),
-                    t.virtual && t.params.virtual.enabled ? (t.clickedIndex = parseInt(D(i).attr("data-swiper-slide-index"), 10)) : (t.clickedIndex = n),
-                    s.slideToClickedSlide && void 0 !== t.clickedIndex && t.clickedIndex !== t.activeIndex && t.slideToClickedSlide();
-            },
-        };
-    function X({ swiper: e, runCallbacks: t, direction: s, step: i }) {
-        const { activeIndex: n, previousIndex: a } = e;
-        let l = s;
-        if ((l || (l = n > a ? "next" : n < a ? "prev" : "reset"), e.emit(`transition${i}`), t && n !== a)) {
-            if ("reset" === l) return void e.emit(`slideResetTransition${i}`);
-            e.emit(`slideChangeTransition${i}`), "next" === l ? e.emit(`slideNextTransition${i}`) : e.emit(`slidePrevTransition${i}`);
-        }
-    }
-    const U = {
-        slideTo: function (e = 0, t = this.params.speed, s = !0, i, n) {
-            if ("number" != typeof e && "string" != typeof e) throw new Error(`The 'index' argument cannot have type other than 'number' or 'string'. [${typeof e}] given.`);
-            if ("string" == typeof e) {
-                const t = parseInt(e, 10);
-                if (!isFinite(t)) throw new Error(`The passed-in 'index' (string) couldn't be converted to 'number'. [${e}] given.`);
-                e = t;
-            }
-            const a = this;
-            let l = e;
-            l < 0 && (l = 0);
-            const { params: r, snapGrid: o, slidesGrid: c, previousIndex: d, activeIndex: u, rtlTranslate: p, wrapperEl: h, enabled: m } = a;
-            if ((a.animating && r.preventInteractionOnTransition) || (!m && !i && !n)) return !1;
-            const f = Math.min(a.params.slidesPerGroupSkip, l);
-            let g = f + Math.floor((l - f) / a.params.slidesPerGroup);
-            g >= o.length && (g = o.length - 1);
-            const v = -o[g];
-            if (r.normalizeSlideIndex)
-                for (let e = 0; e < c.length; e += 1) {
-                    const t = -Math.floor(100 * v),
-                        s = Math.floor(100 * c[e]),
-                        i = Math.floor(100 * c[e + 1]);
-                    void 0 !== c[e + 1] ? (t >= s && t < i - (i - s) / 2 ? (l = e) : t >= s && t < i && (l = e + 1)) : t >= s && (l = e);
-                }
-            if (a.initialized && l !== u) {
-                if (!a.allowSlideNext && v < a.translate && v < a.minTranslate()) return !1;
-                if (!a.allowSlidePrev && v > a.translate && v > a.maxTranslate() && (u || 0) !== l) return !1;
-            }
-            let S;
-            if ((l !== (d || 0) && s && a.emit("beforeSlideChangeStart"), a.updateProgress(v), (S = l > u ? "next" : l < u ? "prev" : "reset"), (p && -v === a.translate) || (!p && v === a.translate)))
-                return a.updateActiveIndex(l), r.autoHeight && a.updateAutoHeight(), a.updateSlidesClasses(), "slide" !== r.effect && a.setTranslate(v), "reset" !== S && (a.transitionStart(s, S), a.transitionEnd(s, S)), !1;
-            if (r.cssMode) {
-                const e = a.isHorizontal(),
-                    s = p ? v : -v;
-                if (0 === t) {
-                    const t = a.virtual && a.params.virtual.enabled;
-                    t && ((a.wrapperEl.style.scrollSnapType = "none"), (a._immediateVirtual = !0)),
-                        (h[e ? "scrollLeft" : "scrollTop"] = s),
-                        t &&
-                        requestAnimationFrame(() => {
-                            (a.wrapperEl.style.scrollSnapType = ""), (a._swiperImmediateVirtual = !1);
-                        });
-                } else {
-                    if (!a.support.smoothScroll) return H({ swiper: a, targetPosition: s, side: e ? "left" : "top" }), !0;
-                    h.scrollTo({ [e ? "left" : "top"]: s, behavior: "smooth" });
-                }
-                return !0;
-            }
-            return (
-                a.setTransition(t),
-                a.setTranslate(v),
-                a.updateActiveIndex(l),
-                a.updateSlidesClasses(),
-                a.emit("beforeTransitionStart", t, i),
-                a.transitionStart(s, S),
-                0 === t
-                    ? a.transitionEnd(s, S)
-                    : a.animating ||
-                    ((a.animating = !0),
-                        a.onSlideToWrapperTransitionEnd ||
-                        (a.onSlideToWrapperTransitionEnd = function (e) {
-                            a &&
-                                !a.destroyed &&
-                                e.target === this &&
-                                (a.$wrapperEl[0].removeEventListener("transitionend", a.onSlideToWrapperTransitionEnd),
-                                    a.$wrapperEl[0].removeEventListener("webkitTransitionEnd", a.onSlideToWrapperTransitionEnd),
-                                    (a.onSlideToWrapperTransitionEnd = null),
-                                    delete a.onSlideToWrapperTransitionEnd,
-                                    a.transitionEnd(s, S));
-                        }),
-                        a.$wrapperEl[0].addEventListener("transitionend", a.onSlideToWrapperTransitionEnd),
-                        a.$wrapperEl[0].addEventListener("webkitTransitionEnd", a.onSlideToWrapperTransitionEnd)),
-                !0
-            );
-        },
-        slideToLoop: function (e = 0, t = this.params.speed, s = !0, i) {
-            if ("string" == typeof e) {
-                const t = parseInt(e, 10);
-                if (!isFinite(t)) throw new Error(`The passed-in 'index' (string) couldn't be converted to 'number'. [${e}] given.`);
-                e = t;
-            }
-            const n = this;
-            let a = e;
-            return n.params.loop && (a += n.loopedSlides), n.slideTo(a, t, s, i);
-        },
-        slideNext: function (e = this.params.speed, t = !0, s) {
-            const i = this,
-                { animating: n, enabled: a, params: l } = i;
-            if (!a) return i;
-            let r = l.slidesPerGroup;
-            "auto" === l.slidesPerView && 1 === l.slidesPerGroup && l.slidesPerGroupAuto && (r = Math.max(i.slidesPerViewDynamic("current", !0), 1));
-            const o = i.activeIndex < l.slidesPerGroupSkip ? 1 : r;
-            if (l.loop) {
-                if (n && l.loopPreventsSlide) return !1;
-                i.loopFix(), (i._clientLeft = i.$wrapperEl[0].clientLeft);
-            }
-            return l.rewind && i.isEnd ? i.slideTo(0, e, t, s) : i.slideTo(i.activeIndex + o, e, t, s);
-        },
-        slidePrev: function (e = this.params.speed, t = !0, s) {
-            const i = this,
-                { params: n, animating: a, snapGrid: l, slidesGrid: r, rtlTranslate: o, enabled: c } = i;
-            if (!c) return i;
-            if (n.loop) {
-                if (a && n.loopPreventsSlide) return !1;
-                i.loopFix(), (i._clientLeft = i.$wrapperEl[0].clientLeft);
-            }
-            function d(e) {
-                return e < 0 ? -Math.floor(Math.abs(e)) : Math.floor(e);
-            }
-            const u = d(o ? i.translate : -i.translate),
-                p = l.map((e) => d(e));
-            let h = l[p.indexOf(u) - 1];
-            if (void 0 === h && n.cssMode) {
-                let e;
-                l.forEach((t, s) => {
-                    u >= t && (e = s);
-                }),
-                    void 0 !== e && (h = l[e > 0 ? e - 1 : e]);
-            }
-            let m = 0;
-            if (
-                (void 0 !== h &&
-                    ((m = r.indexOf(h)), m < 0 && (m = i.activeIndex - 1), "auto" === n.slidesPerView && 1 === n.slidesPerGroup && n.slidesPerGroupAuto && ((m = m - i.slidesPerViewDynamic("previous", !0) + 1), (m = Math.max(m, 0)))),
-                    n.rewind && i.isBeginning)
-            ) {
-                const n = i.params.virtual && i.params.virtual.enabled && i.virtual ? i.virtual.slides.length - 1 : i.slides.length - 1;
-                return i.slideTo(n, e, t, s);
-            }
-            return i.slideTo(m, e, t, s);
-        },
-        slideReset: function (e = this.params.speed, t = !0, s) {
-            return this.slideTo(this.activeIndex, e, t, s);
-        },
-        slideToClosest: function (e = this.params.speed, t = !0, s, i = 0.5) {
-            const n = this;
-            let a = n.activeIndex;
-            const l = Math.min(n.params.slidesPerGroupSkip, a),
-                r = l + Math.floor((a - l) / n.params.slidesPerGroup),
-                o = n.rtlTranslate ? n.translate : -n.translate;
-            if (o >= n.snapGrid[r]) {
-                const e = n.snapGrid[r];
-                o - e > (n.snapGrid[r + 1] - e) * i && (a += n.params.slidesPerGroup);
-            } else {
-                const e = n.snapGrid[r - 1];
-                o - e <= (n.snapGrid[r] - e) * i && (a -= n.params.slidesPerGroup);
-            }
-            return (a = Math.max(a, 0)), (a = Math.min(a, n.slidesGrid.length - 1)), n.slideTo(a, e, t, s);
-        },
-        slideToClickedSlide: function () {
-            const e = this,
-                { params: t, $wrapperEl: s } = e,
-                i = "auto" === t.slidesPerView ? e.slidesPerViewDynamic() : t.slidesPerView;
-            let n,
-                a = e.clickedIndex;
-            if (t.loop) {
-                if (e.animating) return;
-                (n = parseInt(D(e.clickedSlide).attr("data-swiper-slide-index"), 10)),
-                    t.centeredSlides
-                        ? a < e.loopedSlides - i / 2 || a > e.slides.length - e.loopedSlides + i / 2
-                            ? (e.loopFix(),
-                                (a = s.children(`.${t.slideClass}[data-swiper-slide-index="${n}"]:not(.${t.slideDuplicateClass})`).eq(0).index()),
-                                q(() => {
-                                    e.slideTo(a);
-                                }))
-                            : e.slideTo(a)
-                        : a > e.slides.length - i
-                            ? (e.loopFix(),
-                                (a = s.children(`.${t.slideClass}[data-swiper-slide-index="${n}"]:not(.${t.slideDuplicateClass})`).eq(0).index()),
-                                q(() => {
-                                    e.slideTo(a);
-                                }))
-                            : e.slideTo(a);
-            } else e.slideTo(a);
-        },
-    };
-    function K(e) {
-        const t = this,
-            s = x(),
-            i = M(),
-            n = t.touchEventsData,
-            { params: a, touches: l, enabled: r } = t;
-        if (!r) return;
-        if (t.animating && a.preventInteractionOnTransition) return;
-        !t.animating && a.cssMode && a.loop && t.loopFix();
-        let o = e;
-        o.originalEvent && (o = o.originalEvent);
-        let c = D(o.target);
-        if ("wrapper" === a.touchEventsTarget && !c.closest(t.wrapperEl).length) return;
-        if (((n.isTouchEvent = "touchstart" === o.type), !n.isTouchEvent && "which" in o && 3 === o.which)) return;
-        if (!n.isTouchEvent && "button" in o && o.button > 0) return;
-        if (n.isTouched && n.isMoved) return;
-        const d = !!a.noSwipingClass && "" !== a.noSwipingClass,
-            u = e.composedPath ? e.composedPath() : e.path;
-        d && o.target && o.target.shadowRoot && u && (c = D(u[0]));
-        const p = a.noSwipingSelector ? a.noSwipingSelector : `.${a.noSwipingClass}`,
-            h = !(!o.target || !o.target.shadowRoot);
-        if (
-            a.noSwiping &&
-            (h
-                ? (function (e, t = this) {
-                    return (function t(s) {
-                        if (!s || s === x() || s === M()) return null;
-                        s.assignedSlot && (s = s.assignedSlot);
-                        const i = s.closest(e);
-                        return i || s.getRootNode ? i || t(s.getRootNode().host) : null;
-                    })(t);
-                })(p, c[0])
-                : c.closest(p)[0])
-        )
-            return void (t.allowClick = !0);
-        if (a.swipeHandler && !c.closest(a.swipeHandler)[0]) return;
-        (l.currentX = "touchstart" === o.type ? o.targetTouches[0].pageX : o.pageX), (l.currentY = "touchstart" === o.type ? o.targetTouches[0].pageY : o.pageY);
-        const m = l.currentX,
-            f = l.currentY,
-            g = a.edgeSwipeDetection || a.iOSEdgeSwipeDetection,
-            v = a.edgeSwipeThreshold || a.iOSEdgeSwipeThreshold;
-        if (g && (m <= v || m >= i.innerWidth - v)) {
-            if ("prevent" !== g) return;
-            e.preventDefault();
-        }
-        if (
-            (Object.assign(n, { isTouched: !0, isMoved: !1, allowTouchCallbacks: !0, isScrolling: void 0, startMoving: void 0 }),
-                (l.startX = m),
-                (l.startY = f),
-                (n.touchStartTime = z()),
-                (t.allowClick = !0),
-                t.updateSize(),
-                (t.swipeDirection = void 0),
-                a.threshold > 0 && (n.allowThresholdMove = !1),
-                "touchstart" !== o.type)
-        ) {
-            let e = !0;
-            c.is(n.focusableElements) && ((e = !1), "SELECT" === c[0].nodeName && (n.isTouched = !1)), s.activeElement && D(s.activeElement).is(n.focusableElements) && s.activeElement !== c[0] && s.activeElement.blur();
-            const i = e && t.allowTouchMove && a.touchStartPreventDefault;
-            (!a.touchStartForcePreventDefault && !i) || c[0].isContentEditable || o.preventDefault();
-        }
-        t.params.freeMode && t.params.freeMode.enabled && t.freeMode && t.animating && !a.cssMode && t.freeMode.onTouchStart(), t.emit("touchStart", o);
-    }
-    function Z(e) {
-        const t = x(),
-            s = this,
-            i = s.touchEventsData,
-            { params: n, touches: a, rtlTranslate: l, enabled: r } = s;
-        if (!r) return;
-        let o = e;
-        if ((o.originalEvent && (o = o.originalEvent), !i.isTouched)) return void (i.startMoving && i.isScrolling && s.emit("touchMoveOpposite", o));
-        if (i.isTouchEvent && "touchmove" !== o.type) return;
-        const c = "touchmove" === o.type && o.targetTouches && (o.targetTouches[0] || o.changedTouches[0]),
-            d = "touchmove" === o.type ? c.pageX : o.pageX,
-            u = "touchmove" === o.type ? c.pageY : o.pageY;
-        if (o.preventedByNestedSwiper) return (a.startX = d), void (a.startY = u);
-        if (!s.allowTouchMove) return D(o.target).is(i.focusableElements) || (s.allowClick = !1), void (i.isTouched && (Object.assign(a, { startX: d, startY: u, currentX: d, currentY: u }), (i.touchStartTime = z())));
-        if (i.isTouchEvent && n.touchReleaseOnEdges && !n.loop)
-            if (s.isVertical()) {
-                if ((u < a.startY && s.translate <= s.maxTranslate()) || (u > a.startY && s.translate >= s.minTranslate())) return (i.isTouched = !1), void (i.isMoved = !1);
-            } else if ((d < a.startX && s.translate <= s.maxTranslate()) || (d > a.startX && s.translate >= s.minTranslate())) return;
-        if (i.isTouchEvent && t.activeElement && o.target === t.activeElement && D(o.target).is(i.focusableElements)) return (i.isMoved = !0), void (s.allowClick = !1);
-        if ((i.allowTouchCallbacks && s.emit("touchMove", o), o.targetTouches && o.targetTouches.length > 1)) return;
-        (a.currentX = d), (a.currentY = u);
-        const p = a.currentX - a.startX,
-            h = a.currentY - a.startY;
-        if (s.params.threshold && Math.sqrt(p ** 2 + h ** 2) < s.params.threshold) return;
-        if (void 0 === i.isScrolling) {
-            let e;
-            (s.isHorizontal() && a.currentY === a.startY) || (s.isVertical() && a.currentX === a.startX)
-                ? (i.isScrolling = !1)
-                : p * p + h * h >= 25 && ((e = (180 * Math.atan2(Math.abs(h), Math.abs(p))) / Math.PI), (i.isScrolling = s.isHorizontal() ? e > n.touchAngle : 90 - e > n.touchAngle));
-        }
-        if ((i.isScrolling && s.emit("touchMoveOpposite", o), void 0 === i.startMoving && ((a.currentX === a.startX && a.currentY === a.startY) || (i.startMoving = !0)), i.isScrolling)) return void (i.isTouched = !1);
-        if (!i.startMoving) return;
-        (s.allowClick = !1),
-            !n.cssMode && o.cancelable && o.preventDefault(),
-            n.touchMoveStopPropagation && !n.nested && o.stopPropagation(),
-            i.isMoved ||
-            (n.loop && !n.cssMode && s.loopFix(),
-                (i.startTranslate = s.getTranslate()),
-                s.setTransition(0),
-                s.animating && s.$wrapperEl.trigger("webkitTransitionEnd transitionend"),
-                (i.allowMomentumBounce = !1),
-                !n.grabCursor || (!0 !== s.allowSlideNext && !0 !== s.allowSlidePrev) || s.setGrabCursor(!0),
-                s.emit("sliderFirstMove", o)),
-            s.emit("sliderMove", o),
-            (i.isMoved = !0);
-        let m = s.isHorizontal() ? p : h;
-        (a.diff = m), (m *= n.touchRatio), l && (m = -m), (s.swipeDirection = m > 0 ? "prev" : "next"), (i.currentTranslate = m + i.startTranslate);
-        let f = !0,
-            g = n.resistanceRatio;
-        if (
-            (n.touchReleaseOnEdges && (g = 0),
-                m > 0 && i.currentTranslate > s.minTranslate()
-                    ? ((f = !1), n.resistance && (i.currentTranslate = s.minTranslate() - 1 + (-s.minTranslate() + i.startTranslate + m) ** g))
-                    : m < 0 && i.currentTranslate < s.maxTranslate() && ((f = !1), n.resistance && (i.currentTranslate = s.maxTranslate() + 1 - (s.maxTranslate() - i.startTranslate - m) ** g)),
-                f && (o.preventedByNestedSwiper = !0),
-                !s.allowSlideNext && "next" === s.swipeDirection && i.currentTranslate < i.startTranslate && (i.currentTranslate = i.startTranslate),
-                !s.allowSlidePrev && "prev" === s.swipeDirection && i.currentTranslate > i.startTranslate && (i.currentTranslate = i.startTranslate),
-                s.allowSlidePrev || s.allowSlideNext || (i.currentTranslate = i.startTranslate),
-                n.threshold > 0)
-        ) {
-            if (!(Math.abs(m) > n.threshold || i.allowThresholdMove)) return void (i.currentTranslate = i.startTranslate);
-            if (!i.allowThresholdMove)
-                return (i.allowThresholdMove = !0), (a.startX = a.currentX), (a.startY = a.currentY), (i.currentTranslate = i.startTranslate), void (a.diff = s.isHorizontal() ? a.currentX - a.startX : a.currentY - a.startY);
-        }
-        n.followFinger &&
-            !n.cssMode &&
-            (((n.freeMode && n.freeMode.enabled && s.freeMode) || n.watchSlidesProgress) && (s.updateActiveIndex(), s.updateSlidesClasses()),
-                s.params.freeMode && n.freeMode.enabled && s.freeMode && s.freeMode.onTouchMove(),
-                s.updateProgress(i.currentTranslate),
-                s.setTranslate(i.currentTranslate));
-    }
-    function Q(e) {
-        const t = this,
-            s = t.touchEventsData,
-            { params: i, touches: n, rtlTranslate: a, slidesGrid: l, enabled: r } = t;
-        if (!r) return;
-        let o = e;
-        if ((o.originalEvent && (o = o.originalEvent), s.allowTouchCallbacks && t.emit("touchEnd", o), (s.allowTouchCallbacks = !1), !s.isTouched))
-            return s.isMoved && i.grabCursor && t.setGrabCursor(!1), (s.isMoved = !1), void (s.startMoving = !1);
-        i.grabCursor && s.isMoved && s.isTouched && (!0 === t.allowSlideNext || !0 === t.allowSlidePrev) && t.setGrabCursor(!1);
-        const c = z(),
-            d = c - s.touchStartTime;
-        if (t.allowClick) {
-            const e = o.path || (o.composedPath && o.composedPath());
-            t.updateClickedSlide((e && e[0]) || o.target), t.emit("tap click", o), d < 300 && c - s.lastClickTime < 300 && t.emit("doubleTap doubleClick", o);
-        }
-        if (
-            ((s.lastClickTime = z()),
-                q(() => {
-                    t.destroyed || (t.allowClick = !0);
-                }),
-                !s.isTouched || !s.isMoved || !t.swipeDirection || 0 === n.diff || s.currentTranslate === s.startTranslate)
-        )
-            return (s.isTouched = !1), (s.isMoved = !1), void (s.startMoving = !1);
-        let u;
-        if (((s.isTouched = !1), (s.isMoved = !1), (s.startMoving = !1), (u = i.followFinger ? (a ? t.translate : -t.translate) : -s.currentTranslate), i.cssMode)) return;
-        if (t.params.freeMode && i.freeMode.enabled) return void t.freeMode.onTouchEnd({ currentPos: u });
-        let p = 0,
-            h = t.slidesSizesGrid[0];
-        for (let e = 0; e < l.length; e += e < i.slidesPerGroupSkip ? 1 : i.slidesPerGroup) {
-            const t = e < i.slidesPerGroupSkip - 1 ? 1 : i.slidesPerGroup;
-            void 0 !== l[e + t] ? u >= l[e] && u < l[e + t] && ((p = e), (h = l[e + t] - l[e])) : u >= l[e] && ((p = e), (h = l[l.length - 1] - l[l.length - 2]));
-        }
-        let m = null,
-            f = null;
-        i.rewind && (t.isBeginning ? (f = t.params.virtual && t.params.virtual.enabled && t.virtual ? t.virtual.slides.length - 1 : t.slides.length - 1) : t.isEnd && (m = 0));
-        const g = (u - l[p]) / h,
-            v = p < i.slidesPerGroupSkip - 1 ? 1 : i.slidesPerGroup;
-        if (d > i.longSwipesMs) {
-            if (!i.longSwipes) return void t.slideTo(t.activeIndex);
-            "next" === t.swipeDirection && (g >= i.longSwipesRatio ? t.slideTo(i.rewind && t.isEnd ? m : p + v) : t.slideTo(p)),
-                "prev" === t.swipeDirection && (g > 1 - i.longSwipesRatio ? t.slideTo(p + v) : null !== f && g < 0 && Math.abs(g) > i.longSwipesRatio ? t.slideTo(f) : t.slideTo(p));
+    function utils_getTranslate(el, axis) {
+        if (void 0 === axis) axis = "x";
+        const window = ssr_window_esm_getWindow();
+        let matrix;
+        let curTransform;
+        let transformMatrix;
+        const curStyle = utils_getComputedStyle(el, null);
+        if (window.WebKitCSSMatrix) {
+            curTransform = curStyle.transform || curStyle.webkitTransform;
+            if (curTransform.split(",").length > 6) curTransform = curTransform.split(", ").map((a => a.replace(",", "."))).join(", ");
+            transformMatrix = new window.WebKitCSSMatrix("none" === curTransform ? "" : curTransform);
         } else {
-            if (!i.shortSwipes) return void t.slideTo(t.activeIndex);
-            !t.navigation || (o.target !== t.navigation.nextEl && o.target !== t.navigation.prevEl)
-                ? ("next" === t.swipeDirection && t.slideTo(null !== m ? m : p + v), "prev" === t.swipeDirection && t.slideTo(null !== f ? f : p))
-                : o.target === t.navigation.nextEl
-                    ? t.slideTo(p + v)
-                    : t.slideTo(p);
+            transformMatrix = curStyle.MozTransform || curStyle.OTransform || curStyle.MsTransform || curStyle.msTransform || curStyle.transform || curStyle.getPropertyValue("transform").replace("translate(", "matrix(1, 0, 0, 1,");
+            matrix = transformMatrix.toString().split(",");
+        }
+        if ("x" === axis) if (window.WebKitCSSMatrix) curTransform = transformMatrix.m41; else if (16 === matrix.length) curTransform = parseFloat(matrix[12]); else curTransform = parseFloat(matrix[4]);
+        if ("y" === axis) if (window.WebKitCSSMatrix) curTransform = transformMatrix.m42; else if (16 === matrix.length) curTransform = parseFloat(matrix[13]); else curTransform = parseFloat(matrix[5]);
+        return curTransform || 0;
+    }
+    function utils_isObject(o) {
+        return "object" === typeof o && null !== o && o.constructor && "Object" === Object.prototype.toString.call(o).slice(8, -1);
+    }
+    function isNode(node) {
+        if ("undefined" !== typeof window && "undefined" !== typeof window.HTMLElement) return node instanceof HTMLElement;
+        return node && (1 === node.nodeType || 11 === node.nodeType);
+    }
+    function utils_extend() {
+        const to = Object(arguments.length <= 0 ? void 0 : arguments[0]);
+        const noExtend = [ "__proto__", "constructor", "prototype" ];
+        for (let i = 1; i < arguments.length; i += 1) {
+            const nextSource = i < 0 || arguments.length <= i ? void 0 : arguments[i];
+            if (void 0 !== nextSource && null !== nextSource && !isNode(nextSource)) {
+                const keysArray = Object.keys(Object(nextSource)).filter((key => noExtend.indexOf(key) < 0));
+                for (let nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex += 1) {
+                    const nextKey = keysArray[nextIndex];
+                    const desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
+                    if (void 0 !== desc && desc.enumerable) if (utils_isObject(to[nextKey]) && utils_isObject(nextSource[nextKey])) if (nextSource[nextKey].__swiper__) to[nextKey] = nextSource[nextKey]; else utils_extend(to[nextKey], nextSource[nextKey]); else if (!utils_isObject(to[nextKey]) && utils_isObject(nextSource[nextKey])) {
+                        to[nextKey] = {};
+                        if (nextSource[nextKey].__swiper__) to[nextKey] = nextSource[nextKey]; else utils_extend(to[nextKey], nextSource[nextKey]);
+                    } else to[nextKey] = nextSource[nextKey];
+                }
+            }
+        }
+        return to;
+    }
+    function utils_setCSSProperty(el, varName, varValue) {
+        el.style.setProperty(varName, varValue);
+    }
+    function animateCSSModeScroll(_ref) {
+        let {swiper, targetPosition, side} = _ref;
+        const window = ssr_window_esm_getWindow();
+        const startPosition = -swiper.translate;
+        let startTime = null;
+        let time;
+        const duration = swiper.params.speed;
+        swiper.wrapperEl.style.scrollSnapType = "none";
+        window.cancelAnimationFrame(swiper.cssModeFrameID);
+        const dir = targetPosition > startPosition ? "next" : "prev";
+        const isOutOfBound = (current, target) => "next" === dir && current >= target || "prev" === dir && current <= target;
+        const animate = () => {
+            time = (new Date).getTime();
+            if (null === startTime) startTime = time;
+            const progress = Math.max(Math.min((time - startTime) / duration, 1), 0);
+            const easeProgress = .5 - Math.cos(progress * Math.PI) / 2;
+            let currentPosition = startPosition + easeProgress * (targetPosition - startPosition);
+            if (isOutOfBound(currentPosition, targetPosition)) currentPosition = targetPosition;
+            swiper.wrapperEl.scrollTo({
+                [side]: currentPosition
+            });
+            if (isOutOfBound(currentPosition, targetPosition)) {
+                swiper.wrapperEl.style.overflow = "hidden";
+                swiper.wrapperEl.style.scrollSnapType = "";
+                setTimeout((() => {
+                    swiper.wrapperEl.style.overflow = "";
+                    swiper.wrapperEl.scrollTo({
+                        [side]: currentPosition
+                    });
+                }));
+                window.cancelAnimationFrame(swiper.cssModeFrameID);
+                return;
+            }
+            swiper.cssModeFrameID = window.requestAnimationFrame(animate);
+        };
+        animate();
+    }
+    let support;
+    function calcSupport() {
+        const window = ssr_window_esm_getWindow();
+        const document = ssr_window_esm_getDocument();
+        return {
+            smoothScroll: document.documentElement && "scrollBehavior" in document.documentElement.style,
+            touch: !!("ontouchstart" in window || window.DocumentTouch && document instanceof window.DocumentTouch),
+            passiveListener: function checkPassiveListener() {
+                let supportsPassive = false;
+                try {
+                    const opts = Object.defineProperty({}, "passive", {
+                        get() {
+                            supportsPassive = true;
+                        }
+                    });
+                    window.addEventListener("testPassiveListener", null, opts);
+                } catch (e) {}
+                return supportsPassive;
+            }(),
+            gestures: function checkGestures() {
+                return "ongesturestart" in window;
+            }()
+        };
+    }
+    function getSupport() {
+        if (!support) support = calcSupport();
+        return support;
+    }
+    let deviceCached;
+    function calcDevice(_temp) {
+        let {userAgent} = void 0 === _temp ? {} : _temp;
+        const support = getSupport();
+        const window = ssr_window_esm_getWindow();
+        const platform = window.navigator.platform;
+        const ua = userAgent || window.navigator.userAgent;
+        const device = {
+            ios: false,
+            android: false
+        };
+        const screenWidth = window.screen.width;
+        const screenHeight = window.screen.height;
+        const android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
+        let ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
+        const ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
+        const iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
+        const windows = "Win32" === platform;
+        let macos = "MacIntel" === platform;
+        const iPadScreens = [ "1024x1366", "1366x1024", "834x1194", "1194x834", "834x1112", "1112x834", "768x1024", "1024x768", "820x1180", "1180x820", "810x1080", "1080x810" ];
+        if (!ipad && macos && support.touch && iPadScreens.indexOf(`${screenWidth}x${screenHeight}`) >= 0) {
+            ipad = ua.match(/(Version)\/([\d.]+)/);
+            if (!ipad) ipad = [ 0, 1, "13_0_0" ];
+            macos = false;
+        }
+        if (android && !windows) {
+            device.os = "android";
+            device.android = true;
+        }
+        if (ipad || iphone || ipod) {
+            device.os = "ios";
+            device.ios = true;
+        }
+        return device;
+    }
+    function getDevice(overrides) {
+        if (void 0 === overrides) overrides = {};
+        if (!deviceCached) deviceCached = calcDevice(overrides);
+        return deviceCached;
+    }
+    let browser;
+    function calcBrowser() {
+        const window = ssr_window_esm_getWindow();
+        function isSafari() {
+            const ua = window.navigator.userAgent.toLowerCase();
+            return ua.indexOf("safari") >= 0 && ua.indexOf("chrome") < 0 && ua.indexOf("android") < 0;
+        }
+        return {
+            isSafari: isSafari(),
+            isWebView: /(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(window.navigator.userAgent)
+        };
+    }
+    function getBrowser() {
+        if (!browser) browser = calcBrowser();
+        return browser;
+    }
+    function Resize(_ref) {
+        let {swiper, on, emit} = _ref;
+        const window = ssr_window_esm_getWindow();
+        let observer = null;
+        let animationFrame = null;
+        const resizeHandler = () => {
+            if (!swiper || swiper.destroyed || !swiper.initialized) return;
+            emit("beforeResize");
+            emit("resize");
+        };
+        const createObserver = () => {
+            if (!swiper || swiper.destroyed || !swiper.initialized) return;
+            observer = new ResizeObserver((entries => {
+                animationFrame = window.requestAnimationFrame((() => {
+                    const {width, height} = swiper;
+                    let newWidth = width;
+                    let newHeight = height;
+                    entries.forEach((_ref2 => {
+                        let {contentBoxSize, contentRect, target} = _ref2;
+                        if (target && target !== swiper.el) return;
+                        newWidth = contentRect ? contentRect.width : (contentBoxSize[0] || contentBoxSize).inlineSize;
+                        newHeight = contentRect ? contentRect.height : (contentBoxSize[0] || contentBoxSize).blockSize;
+                    }));
+                    if (newWidth !== width || newHeight !== height) resizeHandler();
+                }));
+            }));
+            observer.observe(swiper.el);
+        };
+        const removeObserver = () => {
+            if (animationFrame) window.cancelAnimationFrame(animationFrame);
+            if (observer && observer.unobserve && swiper.el) {
+                observer.unobserve(swiper.el);
+                observer = null;
+            }
+        };
+        const orientationChangeHandler = () => {
+            if (!swiper || swiper.destroyed || !swiper.initialized) return;
+            emit("orientationchange");
+        };
+        on("init", (() => {
+            if (swiper.params.resizeObserver && "undefined" !== typeof window.ResizeObserver) {
+                createObserver();
+                return;
+            }
+            window.addEventListener("resize", resizeHandler);
+            window.addEventListener("orientationchange", orientationChangeHandler);
+        }));
+        on("destroy", (() => {
+            removeObserver();
+            window.removeEventListener("resize", resizeHandler);
+            window.removeEventListener("orientationchange", orientationChangeHandler);
+        }));
+    }
+    function Observer(_ref) {
+        let {swiper, extendParams, on, emit} = _ref;
+        const observers = [];
+        const window = ssr_window_esm_getWindow();
+        const attach = function(target, options) {
+            if (void 0 === options) options = {};
+            const ObserverFunc = window.MutationObserver || window.WebkitMutationObserver;
+            const observer = new ObserverFunc((mutations => {
+                if (1 === mutations.length) {
+                    emit("observerUpdate", mutations[0]);
+                    return;
+                }
+                const observerUpdate = function observerUpdate() {
+                    emit("observerUpdate", mutations[0]);
+                };
+                if (window.requestAnimationFrame) window.requestAnimationFrame(observerUpdate); else window.setTimeout(observerUpdate, 0);
+            }));
+            observer.observe(target, {
+                attributes: "undefined" === typeof options.attributes ? true : options.attributes,
+                childList: "undefined" === typeof options.childList ? true : options.childList,
+                characterData: "undefined" === typeof options.characterData ? true : options.characterData
+            });
+            observers.push(observer);
+        };
+        const init = () => {
+            if (!swiper.params.observer) return;
+            if (swiper.params.observeParents) {
+                const containerParents = swiper.$el.parents();
+                for (let i = 0; i < containerParents.length; i += 1) attach(containerParents[i]);
+            }
+            attach(swiper.$el[0], {
+                childList: swiper.params.observeSlideChildren
+            });
+            attach(swiper.$wrapperEl[0], {
+                attributes: false
+            });
+        };
+        const destroy = () => {
+            observers.forEach((observer => {
+                observer.disconnect();
+            }));
+            observers.splice(0, observers.length);
+        };
+        extendParams({
+            observer: false,
+            observeParents: false,
+            observeSlideChildren: false
+        });
+        on("init", init);
+        on("destroy", destroy);
+    }
+    const events_emitter = {
+        on(events, handler, priority) {
+            const self = this;
+            if (!self.eventsListeners || self.destroyed) return self;
+            if ("function" !== typeof handler) return self;
+            const method = priority ? "unshift" : "push";
+            events.split(" ").forEach((event => {
+                if (!self.eventsListeners[event]) self.eventsListeners[event] = [];
+                self.eventsListeners[event][method](handler);
+            }));
+            return self;
+        },
+        once(events, handler, priority) {
+            const self = this;
+            if (!self.eventsListeners || self.destroyed) return self;
+            if ("function" !== typeof handler) return self;
+            function onceHandler() {
+                self.off(events, onceHandler);
+                if (onceHandler.__emitterProxy) delete onceHandler.__emitterProxy;
+                for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) args[_key] = arguments[_key];
+                handler.apply(self, args);
+            }
+            onceHandler.__emitterProxy = handler;
+            return self.on(events, onceHandler, priority);
+        },
+        onAny(handler, priority) {
+            const self = this;
+            if (!self.eventsListeners || self.destroyed) return self;
+            if ("function" !== typeof handler) return self;
+            const method = priority ? "unshift" : "push";
+            if (self.eventsAnyListeners.indexOf(handler) < 0) self.eventsAnyListeners[method](handler);
+            return self;
+        },
+        offAny(handler) {
+            const self = this;
+            if (!self.eventsListeners || self.destroyed) return self;
+            if (!self.eventsAnyListeners) return self;
+            const index = self.eventsAnyListeners.indexOf(handler);
+            if (index >= 0) self.eventsAnyListeners.splice(index, 1);
+            return self;
+        },
+        off(events, handler) {
+            const self = this;
+            if (!self.eventsListeners || self.destroyed) return self;
+            if (!self.eventsListeners) return self;
+            events.split(" ").forEach((event => {
+                if ("undefined" === typeof handler) self.eventsListeners[event] = []; else if (self.eventsListeners[event]) self.eventsListeners[event].forEach(((eventHandler, index) => {
+                    if (eventHandler === handler || eventHandler.__emitterProxy && eventHandler.__emitterProxy === handler) self.eventsListeners[event].splice(index, 1);
+                }));
+            }));
+            return self;
+        },
+        emit() {
+            const self = this;
+            if (!self.eventsListeners || self.destroyed) return self;
+            if (!self.eventsListeners) return self;
+            let events;
+            let data;
+            let context;
+            for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) args[_key2] = arguments[_key2];
+            if ("string" === typeof args[0] || Array.isArray(args[0])) {
+                events = args[0];
+                data = args.slice(1, args.length);
+                context = self;
+            } else {
+                events = args[0].events;
+                data = args[0].data;
+                context = args[0].context || self;
+            }
+            data.unshift(context);
+            const eventsArray = Array.isArray(events) ? events : events.split(" ");
+            eventsArray.forEach((event => {
+                if (self.eventsAnyListeners && self.eventsAnyListeners.length) self.eventsAnyListeners.forEach((eventHandler => {
+                    eventHandler.apply(context, [ event, ...data ]);
+                }));
+                if (self.eventsListeners && self.eventsListeners[event]) self.eventsListeners[event].forEach((eventHandler => {
+                    eventHandler.apply(context, data);
+                }));
+            }));
+            return self;
+        }
+    };
+    function updateSize() {
+        const swiper = this;
+        let width;
+        let height;
+        const $el = swiper.$el;
+        if ("undefined" !== typeof swiper.params.width && null !== swiper.params.width) width = swiper.params.width; else width = $el[0].clientWidth;
+        if ("undefined" !== typeof swiper.params.height && null !== swiper.params.height) height = swiper.params.height; else height = $el[0].clientHeight;
+        if (0 === width && swiper.isHorizontal() || 0 === height && swiper.isVertical()) return;
+        width = width - parseInt($el.css("padding-left") || 0, 10) - parseInt($el.css("padding-right") || 0, 10);
+        height = height - parseInt($el.css("padding-top") || 0, 10) - parseInt($el.css("padding-bottom") || 0, 10);
+        if (Number.isNaN(width)) width = 0;
+        if (Number.isNaN(height)) height = 0;
+        Object.assign(swiper, {
+            width,
+            height,
+            size: swiper.isHorizontal() ? width : height
+        });
+    }
+    function updateSlides() {
+        const swiper = this;
+        function getDirectionLabel(property) {
+            if (swiper.isHorizontal()) return property;
+            return {
+                width: "height",
+                "margin-top": "margin-left",
+                "margin-bottom ": "margin-right",
+                "margin-left": "margin-top",
+                "margin-right": "margin-bottom",
+                "padding-left": "padding-top",
+                "padding-right": "padding-bottom",
+                marginRight: "marginBottom"
+            }[property];
+        }
+        function getDirectionPropertyValue(node, label) {
+            return parseFloat(node.getPropertyValue(getDirectionLabel(label)) || 0);
+        }
+        const params = swiper.params;
+        const {$wrapperEl, size: swiperSize, rtlTranslate: rtl, wrongRTL} = swiper;
+        const isVirtual = swiper.virtual && params.virtual.enabled;
+        const previousSlidesLength = isVirtual ? swiper.virtual.slides.length : swiper.slides.length;
+        const slides = $wrapperEl.children(`.${swiper.params.slideClass}`);
+        const slidesLength = isVirtual ? swiper.virtual.slides.length : slides.length;
+        let snapGrid = [];
+        const slidesGrid = [];
+        const slidesSizesGrid = [];
+        let offsetBefore = params.slidesOffsetBefore;
+        if ("function" === typeof offsetBefore) offsetBefore = params.slidesOffsetBefore.call(swiper);
+        let offsetAfter = params.slidesOffsetAfter;
+        if ("function" === typeof offsetAfter) offsetAfter = params.slidesOffsetAfter.call(swiper);
+        const previousSnapGridLength = swiper.snapGrid.length;
+        const previousSlidesGridLength = swiper.slidesGrid.length;
+        let spaceBetween = params.spaceBetween;
+        let slidePosition = -offsetBefore;
+        let prevSlideSize = 0;
+        let index = 0;
+        if ("undefined" === typeof swiperSize) return;
+        if ("string" === typeof spaceBetween && spaceBetween.indexOf("%") >= 0) spaceBetween = parseFloat(spaceBetween.replace("%", "")) / 100 * swiperSize;
+        swiper.virtualSize = -spaceBetween;
+        if (rtl) slides.css({
+            marginLeft: "",
+            marginBottom: "",
+            marginTop: ""
+        }); else slides.css({
+            marginRight: "",
+            marginBottom: "",
+            marginTop: ""
+        });
+        if (params.centeredSlides && params.cssMode) {
+            utils_setCSSProperty(swiper.wrapperEl, "--swiper-centered-offset-before", "");
+            utils_setCSSProperty(swiper.wrapperEl, "--swiper-centered-offset-after", "");
+        }
+        const gridEnabled = params.grid && params.grid.rows > 1 && swiper.grid;
+        if (gridEnabled) swiper.grid.initSlides(slidesLength);
+        let slideSize;
+        const shouldResetSlideSize = "auto" === params.slidesPerView && params.breakpoints && Object.keys(params.breakpoints).filter((key => "undefined" !== typeof params.breakpoints[key].slidesPerView)).length > 0;
+        for (let i = 0; i < slidesLength; i += 1) {
+            slideSize = 0;
+            const slide = slides.eq(i);
+            if (gridEnabled) swiper.grid.updateSlide(i, slide, slidesLength, getDirectionLabel);
+            if ("none" === slide.css("display")) continue;
+            if ("auto" === params.slidesPerView) {
+                if (shouldResetSlideSize) slides[i].style[getDirectionLabel("width")] = ``;
+                const slideStyles = getComputedStyle(slide[0]);
+                const currentTransform = slide[0].style.transform;
+                const currentWebKitTransform = slide[0].style.webkitTransform;
+                if (currentTransform) slide[0].style.transform = "none";
+                if (currentWebKitTransform) slide[0].style.webkitTransform = "none";
+                if (params.roundLengths) slideSize = swiper.isHorizontal() ? slide.outerWidth(true) : slide.outerHeight(true); else {
+                    const width = getDirectionPropertyValue(slideStyles, "width");
+                    const paddingLeft = getDirectionPropertyValue(slideStyles, "padding-left");
+                    const paddingRight = getDirectionPropertyValue(slideStyles, "padding-right");
+                    const marginLeft = getDirectionPropertyValue(slideStyles, "margin-left");
+                    const marginRight = getDirectionPropertyValue(slideStyles, "margin-right");
+                    const boxSizing = slideStyles.getPropertyValue("box-sizing");
+                    if (boxSizing && "border-box" === boxSizing) slideSize = width + marginLeft + marginRight; else {
+                        const {clientWidth, offsetWidth} = slide[0];
+                        slideSize = width + paddingLeft + paddingRight + marginLeft + marginRight + (offsetWidth - clientWidth);
+                    }
+                }
+                if (currentTransform) slide[0].style.transform = currentTransform;
+                if (currentWebKitTransform) slide[0].style.webkitTransform = currentWebKitTransform;
+                if (params.roundLengths) slideSize = Math.floor(slideSize);
+            } else {
+                slideSize = (swiperSize - (params.slidesPerView - 1) * spaceBetween) / params.slidesPerView;
+                if (params.roundLengths) slideSize = Math.floor(slideSize);
+                if (slides[i]) slides[i].style[getDirectionLabel("width")] = `${slideSize}px`;
+            }
+            if (slides[i]) slides[i].swiperSlideSize = slideSize;
+            slidesSizesGrid.push(slideSize);
+            if (params.centeredSlides) {
+                slidePosition = slidePosition + slideSize / 2 + prevSlideSize / 2 + spaceBetween;
+                if (0 === prevSlideSize && 0 !== i) slidePosition = slidePosition - swiperSize / 2 - spaceBetween;
+                if (0 === i) slidePosition = slidePosition - swiperSize / 2 - spaceBetween;
+                if (Math.abs(slidePosition) < 1 / 1e3) slidePosition = 0;
+                if (params.roundLengths) slidePosition = Math.floor(slidePosition);
+                if (index % params.slidesPerGroup === 0) snapGrid.push(slidePosition);
+                slidesGrid.push(slidePosition);
+            } else {
+                if (params.roundLengths) slidePosition = Math.floor(slidePosition);
+                if ((index - Math.min(swiper.params.slidesPerGroupSkip, index)) % swiper.params.slidesPerGroup === 0) snapGrid.push(slidePosition);
+                slidesGrid.push(slidePosition);
+                slidePosition = slidePosition + slideSize + spaceBetween;
+            }
+            swiper.virtualSize += slideSize + spaceBetween;
+            prevSlideSize = slideSize;
+            index += 1;
+        }
+        swiper.virtualSize = Math.max(swiper.virtualSize, swiperSize) + offsetAfter;
+        if (rtl && wrongRTL && ("slide" === params.effect || "coverflow" === params.effect)) $wrapperEl.css({
+            width: `${swiper.virtualSize + params.spaceBetween}px`
+        });
+        if (params.setWrapperSize) $wrapperEl.css({
+            [getDirectionLabel("width")]: `${swiper.virtualSize + params.spaceBetween}px`
+        });
+        if (gridEnabled) swiper.grid.updateWrapperSize(slideSize, snapGrid, getDirectionLabel);
+        if (!params.centeredSlides) {
+            const newSlidesGrid = [];
+            for (let i = 0; i < snapGrid.length; i += 1) {
+                let slidesGridItem = snapGrid[i];
+                if (params.roundLengths) slidesGridItem = Math.floor(slidesGridItem);
+                if (snapGrid[i] <= swiper.virtualSize - swiperSize) newSlidesGrid.push(slidesGridItem);
+            }
+            snapGrid = newSlidesGrid;
+            if (Math.floor(swiper.virtualSize - swiperSize) - Math.floor(snapGrid[snapGrid.length - 1]) > 1) snapGrid.push(swiper.virtualSize - swiperSize);
+        }
+        if (0 === snapGrid.length) snapGrid = [ 0 ];
+        if (0 !== params.spaceBetween) {
+            const key = swiper.isHorizontal() && rtl ? "marginLeft" : getDirectionLabel("marginRight");
+            slides.filter(((_, slideIndex) => {
+                if (!params.cssMode) return true;
+                if (slideIndex === slides.length - 1) return false;
+                return true;
+            })).css({
+                [key]: `${spaceBetween}px`
+            });
+        }
+        if (params.centeredSlides && params.centeredSlidesBounds) {
+            let allSlidesSize = 0;
+            slidesSizesGrid.forEach((slideSizeValue => {
+                allSlidesSize += slideSizeValue + (params.spaceBetween ? params.spaceBetween : 0);
+            }));
+            allSlidesSize -= params.spaceBetween;
+            const maxSnap = allSlidesSize - swiperSize;
+            snapGrid = snapGrid.map((snap => {
+                if (snap < 0) return -offsetBefore;
+                if (snap > maxSnap) return maxSnap + offsetAfter;
+                return snap;
+            }));
+        }
+        if (params.centerInsufficientSlides) {
+            let allSlidesSize = 0;
+            slidesSizesGrid.forEach((slideSizeValue => {
+                allSlidesSize += slideSizeValue + (params.spaceBetween ? params.spaceBetween : 0);
+            }));
+            allSlidesSize -= params.spaceBetween;
+            if (allSlidesSize < swiperSize) {
+                const allSlidesOffset = (swiperSize - allSlidesSize) / 2;
+                snapGrid.forEach(((snap, snapIndex) => {
+                    snapGrid[snapIndex] = snap - allSlidesOffset;
+                }));
+                slidesGrid.forEach(((snap, snapIndex) => {
+                    slidesGrid[snapIndex] = snap + allSlidesOffset;
+                }));
+            }
+        }
+        Object.assign(swiper, {
+            slides,
+            snapGrid,
+            slidesGrid,
+            slidesSizesGrid
+        });
+        if (params.centeredSlides && params.cssMode && !params.centeredSlidesBounds) {
+            utils_setCSSProperty(swiper.wrapperEl, "--swiper-centered-offset-before", `${-snapGrid[0]}px`);
+            utils_setCSSProperty(swiper.wrapperEl, "--swiper-centered-offset-after", `${swiper.size / 2 - slidesSizesGrid[slidesSizesGrid.length - 1] / 2}px`);
+            const addToSnapGrid = -swiper.snapGrid[0];
+            const addToSlidesGrid = -swiper.slidesGrid[0];
+            swiper.snapGrid = swiper.snapGrid.map((v => v + addToSnapGrid));
+            swiper.slidesGrid = swiper.slidesGrid.map((v => v + addToSlidesGrid));
+        }
+        if (slidesLength !== previousSlidesLength) swiper.emit("slidesLengthChange");
+        if (snapGrid.length !== previousSnapGridLength) {
+            if (swiper.params.watchOverflow) swiper.checkOverflow();
+            swiper.emit("snapGridLengthChange");
+        }
+        if (slidesGrid.length !== previousSlidesGridLength) swiper.emit("slidesGridLengthChange");
+        if (params.watchSlidesProgress) swiper.updateSlidesOffset();
+        if (!isVirtual && !params.cssMode && ("slide" === params.effect || "fade" === params.effect)) {
+            const backFaceHiddenClass = `${params.containerModifierClass}backface-hidden`;
+            const hasClassBackfaceClassAdded = swiper.$el.hasClass(backFaceHiddenClass);
+            if (slidesLength <= params.maxBackfaceHiddenSlides) {
+                if (!hasClassBackfaceClassAdded) swiper.$el.addClass(backFaceHiddenClass);
+            } else if (hasClassBackfaceClassAdded) swiper.$el.removeClass(backFaceHiddenClass);
         }
     }
-    function J() {
-        const e = this,
-            { params: t, el: s } = e;
-        if (s && 0 === s.offsetWidth) return;
-        t.breakpoints && e.setBreakpoint();
-        const { allowSlideNext: i, allowSlidePrev: n, snapGrid: a } = e;
-        (e.allowSlideNext = !0),
-            (e.allowSlidePrev = !0),
-            e.updateSize(),
-            e.updateSlides(),
-            e.updateSlidesClasses(),
-            ("auto" === t.slidesPerView || t.slidesPerView > 1) && e.isEnd && !e.isBeginning && !e.params.centeredSlides ? e.slideTo(e.slides.length - 1, 0, !1, !0) : e.slideTo(e.activeIndex, 0, !1, !0),
-            e.autoplay && e.autoplay.running && e.autoplay.paused && e.autoplay.run(),
-            (e.allowSlidePrev = n),
-            (e.allowSlideNext = i),
-            e.params.watchOverflow && a !== e.snapGrid && e.checkOverflow();
-    }
-    function ee(e) {
-        const t = this;
-        t.enabled && (t.allowClick || (t.params.preventClicks && e.preventDefault(), t.params.preventClicksPropagation && t.animating && (e.stopPropagation(), e.stopImmediatePropagation())));
-    }
-    function te() {
-        const e = this,
-            { wrapperEl: t, rtlTranslate: s, enabled: i } = e;
-        if (!i) return;
-        let n;
-        (e.previousTranslate = e.translate), e.isHorizontal() ? (e.translate = -t.scrollLeft) : (e.translate = -t.scrollTop), 0 === e.translate && (e.translate = 0), e.updateActiveIndex(), e.updateSlidesClasses();
-        const a = e.maxTranslate() - e.minTranslate();
-        (n = 0 === a ? 0 : (e.translate - e.minTranslate()) / a), n !== e.progress && e.updateProgress(s ? -e.translate : e.translate), e.emit("setTranslate", e.translate, !1);
-    }
-    let se = !1;
-    function ie() { }
-    const ne = (e, t) => {
-        const s = x(),
-            { params: i, touchEvents: n, el: a, wrapperEl: l, device: r, support: o } = e,
-            c = !!i.nested,
-            d = "on" === t ? "addEventListener" : "removeEventListener",
-            u = t;
-        if (o.touch) {
-            const t = !("touchstart" !== n.start || !o.passiveListener || !i.passiveListeners) && { passive: !0, capture: !1 };
-            a[d](n.start, e.onTouchStart, t), a[d](n.move, e.onTouchMove, o.passiveListener ? { passive: !1, capture: c } : c), a[d](n.end, e.onTouchEnd, t), n.cancel && a[d](n.cancel, e.onTouchEnd, t);
-        } else a[d](n.start, e.onTouchStart, !1), s[d](n.move, e.onTouchMove, c), s[d](n.end, e.onTouchEnd, !1);
-        (i.preventClicks || i.preventClicksPropagation) && a[d]("click", e.onClick, !0),
-            i.cssMode && l[d]("scroll", e.onScroll),
-            i.updateOnWindowResize ? e[u](r.ios || r.android ? "resize orientationchange observerUpdate" : "resize observerUpdate", J, !0) : e[u]("observerUpdate", J, !0);
-    },
-        ae = {
-            attachEvents: function () {
-                const e = this,
-                    t = x(),
-                    { params: s, support: i } = e;
-                (e.onTouchStart = K.bind(e)),
-                    (e.onTouchMove = Z.bind(e)),
-                    (e.onTouchEnd = Q.bind(e)),
-                    s.cssMode && (e.onScroll = te.bind(e)),
-                    (e.onClick = ee.bind(e)),
-                    i.touch && !se && (t.addEventListener("touchstart", ie), (se = !0)),
-                    ne(e, "on");
-            },
-            detachEvents: function () {
-                ne(this, "off");
-            },
-        },
-        le = (e, t) => e.grid && t.grid && t.grid.rows > 1,
-        re = {
-            addClasses: function () {
-                const e = this,
-                    { classNames: t, params: s, rtl: i, $el: n, device: a, support: l } = e,
-                    r = (function (e, t) {
-                        const s = [];
-                        return (
-                            e.forEach((e) => {
-                                "object" == typeof e
-                                    ? Object.keys(e).forEach((i) => {
-                                        e[i] && s.push(t + i);
-                                    })
-                                    : "string" == typeof e && s.push(t + e);
-                            }),
-                            s
-                        );
-                    })(
-                        [
-                            "initialized",
-                            s.direction,
-                            { "pointer-events": !l.touch },
-                            { "free-mode": e.params.freeMode && s.freeMode.enabled },
-                            { autoheight: s.autoHeight },
-                            { rtl: i },
-                            { grid: s.grid && s.grid.rows > 1 },
-                            { "grid-column": s.grid && s.grid.rows > 1 && "column" === s.grid.fill },
-                            { android: a.android },
-                            { ios: a.ios },
-                            { "css-mode": s.cssMode },
-                            { centered: s.cssMode && s.centeredSlides },
-                            { "watch-progress": s.watchSlidesProgress },
-                        ],
-                        s.containerModifierClass
-                    );
-                t.push(...r), n.addClass([...t].join(" ")), e.emitContainerClasses();
-            },
-            removeClasses: function () {
-                const { $el: e, classNames: t } = this;
-                e.removeClass(t.join(" ")), this.emitContainerClasses();
-            },
-        },
-        oe = {
-            init: !0,
-            direction: "horizontal",
-            touchEventsTarget: "wrapper",
-            initialSlide: 0,
-            speed: 300,
-            cssMode: !1,
-            updateOnWindowResize: !0,
-            resizeObserver: !0,
-            nested: !1,
-            createElements: !1,
-            enabled: !0,
-            focusableElements: "input, select, option, textarea, button, video, label",
-            width: null,
-            height: null,
-            preventInteractionOnTransition: !1,
-            userAgent: null,
-            url: null,
-            edgeSwipeDetection: !1,
-            edgeSwipeThreshold: 20,
-            autoHeight: !1,
-            setWrapperSize: !1,
-            virtualTranslate: !1,
-            effect: "slide",
-            breakpoints: void 0,
-            breakpointsBase: "window",
-            spaceBetween: 0,
-            slidesPerView: 1,
-            slidesPerGroup: 1,
-            slidesPerGroupSkip: 0,
-            slidesPerGroupAuto: !1,
-            centeredSlides: !1,
-            centeredSlidesBounds: !1,
-            slidesOffsetBefore: 0,
-            slidesOffsetAfter: 0,
-            normalizeSlideIndex: !0,
-            centerInsufficientSlides: !1,
-            watchOverflow: !0,
-            roundLengths: !1,
-            touchRatio: 1,
-            touchAngle: 45,
-            simulateTouch: !0,
-            shortSwipes: !0,
-            longSwipes: !0,
-            longSwipesRatio: 0.5,
-            longSwipesMs: 300,
-            followFinger: !0,
-            allowTouchMove: !0,
-            threshold: 0,
-            touchMoveStopPropagation: !1,
-            touchStartPreventDefault: !0,
-            touchStartForcePreventDefault: !1,
-            touchReleaseOnEdges: !1,
-            uniqueNavElements: !0,
-            resistance: !0,
-            resistanceRatio: 0.85,
-            watchSlidesProgress: !1,
-            grabCursor: !1,
-            preventClicks: !0,
-            preventClicksPropagation: !0,
-            slideToClickedSlide: !1,
-            preloadImages: !0,
-            updateOnImagesReady: !0,
-            loop: !1,
-            loopAdditionalSlides: 0,
-            loopedSlides: null,
-            loopedSlidesLimit: !0,
-            loopFillGroupWithBlank: !1,
-            loopPreventsSlide: !0,
-            rewind: !1,
-            allowSlidePrev: !0,
-            allowSlideNext: !0,
-            swipeHandler: null,
-            noSwiping: !0,
-            noSwipingClass: "swiper-no-swiping",
-            noSwipingSelector: null,
-            passiveListeners: !0,
-            maxBackfaceHiddenSlides: 10,
-            containerModifierClass: "swiper-",
-            slideClass: "swiper-slide",
-            slideBlankClass: "swiper-slide-invisible-blank",
-            slideActiveClass: "swiper-slide-active",
-            slideDuplicateActiveClass: "swiper-slide-duplicate-active",
-            slideVisibleClass: "swiper-slide-visible",
-            slideDuplicateClass: "swiper-slide-duplicate",
-            slideNextClass: "swiper-slide-next",
-            slideDuplicateNextClass: "swiper-slide-duplicate-next",
-            slidePrevClass: "swiper-slide-prev",
-            slideDuplicatePrevClass: "swiper-slide-duplicate-prev",
-            wrapperClass: "swiper-wrapper",
-            runCallbacksOnInit: !0,
-            _emitClasses: !1,
+    function updateAutoHeight(speed) {
+        const swiper = this;
+        const activeSlides = [];
+        const isVirtual = swiper.virtual && swiper.params.virtual.enabled;
+        let newHeight = 0;
+        let i;
+        if ("number" === typeof speed) swiper.setTransition(speed); else if (true === speed) swiper.setTransition(swiper.params.speed);
+        const getSlideByIndex = index => {
+            if (isVirtual) return swiper.slides.filter((el => parseInt(el.getAttribute("data-swiper-slide-index"), 10) === index))[0];
+            return swiper.slides.eq(index)[0];
         };
-    function ce(e, t) {
-        return function (s = {}) {
-            const i = Object.keys(s)[0],
-                n = s[i];
-            "object" == typeof n && null !== n
-                ? (["navigation", "pagination", "scrollbar"].indexOf(i) >= 0 && !0 === e[i] && (e[i] = { auto: !0 }),
-                    i in e && "enabled" in n ? (!0 === e[i] && (e[i] = { enabled: !0 }), "object" != typeof e[i] || "enabled" in e[i] || (e[i].enabled = !0), e[i] || (e[i] = { enabled: !1 }), N(t, s)) : N(t, s))
-                : N(t, s);
-        };
+        if ("auto" !== swiper.params.slidesPerView && swiper.params.slidesPerView > 1) if (swiper.params.centeredSlides) (swiper.visibleSlides || dom([])).each((slide => {
+            activeSlides.push(slide);
+        })); else for (i = 0; i < Math.ceil(swiper.params.slidesPerView); i += 1) {
+            const index = swiper.activeIndex + i;
+            if (index > swiper.slides.length && !isVirtual) break;
+            activeSlides.push(getSlideByIndex(index));
+        } else activeSlides.push(getSlideByIndex(swiper.activeIndex));
+        for (i = 0; i < activeSlides.length; i += 1) if ("undefined" !== typeof activeSlides[i]) {
+            const height = activeSlides[i].offsetHeight;
+            newHeight = height > newHeight ? height : newHeight;
+        }
+        if (newHeight || 0 === newHeight) swiper.$wrapperEl.css("height", `${newHeight}px`);
     }
-    const de = {
-        eventsEmitter: R,
-        update: Y,
-        translate: {
-            getTranslate: function (e = this.isHorizontal() ? "x" : "y") {
-                const { params: t, rtlTranslate: s, translate: i, $wrapperEl: n } = this;
-                if (t.virtualTranslate) return s ? -i : i;
-                if (t.cssMode) return i;
-                let a = (function (e, t = "x") {
-                    const s = M();
-                    let i, n, a;
-                    const l = (function (e) {
-                        const t = M();
-                        let s;
-                        return t.getComputedStyle && (s = t.getComputedStyle(e, null)), !s && e.currentStyle && (s = e.currentStyle), s || (s = e.style), s;
-                    })(e);
-                    return (
-                        s.WebKitCSSMatrix
-                            ? ((n = l.transform || l.webkitTransform),
-                                n.split(",").length > 6 &&
-                                (n = n
-                                    .split(", ")
-                                    .map((e) => e.replace(",", "."))
-                                    .join(", ")),
-                                (a = new s.WebKitCSSMatrix("none" === n ? "" : n)))
-                            : ((a = l.MozTransform || l.OTransform || l.MsTransform || l.msTransform || l.transform || l.getPropertyValue("transform").replace("translate(", "matrix(1, 0, 0, 1,")), (i = a.toString().split(","))),
-                        "x" === t && (n = s.WebKitCSSMatrix ? a.m41 : 16 === i.length ? parseFloat(i[12]) : parseFloat(i[4])),
-                        "y" === t && (n = s.WebKitCSSMatrix ? a.m42 : 16 === i.length ? parseFloat(i[13]) : parseFloat(i[5])),
-                        n || 0
-                    );
-                })(n[0], e);
-                return s && (a = -a), a || 0;
-            },
-            setTranslate: function (e, t) {
-                const s = this,
-                    { rtlTranslate: i, params: n, $wrapperEl: a, wrapperEl: l, progress: r } = s;
-                let o,
-                    c = 0,
-                    d = 0;
-                s.isHorizontal() ? (c = i ? -e : e) : (d = e),
-                    n.roundLengths && ((c = Math.floor(c)), (d = Math.floor(d))),
-                    n.cssMode ? (l[s.isHorizontal() ? "scrollLeft" : "scrollTop"] = s.isHorizontal() ? -c : -d) : n.virtualTranslate || a.transform(`translate3d(${c}px, ${d}px, 0px)`),
-                    (s.previousTranslate = s.translate),
-                    (s.translate = s.isHorizontal() ? c : d);
-                const u = s.maxTranslate() - s.minTranslate();
-                (o = 0 === u ? 0 : (e - s.minTranslate()) / u), o !== r && s.updateProgress(e), s.emit("setTranslate", s.translate, t);
-            },
-            minTranslate: function () {
-                return -this.snapGrid[0];
-            },
-            maxTranslate: function () {
-                return -this.snapGrid[this.snapGrid.length - 1];
-            },
-            translateTo: function (e = 0, t = this.params.speed, s = !0, i = !0, n) {
-                const a = this,
-                    { params: l, wrapperEl: r } = a;
-                if (a.animating && l.preventInteractionOnTransition) return !1;
-                const o = a.minTranslate(),
-                    c = a.maxTranslate();
-                let d;
-                if (((d = i && e > o ? o : i && e < c ? c : e), a.updateProgress(d), l.cssMode)) {
-                    const e = a.isHorizontal();
-                    if (0 === t) r[e ? "scrollLeft" : "scrollTop"] = -d;
-                    else {
-                        if (!a.support.smoothScroll) return H({ swiper: a, targetPosition: -d, side: e ? "left" : "top" }), !0;
-                        r.scrollTo({ [e ? "left" : "top"]: -d, behavior: "smooth" });
-                    }
-                    return !0;
-                }
-                return (
-                    0 === t
-                        ? (a.setTransition(0), a.setTranslate(d), s && (a.emit("beforeTransitionStart", t, n), a.emit("transitionEnd")))
-                        : (a.setTransition(t),
-                            a.setTranslate(d),
-                            s && (a.emit("beforeTransitionStart", t, n), a.emit("transitionStart")),
-                            a.animating ||
-                            ((a.animating = !0),
-                                a.onTranslateToWrapperTransitionEnd ||
-                                (a.onTranslateToWrapperTransitionEnd = function (e) {
-                                    a &&
-                                        !a.destroyed &&
-                                        e.target === this &&
-                                        (a.$wrapperEl[0].removeEventListener("transitionend", a.onTranslateToWrapperTransitionEnd),
-                                            a.$wrapperEl[0].removeEventListener("webkitTransitionEnd", a.onTranslateToWrapperTransitionEnd),
-                                            (a.onTranslateToWrapperTransitionEnd = null),
-                                            delete a.onTranslateToWrapperTransitionEnd,
-                                            s && a.emit("transitionEnd"));
-                                }),
-                                a.$wrapperEl[0].addEventListener("transitionend", a.onTranslateToWrapperTransitionEnd),
-                                a.$wrapperEl[0].addEventListener("webkitTransitionEnd", a.onTranslateToWrapperTransitionEnd))),
-                    !0
-                );
-            },
-        },
-        transition: {
-            setTransition: function (e, t) {
-                const s = this;
-                s.params.cssMode || s.$wrapperEl.transition(e), s.emit("setTransition", e, t);
-            },
-            transitionStart: function (e = !0, t) {
-                const s = this,
-                    { params: i } = s;
-                i.cssMode || (i.autoHeight && s.updateAutoHeight(), X({ swiper: s, runCallbacks: e, direction: t, step: "Start" }));
-            },
-            transitionEnd: function (e = !0, t) {
-                const s = this,
-                    { params: i } = s;
-                (s.animating = !1), i.cssMode || (s.setTransition(0), X({ swiper: s, runCallbacks: e, direction: t, step: "End" }));
-            },
-        },
-        slide: U,
-        loop: {
-            loopCreate: function () {
-                const e = this,
-                    t = x(),
-                    { params: s, $wrapperEl: i } = e,
-                    n = i.children().length > 0 ? D(i.children()[0].parentNode) : i;
-                n.children(`.${s.slideClass}.${s.slideDuplicateClass}`).remove();
-                let a = n.children(`.${s.slideClass}`);
-                if (s.loopFillGroupWithBlank) {
-                    const e = s.slidesPerGroup - (a.length % s.slidesPerGroup);
-                    if (e !== s.slidesPerGroup) {
-                        for (let i = 0; i < e; i += 1) {
-                            const e = D(t.createElement("div")).addClass(`${s.slideClass} ${s.slideBlankClass}`);
-                            n.append(e);
-                        }
-                        a = n.children(`.${s.slideClass}`);
-                    }
-                }
-                "auto" !== s.slidesPerView || s.loopedSlides || (s.loopedSlides = a.length),
-                    (e.loopedSlides = Math.ceil(parseFloat(s.loopedSlides || s.slidesPerView, 10))),
-                    (e.loopedSlides += s.loopAdditionalSlides),
-                    e.loopedSlides > a.length && e.params.loopedSlidesLimit && (e.loopedSlides = a.length);
-                const l = [],
-                    r = [];
-                a.each((e, t) => {
-                    D(e).attr("data-swiper-slide-index", t);
-                });
-                for (let t = 0; t < e.loopedSlides; t += 1) {
-                    const e = t - Math.floor(t / a.length) * a.length;
-                    r.push(a.eq(e)[0]), l.unshift(a.eq(a.length - e - 1)[0]);
-                }
-                for (let e = 0; e < r.length; e += 1) n.append(D(r[e].cloneNode(!0)).addClass(s.slideDuplicateClass));
-                for (let e = l.length - 1; e >= 0; e -= 1) n.prepend(D(l[e].cloneNode(!0)).addClass(s.slideDuplicateClass));
-            },
-            loopFix: function () {
-                const e = this;
-                e.emit("beforeLoopFix");
-                const { activeIndex: t, slides: s, loopedSlides: i, allowSlidePrev: n, allowSlideNext: a, snapGrid: l, rtlTranslate: r } = e;
-                let o;
-                (e.allowSlidePrev = !0), (e.allowSlideNext = !0);
-                const c = -l[t] - e.getTranslate();
-                t < i
-                    ? ((o = s.length - 3 * i + t), (o += i), e.slideTo(o, 0, !1, !0) && 0 !== c && e.setTranslate((r ? -e.translate : e.translate) - c))
-                    : t >= s.length - i && ((o = -s.length + t + i), (o += i), e.slideTo(o, 0, !1, !0) && 0 !== c && e.setTranslate((r ? -e.translate : e.translate) - c)),
-                    (e.allowSlidePrev = n),
-                    (e.allowSlideNext = a),
-                    e.emit("loopFix");
-            },
-            loopDestroy: function () {
-                const { $wrapperEl: e, params: t, slides: s } = this;
-                e.children(`.${t.slideClass}.${t.slideDuplicateClass},.${t.slideClass}.${t.slideBlankClass}`).remove(), s.removeAttr("data-swiper-slide-index");
-            },
-        },
-        grabCursor: {
-            setGrabCursor: function (e) {
-                const t = this;
-                if (t.support.touch || !t.params.simulateTouch || (t.params.watchOverflow && t.isLocked) || t.params.cssMode) return;
-                const s = "container" === t.params.touchEventsTarget ? t.el : t.wrapperEl;
-                (s.style.cursor = "move"), (s.style.cursor = e ? "grabbing" : "grab");
-            },
-            unsetGrabCursor: function () {
-                const e = this;
-                e.support.touch || (e.params.watchOverflow && e.isLocked) || e.params.cssMode || (e["container" === e.params.touchEventsTarget ? "el" : "wrapperEl"].style.cursor = "");
-            },
-        },
-        events: ae,
-        breakpoints: {
-            setBreakpoint: function () {
-                const e = this,
-                    { activeIndex: t, initialized: s, loopedSlides: i = 0, params: n, $el: a } = e,
-                    l = n.breakpoints;
-                if (!l || (l && 0 === Object.keys(l).length)) return;
-                const r = e.getBreakpoint(l, e.params.breakpointsBase, e.el);
-                if (!r || e.currentBreakpoint === r) return;
-                const o = (r in l ? l[r] : void 0) || e.originalParams,
-                    c = le(e, n),
-                    d = le(e, o),
-                    u = n.enabled;
-                c && !d
-                    ? (a.removeClass(`${n.containerModifierClass}grid ${n.containerModifierClass}grid-column`), e.emitContainerClasses())
-                    : !c &&
-                    d &&
-                    (a.addClass(`${n.containerModifierClass}grid`),
-                        ((o.grid.fill && "column" === o.grid.fill) || (!o.grid.fill && "column" === n.grid.fill)) && a.addClass(`${n.containerModifierClass}grid-column`),
-                        e.emitContainerClasses()),
-                    ["navigation", "pagination", "scrollbar"].forEach((t) => {
-                        const s = n[t] && n[t].enabled,
-                            i = o[t] && o[t].enabled;
-                        s && !i && e[t].disable(), !s && i && e[t].enable();
-                    });
-                const p = o.direction && o.direction !== n.direction,
-                    h = n.loop && (o.slidesPerView !== n.slidesPerView || p);
-                p && s && e.changeDirection(), N(e.params, o);
-                const m = e.params.enabled;
-                Object.assign(e, { allowTouchMove: e.params.allowTouchMove, allowSlideNext: e.params.allowSlideNext, allowSlidePrev: e.params.allowSlidePrev }),
-                    u && !m ? e.disable() : !u && m && e.enable(),
-                    (e.currentBreakpoint = r),
-                    e.emit("_beforeBreakpoint", o),
-                    h && s && (e.loopDestroy(), e.loopCreate(), e.updateSlides(), e.slideTo(t - i + e.loopedSlides, 0, !1)),
-                    e.emit("breakpoint", o);
-            },
-            getBreakpoint: function (e, t = "window", s) {
-                if (!e || ("container" === t && !s)) return;
-                let i = !1;
-                const n = M(),
-                    a = "window" === t ? n.innerHeight : s.clientHeight,
-                    l = Object.keys(e).map((e) => {
-                        if ("string" == typeof e && 0 === e.indexOf("@")) {
-                            const t = parseFloat(e.substr(1));
-                            return { value: a * t, point: e };
-                        }
-                        return { value: e, point: e };
-                    });
-                l.sort((e, t) => parseInt(e.value, 10) - parseInt(t.value, 10));
-                for (let e = 0; e < l.length; e += 1) {
-                    const { point: a, value: r } = l[e];
-                    "window" === t ? n.matchMedia(`(min-width: ${r}px)`).matches && (i = a) : r <= s.clientWidth && (i = a);
-                }
-                return i || "max";
-            },
-        },
-        checkOverflow: {
-            checkOverflow: function () {
-                const e = this,
-                    { isLocked: t, params: s } = e,
-                    { slidesOffsetBefore: i } = s;
-                if (i) {
-                    const t = e.slides.length - 1,
-                        s = e.slidesGrid[t] + e.slidesSizesGrid[t] + 2 * i;
-                    e.isLocked = e.size > s;
-                } else e.isLocked = 1 === e.snapGrid.length;
-                !0 === s.allowSlideNext && (e.allowSlideNext = !e.isLocked),
-                    !0 === s.allowSlidePrev && (e.allowSlidePrev = !e.isLocked),
-                    t && t !== e.isLocked && (e.isEnd = !1),
-                    t !== e.isLocked && e.emit(e.isLocked ? "lock" : "unlock");
-            },
-        },
-        classes: re,
-        images: {
-            loadImage: function (e, t, s, i, n, a) {
-                const l = M();
-                let r;
-                function o() {
-                    a && a();
-                }
-                D(e).parent("picture")[0] || (e.complete && n) ? o() : t ? ((r = new l.Image()), (r.onload = o), (r.onerror = o), i && (r.sizes = i), s && (r.srcset = s), t && (r.src = t)) : o();
-            },
-            preloadImages: function () {
-                const e = this;
-                function t() {
-                    null != e && e && !e.destroyed && (void 0 !== e.imagesLoaded && (e.imagesLoaded += 1), e.imagesLoaded === e.imagesToLoad.length && (e.params.updateOnImagesReady && e.update(), e.emit("imagesReady")));
-                }
-                e.imagesToLoad = e.$el.find("img");
-                for (let s = 0; s < e.imagesToLoad.length; s += 1) {
-                    const i = e.imagesToLoad[s];
-                    e.loadImage(i, i.currentSrc || i.getAttribute("src"), i.srcset || i.getAttribute("srcset"), i.sizes || i.getAttribute("sizes"), !0, t);
-                }
-            },
-        },
-    },
-        ue = {};
-    class pe {
-        constructor(...e) {
-            let t, s;
-            if ((1 === e.length && e[0].constructor && "Object" === Object.prototype.toString.call(e[0]).slice(8, -1) ? (s = e[0]) : ([t, s] = e), s || (s = {}), (s = N({}, s)), t && !s.el && (s.el = t), s.el && D(s.el).length > 1)) {
-                const e = [];
-                return (
-                    D(s.el).each((t) => {
-                        const i = N({}, s, { el: t });
-                        e.push(new pe(i));
-                    }),
-                    e
-                );
+    function updateSlidesOffset() {
+        const swiper = this;
+        const slides = swiper.slides;
+        for (let i = 0; i < slides.length; i += 1) slides[i].swiperSlideOffset = swiper.isHorizontal() ? slides[i].offsetLeft : slides[i].offsetTop;
+    }
+    function updateSlidesProgress(translate) {
+        if (void 0 === translate) translate = this && this.translate || 0;
+        const swiper = this;
+        const params = swiper.params;
+        const {slides, rtlTranslate: rtl, snapGrid} = swiper;
+        if (0 === slides.length) return;
+        if ("undefined" === typeof slides[0].swiperSlideOffset) swiper.updateSlidesOffset();
+        let offsetCenter = -translate;
+        if (rtl) offsetCenter = translate;
+        slides.removeClass(params.slideVisibleClass);
+        swiper.visibleSlidesIndexes = [];
+        swiper.visibleSlides = [];
+        for (let i = 0; i < slides.length; i += 1) {
+            const slide = slides[i];
+            let slideOffset = slide.swiperSlideOffset;
+            if (params.cssMode && params.centeredSlides) slideOffset -= slides[0].swiperSlideOffset;
+            const slideProgress = (offsetCenter + (params.centeredSlides ? swiper.minTranslate() : 0) - slideOffset) / (slide.swiperSlideSize + params.spaceBetween);
+            const originalSlideProgress = (offsetCenter - snapGrid[0] + (params.centeredSlides ? swiper.minTranslate() : 0) - slideOffset) / (slide.swiperSlideSize + params.spaceBetween);
+            const slideBefore = -(offsetCenter - slideOffset);
+            const slideAfter = slideBefore + swiper.slidesSizesGrid[i];
+            const isVisible = slideBefore >= 0 && slideBefore < swiper.size - 1 || slideAfter > 1 && slideAfter <= swiper.size || slideBefore <= 0 && slideAfter >= swiper.size;
+            if (isVisible) {
+                swiper.visibleSlides.push(slide);
+                swiper.visibleSlidesIndexes.push(i);
+                slides.eq(i).addClass(params.slideVisibleClass);
             }
-            const i = this;
-            (i.__swiper__ = !0),
-                (i.support = W()),
-                (i.device = (function (e = {}) {
-                    return (
-                        V ||
-                        (V = (function ({ userAgent: e } = {}) {
-                            const t = W(),
-                                s = M(),
-                                i = s.navigator.platform,
-                                n = e || s.navigator.userAgent,
-                                a = { ios: !1, android: !1 },
-                                l = s.screen.width,
-                                r = s.screen.height,
-                                o = n.match(/(Android);?[\s\/]+([\d.]+)?/);
-                            let c = n.match(/(iPad).*OS\s([\d_]+)/);
-                            const d = n.match(/(iPod)(.*OS\s([\d_]+))?/),
-                                u = !c && n.match(/(iPhone\sOS|iOS)\s([\d_]+)/),
-                                p = "Win32" === i;
-                            let h = "MacIntel" === i;
-                            return (
-                                !c &&
-                                h &&
-                                t.touch &&
-                                ["1024x1366", "1366x1024", "834x1194", "1194x834", "834x1112", "1112x834", "768x1024", "1024x768", "820x1180", "1180x820", "810x1080", "1080x810"].indexOf(`${l}x${r}`) >= 0 &&
-                                ((c = n.match(/(Version)\/([\d.]+)/)), c || (c = [0, 1, "13_0_0"]), (h = !1)),
-                                o && !p && ((a.os = "android"), (a.android = !0)),
-                                (c || u || d) && ((a.os = "ios"), (a.ios = !0)),
-                                a
-                            );
-                        })(e)),
-                        V
-                    );
-                })({ userAgent: s.userAgent })),
-                (i.browser =
-                    (F ||
-                        (F = (function () {
-                            const e = M();
-                            return {
-                                isSafari: (function () {
-                                    const t = e.navigator.userAgent.toLowerCase();
-                                    return t.indexOf("safari") >= 0 && t.indexOf("chrome") < 0 && t.indexOf("android") < 0;
-                                })(),
-                                isWebView: /(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(e.navigator.userAgent),
-                            };
-                        })()),
-                        F)),
-                (i.eventsListeners = {}),
-                (i.eventsAnyListeners = []),
-                (i.modules = [...i.__modules__]),
-                s.modules && Array.isArray(s.modules) && i.modules.push(...s.modules);
-            const n = {};
-            i.modules.forEach((e) => {
-                e({ swiper: i, extendParams: ce(s, n), on: i.on.bind(i), once: i.once.bind(i), off: i.off.bind(i), emit: i.emit.bind(i) });
+            slide.progress = rtl ? -slideProgress : slideProgress;
+            slide.originalProgress = rtl ? -originalSlideProgress : originalSlideProgress;
+        }
+        swiper.visibleSlides = dom(swiper.visibleSlides);
+    }
+    function updateProgress(translate) {
+        const swiper = this;
+        if ("undefined" === typeof translate) {
+            const multiplier = swiper.rtlTranslate ? -1 : 1;
+            translate = swiper && swiper.translate && swiper.translate * multiplier || 0;
+        }
+        const params = swiper.params;
+        const translatesDiff = swiper.maxTranslate() - swiper.minTranslate();
+        let {progress, isBeginning, isEnd} = swiper;
+        const wasBeginning = isBeginning;
+        const wasEnd = isEnd;
+        if (0 === translatesDiff) {
+            progress = 0;
+            isBeginning = true;
+            isEnd = true;
+        } else {
+            progress = (translate - swiper.minTranslate()) / translatesDiff;
+            isBeginning = progress <= 0;
+            isEnd = progress >= 1;
+        }
+        Object.assign(swiper, {
+            progress,
+            isBeginning,
+            isEnd
+        });
+        if (params.watchSlidesProgress || params.centeredSlides && params.autoHeight) swiper.updateSlidesProgress(translate);
+        if (isBeginning && !wasBeginning) swiper.emit("reachBeginning toEdge");
+        if (isEnd && !wasEnd) swiper.emit("reachEnd toEdge");
+        if (wasBeginning && !isBeginning || wasEnd && !isEnd) swiper.emit("fromEdge");
+        swiper.emit("progress", progress);
+    }
+    function updateSlidesClasses() {
+        const swiper = this;
+        const {slides, params, $wrapperEl, activeIndex, realIndex} = swiper;
+        const isVirtual = swiper.virtual && params.virtual.enabled;
+        slides.removeClass(`${params.slideActiveClass} ${params.slideNextClass} ${params.slidePrevClass} ${params.slideDuplicateActiveClass} ${params.slideDuplicateNextClass} ${params.slideDuplicatePrevClass}`);
+        let activeSlide;
+        if (isVirtual) activeSlide = swiper.$wrapperEl.find(`.${params.slideClass}[data-swiper-slide-index="${activeIndex}"]`); else activeSlide = slides.eq(activeIndex);
+        activeSlide.addClass(params.slideActiveClass);
+        if (params.loop) if (activeSlide.hasClass(params.slideDuplicateClass)) $wrapperEl.children(`.${params.slideClass}:not(.${params.slideDuplicateClass})[data-swiper-slide-index="${realIndex}"]`).addClass(params.slideDuplicateActiveClass); else $wrapperEl.children(`.${params.slideClass}.${params.slideDuplicateClass}[data-swiper-slide-index="${realIndex}"]`).addClass(params.slideDuplicateActiveClass);
+        let nextSlide = activeSlide.nextAll(`.${params.slideClass}`).eq(0).addClass(params.slideNextClass);
+        if (params.loop && 0 === nextSlide.length) {
+            nextSlide = slides.eq(0);
+            nextSlide.addClass(params.slideNextClass);
+        }
+        let prevSlide = activeSlide.prevAll(`.${params.slideClass}`).eq(0).addClass(params.slidePrevClass);
+        if (params.loop && 0 === prevSlide.length) {
+            prevSlide = slides.eq(-1);
+            prevSlide.addClass(params.slidePrevClass);
+        }
+        if (params.loop) {
+            if (nextSlide.hasClass(params.slideDuplicateClass)) $wrapperEl.children(`.${params.slideClass}:not(.${params.slideDuplicateClass})[data-swiper-slide-index="${nextSlide.attr("data-swiper-slide-index")}"]`).addClass(params.slideDuplicateNextClass); else $wrapperEl.children(`.${params.slideClass}.${params.slideDuplicateClass}[data-swiper-slide-index="${nextSlide.attr("data-swiper-slide-index")}"]`).addClass(params.slideDuplicateNextClass);
+            if (prevSlide.hasClass(params.slideDuplicateClass)) $wrapperEl.children(`.${params.slideClass}:not(.${params.slideDuplicateClass})[data-swiper-slide-index="${prevSlide.attr("data-swiper-slide-index")}"]`).addClass(params.slideDuplicatePrevClass); else $wrapperEl.children(`.${params.slideClass}.${params.slideDuplicateClass}[data-swiper-slide-index="${prevSlide.attr("data-swiper-slide-index")}"]`).addClass(params.slideDuplicatePrevClass);
+        }
+        swiper.emitSlidesClasses();
+    }
+    function updateActiveIndex(newActiveIndex) {
+        const swiper = this;
+        const translate = swiper.rtlTranslate ? swiper.translate : -swiper.translate;
+        const {slidesGrid, snapGrid, params, activeIndex: previousIndex, realIndex: previousRealIndex, snapIndex: previousSnapIndex} = swiper;
+        let activeIndex = newActiveIndex;
+        let snapIndex;
+        if ("undefined" === typeof activeIndex) {
+            for (let i = 0; i < slidesGrid.length; i += 1) if ("undefined" !== typeof slidesGrid[i + 1]) {
+                if (translate >= slidesGrid[i] && translate < slidesGrid[i + 1] - (slidesGrid[i + 1] - slidesGrid[i]) / 2) activeIndex = i; else if (translate >= slidesGrid[i] && translate < slidesGrid[i + 1]) activeIndex = i + 1;
+            } else if (translate >= slidesGrid[i]) activeIndex = i;
+            if (params.normalizeSlideIndex) if (activeIndex < 0 || "undefined" === typeof activeIndex) activeIndex = 0;
+        }
+        if (snapGrid.indexOf(translate) >= 0) snapIndex = snapGrid.indexOf(translate); else {
+            const skip = Math.min(params.slidesPerGroupSkip, activeIndex);
+            snapIndex = skip + Math.floor((activeIndex - skip) / params.slidesPerGroup);
+        }
+        if (snapIndex >= snapGrid.length) snapIndex = snapGrid.length - 1;
+        if (activeIndex === previousIndex) {
+            if (snapIndex !== previousSnapIndex) {
+                swiper.snapIndex = snapIndex;
+                swiper.emit("snapIndexChange");
+            }
+            return;
+        }
+        const realIndex = parseInt(swiper.slides.eq(activeIndex).attr("data-swiper-slide-index") || activeIndex, 10);
+        Object.assign(swiper, {
+            snapIndex,
+            realIndex,
+            previousIndex,
+            activeIndex
+        });
+        swiper.emit("activeIndexChange");
+        swiper.emit("snapIndexChange");
+        if (previousRealIndex !== realIndex) swiper.emit("realIndexChange");
+        if (swiper.initialized || swiper.params.runCallbacksOnInit) swiper.emit("slideChange");
+    }
+    function updateClickedSlide(e) {
+        const swiper = this;
+        const params = swiper.params;
+        const slide = dom(e).closest(`.${params.slideClass}`)[0];
+        let slideFound = false;
+        let slideIndex;
+        if (slide) for (let i = 0; i < swiper.slides.length; i += 1) if (swiper.slides[i] === slide) {
+            slideFound = true;
+            slideIndex = i;
+            break;
+        }
+        if (slide && slideFound) {
+            swiper.clickedSlide = slide;
+            if (swiper.virtual && swiper.params.virtual.enabled) swiper.clickedIndex = parseInt(dom(slide).attr("data-swiper-slide-index"), 10); else swiper.clickedIndex = slideIndex;
+        } else {
+            swiper.clickedSlide = void 0;
+            swiper.clickedIndex = void 0;
+            return;
+        }
+        if (params.slideToClickedSlide && void 0 !== swiper.clickedIndex && swiper.clickedIndex !== swiper.activeIndex) swiper.slideToClickedSlide();
+    }
+    const update = {
+        updateSize,
+        updateSlides,
+        updateAutoHeight,
+        updateSlidesOffset,
+        updateSlidesProgress,
+        updateProgress,
+        updateSlidesClasses,
+        updateActiveIndex,
+        updateClickedSlide
+    };
+    function getSwiperTranslate(axis) {
+        if (void 0 === axis) axis = this.isHorizontal() ? "x" : "y";
+        const swiper = this;
+        const {params, rtlTranslate: rtl, translate, $wrapperEl} = swiper;
+        if (params.virtualTranslate) return rtl ? -translate : translate;
+        if (params.cssMode) return translate;
+        let currentTranslate = utils_getTranslate($wrapperEl[0], axis);
+        if (rtl) currentTranslate = -currentTranslate;
+        return currentTranslate || 0;
+    }
+    function setTranslate(translate, byController) {
+        const swiper = this;
+        const {rtlTranslate: rtl, params, $wrapperEl, wrapperEl, progress} = swiper;
+        let x = 0;
+        let y = 0;
+        const z = 0;
+        if (swiper.isHorizontal()) x = rtl ? -translate : translate; else y = translate;
+        if (params.roundLengths) {
+            x = Math.floor(x);
+            y = Math.floor(y);
+        }
+        if (params.cssMode) wrapperEl[swiper.isHorizontal() ? "scrollLeft" : "scrollTop"] = swiper.isHorizontal() ? -x : -y; else if (!params.virtualTranslate) $wrapperEl.transform(`translate3d(${x}px, ${y}px, ${z}px)`);
+        swiper.previousTranslate = swiper.translate;
+        swiper.translate = swiper.isHorizontal() ? x : y;
+        let newProgress;
+        const translatesDiff = swiper.maxTranslate() - swiper.minTranslate();
+        if (0 === translatesDiff) newProgress = 0; else newProgress = (translate - swiper.minTranslate()) / translatesDiff;
+        if (newProgress !== progress) swiper.updateProgress(translate);
+        swiper.emit("setTranslate", swiper.translate, byController);
+    }
+    function minTranslate() {
+        return -this.snapGrid[0];
+    }
+    function maxTranslate() {
+        return -this.snapGrid[this.snapGrid.length - 1];
+    }
+    function translateTo(translate, speed, runCallbacks, translateBounds, internal) {
+        if (void 0 === translate) translate = 0;
+        if (void 0 === speed) speed = this.params.speed;
+        if (void 0 === runCallbacks) runCallbacks = true;
+        if (void 0 === translateBounds) translateBounds = true;
+        const swiper = this;
+        const {params, wrapperEl} = swiper;
+        if (swiper.animating && params.preventInteractionOnTransition) return false;
+        const minTranslate = swiper.minTranslate();
+        const maxTranslate = swiper.maxTranslate();
+        let newTranslate;
+        if (translateBounds && translate > minTranslate) newTranslate = minTranslate; else if (translateBounds && translate < maxTranslate) newTranslate = maxTranslate; else newTranslate = translate;
+        swiper.updateProgress(newTranslate);
+        if (params.cssMode) {
+            const isH = swiper.isHorizontal();
+            if (0 === speed) wrapperEl[isH ? "scrollLeft" : "scrollTop"] = -newTranslate; else {
+                if (!swiper.support.smoothScroll) {
+                    animateCSSModeScroll({
+                        swiper,
+                        targetPosition: -newTranslate,
+                        side: isH ? "left" : "top"
+                    });
+                    return true;
+                }
+                wrapperEl.scrollTo({
+                    [isH ? "left" : "top"]: -newTranslate,
+                    behavior: "smooth"
+                });
+            }
+            return true;
+        }
+        if (0 === speed) {
+            swiper.setTransition(0);
+            swiper.setTranslate(newTranslate);
+            if (runCallbacks) {
+                swiper.emit("beforeTransitionStart", speed, internal);
+                swiper.emit("transitionEnd");
+            }
+        } else {
+            swiper.setTransition(speed);
+            swiper.setTranslate(newTranslate);
+            if (runCallbacks) {
+                swiper.emit("beforeTransitionStart", speed, internal);
+                swiper.emit("transitionStart");
+            }
+            if (!swiper.animating) {
+                swiper.animating = true;
+                if (!swiper.onTranslateToWrapperTransitionEnd) swiper.onTranslateToWrapperTransitionEnd = function transitionEnd(e) {
+                    if (!swiper || swiper.destroyed) return;
+                    if (e.target !== this) return;
+                    swiper.$wrapperEl[0].removeEventListener("transitionend", swiper.onTranslateToWrapperTransitionEnd);
+                    swiper.$wrapperEl[0].removeEventListener("webkitTransitionEnd", swiper.onTranslateToWrapperTransitionEnd);
+                    swiper.onTranslateToWrapperTransitionEnd = null;
+                    delete swiper.onTranslateToWrapperTransitionEnd;
+                    if (runCallbacks) swiper.emit("transitionEnd");
+                };
+                swiper.$wrapperEl[0].addEventListener("transitionend", swiper.onTranslateToWrapperTransitionEnd);
+                swiper.$wrapperEl[0].addEventListener("webkitTransitionEnd", swiper.onTranslateToWrapperTransitionEnd);
+            }
+        }
+        return true;
+    }
+    const translate = {
+        getTranslate: getSwiperTranslate,
+        setTranslate,
+        minTranslate,
+        maxTranslate,
+        translateTo
+    };
+    function setTransition(duration, byController) {
+        const swiper = this;
+        if (!swiper.params.cssMode) swiper.$wrapperEl.transition(duration);
+        swiper.emit("setTransition", duration, byController);
+    }
+    function transitionEmit(_ref) {
+        let {swiper, runCallbacks, direction, step} = _ref;
+        const {activeIndex, previousIndex} = swiper;
+        let dir = direction;
+        if (!dir) if (activeIndex > previousIndex) dir = "next"; else if (activeIndex < previousIndex) dir = "prev"; else dir = "reset";
+        swiper.emit(`transition${step}`);
+        if (runCallbacks && activeIndex !== previousIndex) {
+            if ("reset" === dir) {
+                swiper.emit(`slideResetTransition${step}`);
+                return;
+            }
+            swiper.emit(`slideChangeTransition${step}`);
+            if ("next" === dir) swiper.emit(`slideNextTransition${step}`); else swiper.emit(`slidePrevTransition${step}`);
+        }
+    }
+    function transitionStart(runCallbacks, direction) {
+        if (void 0 === runCallbacks) runCallbacks = true;
+        const swiper = this;
+        const {params} = swiper;
+        if (params.cssMode) return;
+        if (params.autoHeight) swiper.updateAutoHeight();
+        transitionEmit({
+            swiper,
+            runCallbacks,
+            direction,
+            step: "Start"
+        });
+    }
+    function transitionEnd_transitionEnd(runCallbacks, direction) {
+        if (void 0 === runCallbacks) runCallbacks = true;
+        const swiper = this;
+        const {params} = swiper;
+        swiper.animating = false;
+        if (params.cssMode) return;
+        swiper.setTransition(0);
+        transitionEmit({
+            swiper,
+            runCallbacks,
+            direction,
+            step: "End"
+        });
+    }
+    const core_transition = {
+        setTransition,
+        transitionStart,
+        transitionEnd: transitionEnd_transitionEnd
+    };
+    function slideTo(index, speed, runCallbacks, internal, initial) {
+        if (void 0 === index) index = 0;
+        if (void 0 === speed) speed = this.params.speed;
+        if (void 0 === runCallbacks) runCallbacks = true;
+        if ("number" !== typeof index && "string" !== typeof index) throw new Error(`The 'index' argument cannot have type other than 'number' or 'string'. [${typeof index}] given.`);
+        if ("string" === typeof index) {
+            const indexAsNumber = parseInt(index, 10);
+            const isValidNumber = isFinite(indexAsNumber);
+            if (!isValidNumber) throw new Error(`The passed-in 'index' (string) couldn't be converted to 'number'. [${index}] given.`);
+            index = indexAsNumber;
+        }
+        const swiper = this;
+        let slideIndex = index;
+        if (slideIndex < 0) slideIndex = 0;
+        const {params, snapGrid, slidesGrid, previousIndex, activeIndex, rtlTranslate: rtl, wrapperEl, enabled} = swiper;
+        if (swiper.animating && params.preventInteractionOnTransition || !enabled && !internal && !initial) return false;
+        const skip = Math.min(swiper.params.slidesPerGroupSkip, slideIndex);
+        let snapIndex = skip + Math.floor((slideIndex - skip) / swiper.params.slidesPerGroup);
+        if (snapIndex >= snapGrid.length) snapIndex = snapGrid.length - 1;
+        if ((activeIndex || params.initialSlide || 0) === (previousIndex || 0) && runCallbacks) swiper.emit("beforeSlideChangeStart");
+        const translate = -snapGrid[snapIndex];
+        swiper.updateProgress(translate);
+        if (params.normalizeSlideIndex) for (let i = 0; i < slidesGrid.length; i += 1) {
+            const normalizedTranslate = -Math.floor(100 * translate);
+            const normalizedGrid = Math.floor(100 * slidesGrid[i]);
+            const normalizedGridNext = Math.floor(100 * slidesGrid[i + 1]);
+            if ("undefined" !== typeof slidesGrid[i + 1]) {
+                if (normalizedTranslate >= normalizedGrid && normalizedTranslate < normalizedGridNext - (normalizedGridNext - normalizedGrid) / 2) slideIndex = i; else if (normalizedTranslate >= normalizedGrid && normalizedTranslate < normalizedGridNext) slideIndex = i + 1;
+            } else if (normalizedTranslate >= normalizedGrid) slideIndex = i;
+        }
+        if (swiper.initialized && slideIndex !== activeIndex) {
+            if (!swiper.allowSlideNext && translate < swiper.translate && translate < swiper.minTranslate()) return false;
+            if (!swiper.allowSlidePrev && translate > swiper.translate && translate > swiper.maxTranslate()) if ((activeIndex || 0) !== slideIndex) return false;
+        }
+        let direction;
+        if (slideIndex > activeIndex) direction = "next"; else if (slideIndex < activeIndex) direction = "prev"; else direction = "reset";
+        if (rtl && -translate === swiper.translate || !rtl && translate === swiper.translate) {
+            swiper.updateActiveIndex(slideIndex);
+            if (params.autoHeight) swiper.updateAutoHeight();
+            swiper.updateSlidesClasses();
+            if ("slide" !== params.effect) swiper.setTranslate(translate);
+            if ("reset" !== direction) {
+                swiper.transitionStart(runCallbacks, direction);
+                swiper.transitionEnd(runCallbacks, direction);
+            }
+            return false;
+        }
+        if (params.cssMode) {
+            const isH = swiper.isHorizontal();
+            const t = rtl ? translate : -translate;
+            if (0 === speed) {
+                const isVirtual = swiper.virtual && swiper.params.virtual.enabled;
+                if (isVirtual) {
+                    swiper.wrapperEl.style.scrollSnapType = "none";
+                    swiper._immediateVirtual = true;
+                }
+                wrapperEl[isH ? "scrollLeft" : "scrollTop"] = t;
+                if (isVirtual) requestAnimationFrame((() => {
+                    swiper.wrapperEl.style.scrollSnapType = "";
+                    swiper._swiperImmediateVirtual = false;
+                }));
+            } else {
+                if (!swiper.support.smoothScroll) {
+                    animateCSSModeScroll({
+                        swiper,
+                        targetPosition: t,
+                        side: isH ? "left" : "top"
+                    });
+                    return true;
+                }
+                wrapperEl.scrollTo({
+                    [isH ? "left" : "top"]: t,
+                    behavior: "smooth"
+                });
+            }
+            return true;
+        }
+        swiper.setTransition(speed);
+        swiper.setTranslate(translate);
+        swiper.updateActiveIndex(slideIndex);
+        swiper.updateSlidesClasses();
+        swiper.emit("beforeTransitionStart", speed, internal);
+        swiper.transitionStart(runCallbacks, direction);
+        if (0 === speed) swiper.transitionEnd(runCallbacks, direction); else if (!swiper.animating) {
+            swiper.animating = true;
+            if (!swiper.onSlideToWrapperTransitionEnd) swiper.onSlideToWrapperTransitionEnd = function transitionEnd(e) {
+                if (!swiper || swiper.destroyed) return;
+                if (e.target !== this) return;
+                swiper.$wrapperEl[0].removeEventListener("transitionend", swiper.onSlideToWrapperTransitionEnd);
+                swiper.$wrapperEl[0].removeEventListener("webkitTransitionEnd", swiper.onSlideToWrapperTransitionEnd);
+                swiper.onSlideToWrapperTransitionEnd = null;
+                delete swiper.onSlideToWrapperTransitionEnd;
+                swiper.transitionEnd(runCallbacks, direction);
+            };
+            swiper.$wrapperEl[0].addEventListener("transitionend", swiper.onSlideToWrapperTransitionEnd);
+            swiper.$wrapperEl[0].addEventListener("webkitTransitionEnd", swiper.onSlideToWrapperTransitionEnd);
+        }
+        return true;
+    }
+    function slideToLoop(index, speed, runCallbacks, internal) {
+        if (void 0 === index) index = 0;
+        if (void 0 === speed) speed = this.params.speed;
+        if (void 0 === runCallbacks) runCallbacks = true;
+        if ("string" === typeof index) {
+            const indexAsNumber = parseInt(index, 10);
+            const isValidNumber = isFinite(indexAsNumber);
+            if (!isValidNumber) throw new Error(`The passed-in 'index' (string) couldn't be converted to 'number'. [${index}] given.`);
+            index = indexAsNumber;
+        }
+        const swiper = this;
+        let newIndex = index;
+        if (swiper.params.loop) newIndex += swiper.loopedSlides;
+        return swiper.slideTo(newIndex, speed, runCallbacks, internal);
+    }
+    function slideNext(speed, runCallbacks, internal) {
+        if (void 0 === speed) speed = this.params.speed;
+        if (void 0 === runCallbacks) runCallbacks = true;
+        const swiper = this;
+        const {animating, enabled, params} = swiper;
+        if (!enabled) return swiper;
+        let perGroup = params.slidesPerGroup;
+        if ("auto" === params.slidesPerView && 1 === params.slidesPerGroup && params.slidesPerGroupAuto) perGroup = Math.max(swiper.slidesPerViewDynamic("current", true), 1);
+        const increment = swiper.activeIndex < params.slidesPerGroupSkip ? 1 : perGroup;
+        if (params.loop) {
+            if (animating && params.loopPreventsSlide) return false;
+            swiper.loopFix();
+            swiper._clientLeft = swiper.$wrapperEl[0].clientLeft;
+        }
+        if (params.rewind && swiper.isEnd) return swiper.slideTo(0, speed, runCallbacks, internal);
+        return swiper.slideTo(swiper.activeIndex + increment, speed, runCallbacks, internal);
+    }
+    function slidePrev(speed, runCallbacks, internal) {
+        if (void 0 === speed) speed = this.params.speed;
+        if (void 0 === runCallbacks) runCallbacks = true;
+        const swiper = this;
+        const {params, animating, snapGrid, slidesGrid, rtlTranslate, enabled} = swiper;
+        if (!enabled) return swiper;
+        if (params.loop) {
+            if (animating && params.loopPreventsSlide) return false;
+            swiper.loopFix();
+            swiper._clientLeft = swiper.$wrapperEl[0].clientLeft;
+        }
+        const translate = rtlTranslate ? swiper.translate : -swiper.translate;
+        function normalize(val) {
+            if (val < 0) return -Math.floor(Math.abs(val));
+            return Math.floor(val);
+        }
+        const normalizedTranslate = normalize(translate);
+        const normalizedSnapGrid = snapGrid.map((val => normalize(val)));
+        let prevSnap = snapGrid[normalizedSnapGrid.indexOf(normalizedTranslate) - 1];
+        if ("undefined" === typeof prevSnap && params.cssMode) {
+            let prevSnapIndex;
+            snapGrid.forEach(((snap, snapIndex) => {
+                if (normalizedTranslate >= snap) prevSnapIndex = snapIndex;
+            }));
+            if ("undefined" !== typeof prevSnapIndex) prevSnap = snapGrid[prevSnapIndex > 0 ? prevSnapIndex - 1 : prevSnapIndex];
+        }
+        let prevIndex = 0;
+        if ("undefined" !== typeof prevSnap) {
+            prevIndex = slidesGrid.indexOf(prevSnap);
+            if (prevIndex < 0) prevIndex = swiper.activeIndex - 1;
+            if ("auto" === params.slidesPerView && 1 === params.slidesPerGroup && params.slidesPerGroupAuto) {
+                prevIndex = prevIndex - swiper.slidesPerViewDynamic("previous", true) + 1;
+                prevIndex = Math.max(prevIndex, 0);
+            }
+        }
+        if (params.rewind && swiper.isBeginning) {
+            const lastIndex = swiper.params.virtual && swiper.params.virtual.enabled && swiper.virtual ? swiper.virtual.slides.length - 1 : swiper.slides.length - 1;
+            return swiper.slideTo(lastIndex, speed, runCallbacks, internal);
+        }
+        return swiper.slideTo(prevIndex, speed, runCallbacks, internal);
+    }
+    function slideReset(speed, runCallbacks, internal) {
+        if (void 0 === speed) speed = this.params.speed;
+        if (void 0 === runCallbacks) runCallbacks = true;
+        const swiper = this;
+        return swiper.slideTo(swiper.activeIndex, speed, runCallbacks, internal);
+    }
+    function slideToClosest(speed, runCallbacks, internal, threshold) {
+        if (void 0 === speed) speed = this.params.speed;
+        if (void 0 === runCallbacks) runCallbacks = true;
+        if (void 0 === threshold) threshold = .5;
+        const swiper = this;
+        let index = swiper.activeIndex;
+        const skip = Math.min(swiper.params.slidesPerGroupSkip, index);
+        const snapIndex = skip + Math.floor((index - skip) / swiper.params.slidesPerGroup);
+        const translate = swiper.rtlTranslate ? swiper.translate : -swiper.translate;
+        if (translate >= swiper.snapGrid[snapIndex]) {
+            const currentSnap = swiper.snapGrid[snapIndex];
+            const nextSnap = swiper.snapGrid[snapIndex + 1];
+            if (translate - currentSnap > (nextSnap - currentSnap) * threshold) index += swiper.params.slidesPerGroup;
+        } else {
+            const prevSnap = swiper.snapGrid[snapIndex - 1];
+            const currentSnap = swiper.snapGrid[snapIndex];
+            if (translate - prevSnap <= (currentSnap - prevSnap) * threshold) index -= swiper.params.slidesPerGroup;
+        }
+        index = Math.max(index, 0);
+        index = Math.min(index, swiper.slidesGrid.length - 1);
+        return swiper.slideTo(index, speed, runCallbacks, internal);
+    }
+    function slideToClickedSlide() {
+        const swiper = this;
+        const {params, $wrapperEl} = swiper;
+        const slidesPerView = "auto" === params.slidesPerView ? swiper.slidesPerViewDynamic() : params.slidesPerView;
+        let slideToIndex = swiper.clickedIndex;
+        let realIndex;
+        if (params.loop) {
+            if (swiper.animating) return;
+            realIndex = parseInt(dom(swiper.clickedSlide).attr("data-swiper-slide-index"), 10);
+            if (params.centeredSlides) if (slideToIndex < swiper.loopedSlides - slidesPerView / 2 || slideToIndex > swiper.slides.length - swiper.loopedSlides + slidesPerView / 2) {
+                swiper.loopFix();
+                slideToIndex = $wrapperEl.children(`.${params.slideClass}[data-swiper-slide-index="${realIndex}"]:not(.${params.slideDuplicateClass})`).eq(0).index();
+                utils_nextTick((() => {
+                    swiper.slideTo(slideToIndex);
+                }));
+            } else swiper.slideTo(slideToIndex); else if (slideToIndex > swiper.slides.length - slidesPerView) {
+                swiper.loopFix();
+                slideToIndex = $wrapperEl.children(`.${params.slideClass}[data-swiper-slide-index="${realIndex}"]:not(.${params.slideDuplicateClass})`).eq(0).index();
+                utils_nextTick((() => {
+                    swiper.slideTo(slideToIndex);
+                }));
+            } else swiper.slideTo(slideToIndex);
+        } else swiper.slideTo(slideToIndex);
+    }
+    const slide = {
+        slideTo,
+        slideToLoop,
+        slideNext,
+        slidePrev,
+        slideReset,
+        slideToClosest,
+        slideToClickedSlide
+    };
+    function loopCreate() {
+        const swiper = this;
+        const document = ssr_window_esm_getDocument();
+        const {params, $wrapperEl} = swiper;
+        const $selector = $wrapperEl.children().length > 0 ? dom($wrapperEl.children()[0].parentNode) : $wrapperEl;
+        $selector.children(`.${params.slideClass}.${params.slideDuplicateClass}`).remove();
+        let slides = $selector.children(`.${params.slideClass}`);
+        if (params.loopFillGroupWithBlank) {
+            const blankSlidesNum = params.slidesPerGroup - slides.length % params.slidesPerGroup;
+            if (blankSlidesNum !== params.slidesPerGroup) {
+                for (let i = 0; i < blankSlidesNum; i += 1) {
+                    const blankNode = dom(document.createElement("div")).addClass(`${params.slideClass} ${params.slideBlankClass}`);
+                    $selector.append(blankNode);
+                }
+                slides = $selector.children(`.${params.slideClass}`);
+            }
+        }
+        if ("auto" === params.slidesPerView && !params.loopedSlides) params.loopedSlides = slides.length;
+        swiper.loopedSlides = Math.ceil(parseFloat(params.loopedSlides || params.slidesPerView, 10));
+        swiper.loopedSlides += params.loopAdditionalSlides;
+        if (swiper.loopedSlides > slides.length) swiper.loopedSlides = slides.length;
+        const prependSlides = [];
+        const appendSlides = [];
+        slides.each(((el, index) => {
+            const slide = dom(el);
+            if (index < swiper.loopedSlides) appendSlides.push(el);
+            if (index < slides.length && index >= slides.length - swiper.loopedSlides) prependSlides.push(el);
+            slide.attr("data-swiper-slide-index", index);
+        }));
+        for (let i = 0; i < appendSlides.length; i += 1) $selector.append(dom(appendSlides[i].cloneNode(true)).addClass(params.slideDuplicateClass));
+        for (let i = prependSlides.length - 1; i >= 0; i -= 1) $selector.prepend(dom(prependSlides[i].cloneNode(true)).addClass(params.slideDuplicateClass));
+    }
+    function loopFix() {
+        const swiper = this;
+        swiper.emit("beforeLoopFix");
+        const {activeIndex, slides, loopedSlides, allowSlidePrev, allowSlideNext, snapGrid, rtlTranslate: rtl} = swiper;
+        let newIndex;
+        swiper.allowSlidePrev = true;
+        swiper.allowSlideNext = true;
+        const snapTranslate = -snapGrid[activeIndex];
+        const diff = snapTranslate - swiper.getTranslate();
+        if (activeIndex < loopedSlides) {
+            newIndex = slides.length - 3 * loopedSlides + activeIndex;
+            newIndex += loopedSlides;
+            const slideChanged = swiper.slideTo(newIndex, 0, false, true);
+            if (slideChanged && 0 !== diff) swiper.setTranslate((rtl ? -swiper.translate : swiper.translate) - diff);
+        } else if (activeIndex >= slides.length - loopedSlides) {
+            newIndex = -slides.length + activeIndex + loopedSlides;
+            newIndex += loopedSlides;
+            const slideChanged = swiper.slideTo(newIndex, 0, false, true);
+            if (slideChanged && 0 !== diff) swiper.setTranslate((rtl ? -swiper.translate : swiper.translate) - diff);
+        }
+        swiper.allowSlidePrev = allowSlidePrev;
+        swiper.allowSlideNext = allowSlideNext;
+        swiper.emit("loopFix");
+    }
+    function loopDestroy() {
+        const swiper = this;
+        const {$wrapperEl, params, slides} = swiper;
+        $wrapperEl.children(`.${params.slideClass}.${params.slideDuplicateClass},.${params.slideClass}.${params.slideBlankClass}`).remove();
+        slides.removeAttr("data-swiper-slide-index");
+    }
+    const loop = {
+        loopCreate,
+        loopFix,
+        loopDestroy
+    };
+    function setGrabCursor(moving) {
+        const swiper = this;
+        if (swiper.support.touch || !swiper.params.simulateTouch || swiper.params.watchOverflow && swiper.isLocked || swiper.params.cssMode) return;
+        const el = "container" === swiper.params.touchEventsTarget ? swiper.el : swiper.wrapperEl;
+        el.style.cursor = "move";
+        el.style.cursor = moving ? "grabbing" : "grab";
+    }
+    function unsetGrabCursor() {
+        const swiper = this;
+        if (swiper.support.touch || swiper.params.watchOverflow && swiper.isLocked || swiper.params.cssMode) return;
+        swiper["container" === swiper.params.touchEventsTarget ? "el" : "wrapperEl"].style.cursor = "";
+    }
+    const grab_cursor = {
+        setGrabCursor,
+        unsetGrabCursor
+    };
+    function closestElement(selector, base) {
+        if (void 0 === base) base = this;
+        function __closestFrom(el) {
+            if (!el || el === ssr_window_esm_getDocument() || el === ssr_window_esm_getWindow()) return null;
+            if (el.assignedSlot) el = el.assignedSlot;
+            const found = el.closest(selector);
+            if (!found && !el.getRootNode) return null;
+            return found || __closestFrom(el.getRootNode().host);
+        }
+        return __closestFrom(base);
+    }
+    function onTouchStart(event) {
+        const swiper = this;
+        const document = ssr_window_esm_getDocument();
+        const window = ssr_window_esm_getWindow();
+        const data = swiper.touchEventsData;
+        const {params, touches, enabled} = swiper;
+        if (!enabled) return;
+        if (swiper.animating && params.preventInteractionOnTransition) return;
+        if (!swiper.animating && params.cssMode && params.loop) swiper.loopFix();
+        let e = event;
+        if (e.originalEvent) e = e.originalEvent;
+        let $targetEl = dom(e.target);
+        if ("wrapper" === params.touchEventsTarget) if (!$targetEl.closest(swiper.wrapperEl).length) return;
+        data.isTouchEvent = "touchstart" === e.type;
+        if (!data.isTouchEvent && "which" in e && 3 === e.which) return;
+        if (!data.isTouchEvent && "button" in e && e.button > 0) return;
+        if (data.isTouched && data.isMoved) return;
+        const swipingClassHasValue = !!params.noSwipingClass && "" !== params.noSwipingClass;
+        if (swipingClassHasValue && e.target && e.target.shadowRoot && event.path && event.path[0]) $targetEl = dom(event.path[0]);
+        const noSwipingSelector = params.noSwipingSelector ? params.noSwipingSelector : `.${params.noSwipingClass}`;
+        const isTargetShadow = !!(e.target && e.target.shadowRoot);
+        if (params.noSwiping && (isTargetShadow ? closestElement(noSwipingSelector, $targetEl[0]) : $targetEl.closest(noSwipingSelector)[0])) {
+            swiper.allowClick = true;
+            return;
+        }
+        if (params.swipeHandler) if (!$targetEl.closest(params.swipeHandler)[0]) return;
+        touches.currentX = "touchstart" === e.type ? e.targetTouches[0].pageX : e.pageX;
+        touches.currentY = "touchstart" === e.type ? e.targetTouches[0].pageY : e.pageY;
+        const startX = touches.currentX;
+        const startY = touches.currentY;
+        const edgeSwipeDetection = params.edgeSwipeDetection || params.iOSEdgeSwipeDetection;
+        const edgeSwipeThreshold = params.edgeSwipeThreshold || params.iOSEdgeSwipeThreshold;
+        if (edgeSwipeDetection && (startX <= edgeSwipeThreshold || startX >= window.innerWidth - edgeSwipeThreshold)) if ("prevent" === edgeSwipeDetection) event.preventDefault(); else return;
+        Object.assign(data, {
+            isTouched: true,
+            isMoved: false,
+            allowTouchCallbacks: true,
+            isScrolling: void 0,
+            startMoving: void 0
+        });
+        touches.startX = startX;
+        touches.startY = startY;
+        data.touchStartTime = utils_now();
+        swiper.allowClick = true;
+        swiper.updateSize();
+        swiper.swipeDirection = void 0;
+        if (params.threshold > 0) data.allowThresholdMove = false;
+        if ("touchstart" !== e.type) {
+            let preventDefault = true;
+            if ($targetEl.is(data.focusableElements)) {
+                preventDefault = false;
+                if ("SELECT" === $targetEl[0].nodeName) data.isTouched = false;
+            }
+            if (document.activeElement && dom(document.activeElement).is(data.focusableElements) && document.activeElement !== $targetEl[0]) document.activeElement.blur();
+            const shouldPreventDefault = preventDefault && swiper.allowTouchMove && params.touchStartPreventDefault;
+            if ((params.touchStartForcePreventDefault || shouldPreventDefault) && !$targetEl[0].isContentEditable) e.preventDefault();
+        }
+        if (swiper.params.freeMode && swiper.params.freeMode.enabled && swiper.freeMode && swiper.animating && !params.cssMode) swiper.freeMode.onTouchStart();
+        swiper.emit("touchStart", e);
+    }
+    function onTouchMove(event) {
+        const document = ssr_window_esm_getDocument();
+        const swiper = this;
+        const data = swiper.touchEventsData;
+        const {params, touches, rtlTranslate: rtl, enabled} = swiper;
+        if (!enabled) return;
+        let e = event;
+        if (e.originalEvent) e = e.originalEvent;
+        if (!data.isTouched) {
+            if (data.startMoving && data.isScrolling) swiper.emit("touchMoveOpposite", e);
+            return;
+        }
+        if (data.isTouchEvent && "touchmove" !== e.type) return;
+        const targetTouch = "touchmove" === e.type && e.targetTouches && (e.targetTouches[0] || e.changedTouches[0]);
+        const pageX = "touchmove" === e.type ? targetTouch.pageX : e.pageX;
+        const pageY = "touchmove" === e.type ? targetTouch.pageY : e.pageY;
+        if (e.preventedByNestedSwiper) {
+            touches.startX = pageX;
+            touches.startY = pageY;
+            return;
+        }
+        if (!swiper.allowTouchMove) {
+            if (!dom(e.target).is(data.focusableElements)) swiper.allowClick = false;
+            if (data.isTouched) {
+                Object.assign(touches, {
+                    startX: pageX,
+                    startY: pageY,
+                    currentX: pageX,
+                    currentY: pageY
+                });
+                data.touchStartTime = utils_now();
+            }
+            return;
+        }
+        if (data.isTouchEvent && params.touchReleaseOnEdges && !params.loop) if (swiper.isVertical()) {
+            if (pageY < touches.startY && swiper.translate <= swiper.maxTranslate() || pageY > touches.startY && swiper.translate >= swiper.minTranslate()) {
+                data.isTouched = false;
+                data.isMoved = false;
+                return;
+            }
+        } else if (pageX < touches.startX && swiper.translate <= swiper.maxTranslate() || pageX > touches.startX && swiper.translate >= swiper.minTranslate()) return;
+        if (data.isTouchEvent && document.activeElement) if (e.target === document.activeElement && dom(e.target).is(data.focusableElements)) {
+            data.isMoved = true;
+            swiper.allowClick = false;
+            return;
+        }
+        if (data.allowTouchCallbacks) swiper.emit("touchMove", e);
+        if (e.targetTouches && e.targetTouches.length > 1) return;
+        touches.currentX = pageX;
+        touches.currentY = pageY;
+        const diffX = touches.currentX - touches.startX;
+        const diffY = touches.currentY - touches.startY;
+        if (swiper.params.threshold && Math.sqrt(diffX ** 2 + diffY ** 2) < swiper.params.threshold) return;
+        if ("undefined" === typeof data.isScrolling) {
+            let touchAngle;
+            if (swiper.isHorizontal() && touches.currentY === touches.startY || swiper.isVertical() && touches.currentX === touches.startX) data.isScrolling = false; else if (diffX * diffX + diffY * diffY >= 25) {
+                touchAngle = 180 * Math.atan2(Math.abs(diffY), Math.abs(diffX)) / Math.PI;
+                data.isScrolling = swiper.isHorizontal() ? touchAngle > params.touchAngle : 90 - touchAngle > params.touchAngle;
+            }
+        }
+        if (data.isScrolling) swiper.emit("touchMoveOpposite", e);
+        if ("undefined" === typeof data.startMoving) if (touches.currentX !== touches.startX || touches.currentY !== touches.startY) data.startMoving = true;
+        if (data.isScrolling) {
+            data.isTouched = false;
+            return;
+        }
+        if (!data.startMoving) return;
+        swiper.allowClick = false;
+        if (!params.cssMode && e.cancelable) e.preventDefault();
+        if (params.touchMoveStopPropagation && !params.nested) e.stopPropagation();
+        if (!data.isMoved) {
+            if (params.loop && !params.cssMode) swiper.loopFix();
+            data.startTranslate = swiper.getTranslate();
+            swiper.setTransition(0);
+            if (swiper.animating) swiper.$wrapperEl.trigger("webkitTransitionEnd transitionend");
+            data.allowMomentumBounce = false;
+            if (params.grabCursor && (true === swiper.allowSlideNext || true === swiper.allowSlidePrev)) swiper.setGrabCursor(true);
+            swiper.emit("sliderFirstMove", e);
+        }
+        swiper.emit("sliderMove", e);
+        data.isMoved = true;
+        let diff = swiper.isHorizontal() ? diffX : diffY;
+        touches.diff = diff;
+        diff *= params.touchRatio;
+        if (rtl) diff = -diff;
+        swiper.swipeDirection = diff > 0 ? "prev" : "next";
+        data.currentTranslate = diff + data.startTranslate;
+        let disableParentSwiper = true;
+        let resistanceRatio = params.resistanceRatio;
+        if (params.touchReleaseOnEdges) resistanceRatio = 0;
+        if (diff > 0 && data.currentTranslate > swiper.minTranslate()) {
+            disableParentSwiper = false;
+            if (params.resistance) data.currentTranslate = swiper.minTranslate() - 1 + (-swiper.minTranslate() + data.startTranslate + diff) ** resistanceRatio;
+        } else if (diff < 0 && data.currentTranslate < swiper.maxTranslate()) {
+            disableParentSwiper = false;
+            if (params.resistance) data.currentTranslate = swiper.maxTranslate() + 1 - (swiper.maxTranslate() - data.startTranslate - diff) ** resistanceRatio;
+        }
+        if (disableParentSwiper) e.preventedByNestedSwiper = true;
+        if (!swiper.allowSlideNext && "next" === swiper.swipeDirection && data.currentTranslate < data.startTranslate) data.currentTranslate = data.startTranslate;
+        if (!swiper.allowSlidePrev && "prev" === swiper.swipeDirection && data.currentTranslate > data.startTranslate) data.currentTranslate = data.startTranslate;
+        if (!swiper.allowSlidePrev && !swiper.allowSlideNext) data.currentTranslate = data.startTranslate;
+        if (params.threshold > 0) if (Math.abs(diff) > params.threshold || data.allowThresholdMove) {
+            if (!data.allowThresholdMove) {
+                data.allowThresholdMove = true;
+                touches.startX = touches.currentX;
+                touches.startY = touches.currentY;
+                data.currentTranslate = data.startTranslate;
+                touches.diff = swiper.isHorizontal() ? touches.currentX - touches.startX : touches.currentY - touches.startY;
+                return;
+            }
+        } else {
+            data.currentTranslate = data.startTranslate;
+            return;
+        }
+        if (!params.followFinger || params.cssMode) return;
+        if (params.freeMode && params.freeMode.enabled && swiper.freeMode || params.watchSlidesProgress) {
+            swiper.updateActiveIndex();
+            swiper.updateSlidesClasses();
+        }
+        if (swiper.params.freeMode && params.freeMode.enabled && swiper.freeMode) swiper.freeMode.onTouchMove();
+        swiper.updateProgress(data.currentTranslate);
+        swiper.setTranslate(data.currentTranslate);
+    }
+    function onTouchEnd(event) {
+        const swiper = this;
+        const data = swiper.touchEventsData;
+        const {params, touches, rtlTranslate: rtl, slidesGrid, enabled} = swiper;
+        if (!enabled) return;
+        let e = event;
+        if (e.originalEvent) e = e.originalEvent;
+        if (data.allowTouchCallbacks) swiper.emit("touchEnd", e);
+        data.allowTouchCallbacks = false;
+        if (!data.isTouched) {
+            if (data.isMoved && params.grabCursor) swiper.setGrabCursor(false);
+            data.isMoved = false;
+            data.startMoving = false;
+            return;
+        }
+        if (params.grabCursor && data.isMoved && data.isTouched && (true === swiper.allowSlideNext || true === swiper.allowSlidePrev)) swiper.setGrabCursor(false);
+        const touchEndTime = utils_now();
+        const timeDiff = touchEndTime - data.touchStartTime;
+        if (swiper.allowClick) {
+            const pathTree = e.path || e.composedPath && e.composedPath();
+            swiper.updateClickedSlide(pathTree && pathTree[0] || e.target);
+            swiper.emit("tap click", e);
+            if (timeDiff < 300 && touchEndTime - data.lastClickTime < 300) swiper.emit("doubleTap doubleClick", e);
+        }
+        data.lastClickTime = utils_now();
+        utils_nextTick((() => {
+            if (!swiper.destroyed) swiper.allowClick = true;
+        }));
+        if (!data.isTouched || !data.isMoved || !swiper.swipeDirection || 0 === touches.diff || data.currentTranslate === data.startTranslate) {
+            data.isTouched = false;
+            data.isMoved = false;
+            data.startMoving = false;
+            return;
+        }
+        data.isTouched = false;
+        data.isMoved = false;
+        data.startMoving = false;
+        let currentPos;
+        if (params.followFinger) currentPos = rtl ? swiper.translate : -swiper.translate; else currentPos = -data.currentTranslate;
+        if (params.cssMode) return;
+        if (swiper.params.freeMode && params.freeMode.enabled) {
+            swiper.freeMode.onTouchEnd({
+                currentPos
             });
-            const a = N({}, oe, n);
-            return (
-                (i.params = N({}, a, ue, s)),
-                (i.originalParams = N({}, i.params)),
-                (i.passedParams = N({}, s)),
-                i.params &&
-                i.params.on &&
-                Object.keys(i.params.on).forEach((e) => {
-                    i.on(e, i.params.on[e]);
-                }),
-                i.params && i.params.onAny && i.onAny(i.params.onAny),
-                (i.$ = D),
-                Object.assign(i, {
-                    enabled: i.params.enabled,
-                    el: t,
-                    classNames: [],
-                    slides: D(),
-                    slidesGrid: [],
-                    snapGrid: [],
-                    slidesSizesGrid: [],
-                    isHorizontal: () => "horizontal" === i.params.direction,
-                    isVertical: () => "vertical" === i.params.direction,
-                    activeIndex: 0,
-                    realIndex: 0,
-                    isBeginning: !0,
-                    isEnd: !1,
-                    translate: 0,
-                    previousTranslate: 0,
-                    progress: 0,
-                    velocity: 0,
-                    animating: !1,
-                    allowSlideNext: i.params.allowSlideNext,
-                    allowSlidePrev: i.params.allowSlidePrev,
-                    touchEvents: (function () {
-                        const e = ["touchstart", "touchmove", "touchend", "touchcancel"],
-                            t = ["pointerdown", "pointermove", "pointerup"];
-                        return (
-                            (i.touchEventsTouch = { start: e[0], move: e[1], end: e[2], cancel: e[3] }),
-                            (i.touchEventsDesktop = { start: t[0], move: t[1], end: t[2] }),
-                            i.support.touch || !i.params.simulateTouch ? i.touchEventsTouch : i.touchEventsDesktop
-                        );
-                    })(),
-                    touchEventsData: {
-                        isTouched: void 0,
-                        isMoved: void 0,
-                        allowTouchCallbacks: void 0,
-                        touchStartTime: void 0,
-                        isScrolling: void 0,
-                        currentTranslate: void 0,
-                        startTranslate: void 0,
-                        allowThresholdMove: void 0,
-                        focusableElements: i.params.focusableElements,
-                        lastClickTime: z(),
-                        clickTimeout: void 0,
-                        velocities: [],
-                        allowMomentumBounce: void 0,
-                        isTouchEvent: void 0,
-                        startMoving: void 0,
-                    },
-                    allowClick: !0,
-                    allowTouchMove: i.params.allowTouchMove,
-                    touches: { startX: 0, startY: 0, currentX: 0, currentY: 0, diff: 0 },
-                    imagesToLoad: [],
-                    imagesLoaded: 0,
-                }),
-                i.emit("_swiper"),
-                i.params.init && i.init(),
-                i
-            );
+            return;
+        }
+        let stopIndex = 0;
+        let groupSize = swiper.slidesSizesGrid[0];
+        for (let i = 0; i < slidesGrid.length; i += i < params.slidesPerGroupSkip ? 1 : params.slidesPerGroup) {
+            const increment = i < params.slidesPerGroupSkip - 1 ? 1 : params.slidesPerGroup;
+            if ("undefined" !== typeof slidesGrid[i + increment]) {
+                if (currentPos >= slidesGrid[i] && currentPos < slidesGrid[i + increment]) {
+                    stopIndex = i;
+                    groupSize = slidesGrid[i + increment] - slidesGrid[i];
+                }
+            } else if (currentPos >= slidesGrid[i]) {
+                stopIndex = i;
+                groupSize = slidesGrid[slidesGrid.length - 1] - slidesGrid[slidesGrid.length - 2];
+            }
+        }
+        let rewindFirstIndex = null;
+        let rewindLastIndex = null;
+        if (params.rewind) if (swiper.isBeginning) rewindLastIndex = swiper.params.virtual && swiper.params.virtual.enabled && swiper.virtual ? swiper.virtual.slides.length - 1 : swiper.slides.length - 1; else if (swiper.isEnd) rewindFirstIndex = 0;
+        const ratio = (currentPos - slidesGrid[stopIndex]) / groupSize;
+        const increment = stopIndex < params.slidesPerGroupSkip - 1 ? 1 : params.slidesPerGroup;
+        if (timeDiff > params.longSwipesMs) {
+            if (!params.longSwipes) {
+                swiper.slideTo(swiper.activeIndex);
+                return;
+            }
+            if ("next" === swiper.swipeDirection) if (ratio >= params.longSwipesRatio) swiper.slideTo(params.rewind && swiper.isEnd ? rewindFirstIndex : stopIndex + increment); else swiper.slideTo(stopIndex);
+            if ("prev" === swiper.swipeDirection) if (ratio > 1 - params.longSwipesRatio) swiper.slideTo(stopIndex + increment); else if (null !== rewindLastIndex && ratio < 0 && Math.abs(ratio) > params.longSwipesRatio) swiper.slideTo(rewindLastIndex); else swiper.slideTo(stopIndex);
+        } else {
+            if (!params.shortSwipes) {
+                swiper.slideTo(swiper.activeIndex);
+                return;
+            }
+            const isNavButtonTarget = swiper.navigation && (e.target === swiper.navigation.nextEl || e.target === swiper.navigation.prevEl);
+            if (!isNavButtonTarget) {
+                if ("next" === swiper.swipeDirection) swiper.slideTo(null !== rewindFirstIndex ? rewindFirstIndex : stopIndex + increment);
+                if ("prev" === swiper.swipeDirection) swiper.slideTo(null !== rewindLastIndex ? rewindLastIndex : stopIndex);
+            } else if (e.target === swiper.navigation.nextEl) swiper.slideTo(stopIndex + increment); else swiper.slideTo(stopIndex);
+        }
+    }
+    function onResize() {
+        const swiper = this;
+        const {params, el} = swiper;
+        if (el && 0 === el.offsetWidth) return;
+        if (params.breakpoints) swiper.setBreakpoint();
+        const {allowSlideNext, allowSlidePrev, snapGrid} = swiper;
+        swiper.allowSlideNext = true;
+        swiper.allowSlidePrev = true;
+        swiper.updateSize();
+        swiper.updateSlides();
+        swiper.updateSlidesClasses();
+        if (("auto" === params.slidesPerView || params.slidesPerView > 1) && swiper.isEnd && !swiper.isBeginning && !swiper.params.centeredSlides) swiper.slideTo(swiper.slides.length - 1, 0, false, true); else swiper.slideTo(swiper.activeIndex, 0, false, true);
+        if (swiper.autoplay && swiper.autoplay.running && swiper.autoplay.paused) swiper.autoplay.run();
+        swiper.allowSlidePrev = allowSlidePrev;
+        swiper.allowSlideNext = allowSlideNext;
+        if (swiper.params.watchOverflow && snapGrid !== swiper.snapGrid) swiper.checkOverflow();
+    }
+    function onClick(e) {
+        const swiper = this;
+        if (!swiper.enabled) return;
+        if (!swiper.allowClick) {
+            if (swiper.params.preventClicks) e.preventDefault();
+            if (swiper.params.preventClicksPropagation && swiper.animating) {
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+            }
+        }
+    }
+    function onScroll() {
+        const swiper = this;
+        const {wrapperEl, rtlTranslate, enabled} = swiper;
+        if (!enabled) return;
+        swiper.previousTranslate = swiper.translate;
+        if (swiper.isHorizontal()) swiper.translate = -wrapperEl.scrollLeft; else swiper.translate = -wrapperEl.scrollTop;
+        if (0 === swiper.translate) swiper.translate = 0;
+        swiper.updateActiveIndex();
+        swiper.updateSlidesClasses();
+        let newProgress;
+        const translatesDiff = swiper.maxTranslate() - swiper.minTranslate();
+        if (0 === translatesDiff) newProgress = 0; else newProgress = (swiper.translate - swiper.minTranslate()) / translatesDiff;
+        if (newProgress !== swiper.progress) swiper.updateProgress(rtlTranslate ? -swiper.translate : swiper.translate);
+        swiper.emit("setTranslate", swiper.translate, false);
+    }
+    let dummyEventAttached = false;
+    function dummyEventListener() {}
+    const events = (swiper, method) => {
+        const document = ssr_window_esm_getDocument();
+        const {params, touchEvents, el, wrapperEl, device, support} = swiper;
+        const capture = !!params.nested;
+        const domMethod = "on" === method ? "addEventListener" : "removeEventListener";
+        const swiperMethod = method;
+        if (!support.touch) {
+            el[domMethod](touchEvents.start, swiper.onTouchStart, false);
+            document[domMethod](touchEvents.move, swiper.onTouchMove, capture);
+            document[domMethod](touchEvents.end, swiper.onTouchEnd, false);
+        } else {
+            const passiveListener = "touchstart" === touchEvents.start && support.passiveListener && params.passiveListeners ? {
+                passive: true,
+                capture: false
+            } : false;
+            el[domMethod](touchEvents.start, swiper.onTouchStart, passiveListener);
+            el[domMethod](touchEvents.move, swiper.onTouchMove, support.passiveListener ? {
+                passive: false,
+                capture
+            } : capture);
+            el[domMethod](touchEvents.end, swiper.onTouchEnd, passiveListener);
+            if (touchEvents.cancel) el[domMethod](touchEvents.cancel, swiper.onTouchEnd, passiveListener);
+        }
+        if (params.preventClicks || params.preventClicksPropagation) el[domMethod]("click", swiper.onClick, true);
+        if (params.cssMode) wrapperEl[domMethod]("scroll", swiper.onScroll);
+        if (params.updateOnWindowResize) swiper[swiperMethod](device.ios || device.android ? "resize orientationchange observerUpdate" : "resize observerUpdate", onResize, true); else swiper[swiperMethod]("observerUpdate", onResize, true);
+    };
+    function attachEvents() {
+        const swiper = this;
+        const document = ssr_window_esm_getDocument();
+        const {params, support} = swiper;
+        swiper.onTouchStart = onTouchStart.bind(swiper);
+        swiper.onTouchMove = onTouchMove.bind(swiper);
+        swiper.onTouchEnd = onTouchEnd.bind(swiper);
+        if (params.cssMode) swiper.onScroll = onScroll.bind(swiper);
+        swiper.onClick = onClick.bind(swiper);
+        if (support.touch && !dummyEventAttached) {
+            document.addEventListener("touchstart", dummyEventListener);
+            dummyEventAttached = true;
+        }
+        events(swiper, "on");
+    }
+    function detachEvents() {
+        const swiper = this;
+        events(swiper, "off");
+    }
+    const core_events = {
+        attachEvents,
+        detachEvents
+    };
+    const isGridEnabled = (swiper, params) => swiper.grid && params.grid && params.grid.rows > 1;
+    function setBreakpoint() {
+        const swiper = this;
+        const {activeIndex, initialized, loopedSlides = 0, params, $el} = swiper;
+        const breakpoints = params.breakpoints;
+        if (!breakpoints || breakpoints && 0 === Object.keys(breakpoints).length) return;
+        const breakpoint = swiper.getBreakpoint(breakpoints, swiper.params.breakpointsBase, swiper.el);
+        if (!breakpoint || swiper.currentBreakpoint === breakpoint) return;
+        const breakpointOnlyParams = breakpoint in breakpoints ? breakpoints[breakpoint] : void 0;
+        const breakpointParams = breakpointOnlyParams || swiper.originalParams;
+        const wasMultiRow = isGridEnabled(swiper, params);
+        const isMultiRow = isGridEnabled(swiper, breakpointParams);
+        const wasEnabled = params.enabled;
+        if (wasMultiRow && !isMultiRow) {
+            $el.removeClass(`${params.containerModifierClass}grid ${params.containerModifierClass}grid-column`);
+            swiper.emitContainerClasses();
+        } else if (!wasMultiRow && isMultiRow) {
+            $el.addClass(`${params.containerModifierClass}grid`);
+            if (breakpointParams.grid.fill && "column" === breakpointParams.grid.fill || !breakpointParams.grid.fill && "column" === params.grid.fill) $el.addClass(`${params.containerModifierClass}grid-column`);
+            swiper.emitContainerClasses();
+        }
+        [ "navigation", "pagination", "scrollbar" ].forEach((prop => {
+            const wasModuleEnabled = params[prop] && params[prop].enabled;
+            const isModuleEnabled = breakpointParams[prop] && breakpointParams[prop].enabled;
+            if (wasModuleEnabled && !isModuleEnabled) swiper[prop].disable();
+            if (!wasModuleEnabled && isModuleEnabled) swiper[prop].enable();
+        }));
+        const directionChanged = breakpointParams.direction && breakpointParams.direction !== params.direction;
+        const needsReLoop = params.loop && (breakpointParams.slidesPerView !== params.slidesPerView || directionChanged);
+        if (directionChanged && initialized) swiper.changeDirection();
+        utils_extend(swiper.params, breakpointParams);
+        const isEnabled = swiper.params.enabled;
+        Object.assign(swiper, {
+            allowTouchMove: swiper.params.allowTouchMove,
+            allowSlideNext: swiper.params.allowSlideNext,
+            allowSlidePrev: swiper.params.allowSlidePrev
+        });
+        if (wasEnabled && !isEnabled) swiper.disable(); else if (!wasEnabled && isEnabled) swiper.enable();
+        swiper.currentBreakpoint = breakpoint;
+        swiper.emit("_beforeBreakpoint", breakpointParams);
+        if (needsReLoop && initialized) {
+            swiper.loopDestroy();
+            swiper.loopCreate();
+            swiper.updateSlides();
+            swiper.slideTo(activeIndex - loopedSlides + swiper.loopedSlides, 0, false);
+        }
+        swiper.emit("breakpoint", breakpointParams);
+    }
+    function getBreakpoint(breakpoints, base, containerEl) {
+        if (void 0 === base) base = "window";
+        if (!breakpoints || "container" === base && !containerEl) return;
+        let breakpoint = false;
+        const window = ssr_window_esm_getWindow();
+        const currentHeight = "window" === base ? window.innerHeight : containerEl.clientHeight;
+        const points = Object.keys(breakpoints).map((point => {
+            if ("string" === typeof point && 0 === point.indexOf("@")) {
+                const minRatio = parseFloat(point.substr(1));
+                const value = currentHeight * minRatio;
+                return {
+                    value,
+                    point
+                };
+            }
+            return {
+                value: point,
+                point
+            };
+        }));
+        points.sort(((a, b) => parseInt(a.value, 10) - parseInt(b.value, 10)));
+        for (let i = 0; i < points.length; i += 1) {
+            const {point, value} = points[i];
+            if ("window" === base) {
+                if (window.matchMedia(`(min-width: ${value}px)`).matches) breakpoint = point;
+            } else if (value <= containerEl.clientWidth) breakpoint = point;
+        }
+        return breakpoint || "max";
+    }
+    const breakpoints = {
+        setBreakpoint,
+        getBreakpoint
+    };
+    function prepareClasses(entries, prefix) {
+        const resultClasses = [];
+        entries.forEach((item => {
+            if ("object" === typeof item) Object.keys(item).forEach((classNames => {
+                if (item[classNames]) resultClasses.push(prefix + classNames);
+            })); else if ("string" === typeof item) resultClasses.push(prefix + item);
+        }));
+        return resultClasses;
+    }
+    function addClasses() {
+        const swiper = this;
+        const {classNames, params, rtl, $el, device, support} = swiper;
+        const suffixes = prepareClasses([ "initialized", params.direction, {
+            "pointer-events": !support.touch
+        }, {
+            "free-mode": swiper.params.freeMode && params.freeMode.enabled
+        }, {
+            autoheight: params.autoHeight
+        }, {
+            rtl
+        }, {
+            grid: params.grid && params.grid.rows > 1
+        }, {
+            "grid-column": params.grid && params.grid.rows > 1 && "column" === params.grid.fill
+        }, {
+            android: device.android
+        }, {
+            ios: device.ios
+        }, {
+            "css-mode": params.cssMode
+        }, {
+            centered: params.cssMode && params.centeredSlides
+        }, {
+            "watch-progress": params.watchSlidesProgress
+        } ], params.containerModifierClass);
+        classNames.push(...suffixes);
+        $el.addClass([ ...classNames ].join(" "));
+        swiper.emitContainerClasses();
+    }
+    function removeClasses_removeClasses() {
+        const swiper = this;
+        const {$el, classNames} = swiper;
+        $el.removeClass(classNames.join(" "));
+        swiper.emitContainerClasses();
+    }
+    const classes = {
+        addClasses,
+        removeClasses: removeClasses_removeClasses
+    };
+    function loadImage(imageEl, src, srcset, sizes, checkForComplete, callback) {
+        const window = ssr_window_esm_getWindow();
+        let image;
+        function onReady() {
+            if (callback) callback();
+        }
+        const isPicture = dom(imageEl).parent("picture")[0];
+        if (!isPicture && (!imageEl.complete || !checkForComplete)) if (src) {
+            image = new window.Image;
+            image.onload = onReady;
+            image.onerror = onReady;
+            if (sizes) image.sizes = sizes;
+            if (srcset) image.srcset = srcset;
+            if (src) image.src = src;
+        } else onReady(); else onReady();
+    }
+    function preloadImages() {
+        const swiper = this;
+        swiper.imagesToLoad = swiper.$el.find("img");
+        function onReady() {
+            if ("undefined" === typeof swiper || null === swiper || !swiper || swiper.destroyed) return;
+            if (void 0 !== swiper.imagesLoaded) swiper.imagesLoaded += 1;
+            if (swiper.imagesLoaded === swiper.imagesToLoad.length) {
+                if (swiper.params.updateOnImagesReady) swiper.update();
+                swiper.emit("imagesReady");
+            }
+        }
+        for (let i = 0; i < swiper.imagesToLoad.length; i += 1) {
+            const imageEl = swiper.imagesToLoad[i];
+            swiper.loadImage(imageEl, imageEl.currentSrc || imageEl.getAttribute("src"), imageEl.srcset || imageEl.getAttribute("srcset"), imageEl.sizes || imageEl.getAttribute("sizes"), true, onReady);
+        }
+    }
+    const core_images = {
+        loadImage,
+        preloadImages
+    };
+    function checkOverflow() {
+        const swiper = this;
+        const {isLocked: wasLocked, params} = swiper;
+        const {slidesOffsetBefore} = params;
+        if (slidesOffsetBefore) {
+            const lastSlideIndex = swiper.slides.length - 1;
+            const lastSlideRightEdge = swiper.slidesGrid[lastSlideIndex] + swiper.slidesSizesGrid[lastSlideIndex] + 2 * slidesOffsetBefore;
+            swiper.isLocked = swiper.size > lastSlideRightEdge;
+        } else swiper.isLocked = 1 === swiper.snapGrid.length;
+        if (true === params.allowSlideNext) swiper.allowSlideNext = !swiper.isLocked;
+        if (true === params.allowSlidePrev) swiper.allowSlidePrev = !swiper.isLocked;
+        if (wasLocked && wasLocked !== swiper.isLocked) swiper.isEnd = false;
+        if (wasLocked !== swiper.isLocked) swiper.emit(swiper.isLocked ? "lock" : "unlock");
+    }
+    const check_overflow = {
+        checkOverflow
+    };
+    const defaults = {
+        init: true,
+        direction: "horizontal",
+        touchEventsTarget: "wrapper",
+        initialSlide: 0,
+        speed: 300,
+        cssMode: false,
+        updateOnWindowResize: true,
+        resizeObserver: true,
+        nested: false,
+        createElements: false,
+        enabled: true,
+        focusableElements: "input, select, option, textarea, button, video, label",
+        width: null,
+        height: null,
+        preventInteractionOnTransition: false,
+        userAgent: null,
+        url: null,
+        edgeSwipeDetection: false,
+        edgeSwipeThreshold: 20,
+        autoHeight: false,
+        setWrapperSize: false,
+        virtualTranslate: false,
+        effect: "slide",
+        breakpoints: void 0,
+        breakpointsBase: "window",
+        spaceBetween: 0,
+        slidesPerView: 1,
+        slidesPerGroup: 1,
+        slidesPerGroupSkip: 0,
+        slidesPerGroupAuto: false,
+        centeredSlides: false,
+        centeredSlidesBounds: false,
+        slidesOffsetBefore: 0,
+        slidesOffsetAfter: 0,
+        normalizeSlideIndex: true,
+        centerInsufficientSlides: false,
+        watchOverflow: true,
+        roundLengths: false,
+        touchRatio: 1,
+        touchAngle: 45,
+        simulateTouch: true,
+        shortSwipes: true,
+        longSwipes: true,
+        longSwipesRatio: .5,
+        longSwipesMs: 300,
+        followFinger: true,
+        allowTouchMove: true,
+        threshold: 0,
+        touchMoveStopPropagation: false,
+        touchStartPreventDefault: true,
+        touchStartForcePreventDefault: false,
+        touchReleaseOnEdges: false,
+        uniqueNavElements: true,
+        resistance: true,
+        resistanceRatio: .85,
+        watchSlidesProgress: false,
+        grabCursor: false,
+        preventClicks: true,
+        preventClicksPropagation: true,
+        slideToClickedSlide: false,
+        preloadImages: true,
+        updateOnImagesReady: true,
+        loop: false,
+        loopAdditionalSlides: 0,
+        loopedSlides: null,
+        loopFillGroupWithBlank: false,
+        loopPreventsSlide: true,
+        rewind: false,
+        allowSlidePrev: true,
+        allowSlideNext: true,
+        swipeHandler: null,
+        noSwiping: true,
+        noSwipingClass: "swiper-no-swiping",
+        noSwipingSelector: null,
+        passiveListeners: true,
+        maxBackfaceHiddenSlides: 10,
+        containerModifierClass: "swiper-",
+        slideClass: "swiper-slide",
+        slideBlankClass: "swiper-slide-invisible-blank",
+        slideActiveClass: "swiper-slide-active",
+        slideDuplicateActiveClass: "swiper-slide-duplicate-active",
+        slideVisibleClass: "swiper-slide-visible",
+        slideDuplicateClass: "swiper-slide-duplicate",
+        slideNextClass: "swiper-slide-next",
+        slideDuplicateNextClass: "swiper-slide-duplicate-next",
+        slidePrevClass: "swiper-slide-prev",
+        slideDuplicatePrevClass: "swiper-slide-duplicate-prev",
+        wrapperClass: "swiper-wrapper",
+        runCallbacksOnInit: true,
+        _emitClasses: false
+    };
+    function moduleExtendParams(params, allModulesParams) {
+        return function extendParams(obj) {
+            if (void 0 === obj) obj = {};
+            const moduleParamName = Object.keys(obj)[0];
+            const moduleParams = obj[moduleParamName];
+            if ("object" !== typeof moduleParams || null === moduleParams) {
+                utils_extend(allModulesParams, obj);
+                return;
+            }
+            if ([ "navigation", "pagination", "scrollbar" ].indexOf(moduleParamName) >= 0 && true === params[moduleParamName]) params[moduleParamName] = {
+                auto: true
+            };
+            if (!(moduleParamName in params && "enabled" in moduleParams)) {
+                utils_extend(allModulesParams, obj);
+                return;
+            }
+            if (true === params[moduleParamName]) params[moduleParamName] = {
+                enabled: true
+            };
+            if ("object" === typeof params[moduleParamName] && !("enabled" in params[moduleParamName])) params[moduleParamName].enabled = true;
+            if (!params[moduleParamName]) params[moduleParamName] = {
+                enabled: false
+            };
+            utils_extend(allModulesParams, obj);
+        };
+    }
+    const prototypes = {
+        eventsEmitter: events_emitter,
+        update,
+        translate,
+        transition: core_transition,
+        slide,
+        loop,
+        grabCursor: grab_cursor,
+        events: core_events,
+        breakpoints,
+        checkOverflow: check_overflow,
+        classes,
+        images: core_images
+    };
+    const extendedDefaults = {};
+    class Swiper {
+        constructor() {
+            let el;
+            let params;
+            for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) args[_key] = arguments[_key];
+            if (1 === args.length && args[0].constructor && "Object" === Object.prototype.toString.call(args[0]).slice(8, -1)) params = args[0]; else [el, params] = args;
+            if (!params) params = {};
+            params = utils_extend({}, params);
+            if (el && !params.el) params.el = el;
+            if (params.el && dom(params.el).length > 1) {
+                const swipers = [];
+                dom(params.el).each((containerEl => {
+                    const newParams = utils_extend({}, params, {
+                        el: containerEl
+                    });
+                    swipers.push(new Swiper(newParams));
+                }));
+                return swipers;
+            }
+            const swiper = this;
+            swiper.__swiper__ = true;
+            swiper.support = getSupport();
+            swiper.device = getDevice({
+                userAgent: params.userAgent
+            });
+            swiper.browser = getBrowser();
+            swiper.eventsListeners = {};
+            swiper.eventsAnyListeners = [];
+            swiper.modules = [ ...swiper.__modules__ ];
+            if (params.modules && Array.isArray(params.modules)) swiper.modules.push(...params.modules);
+            const allModulesParams = {};
+            swiper.modules.forEach((mod => {
+                mod({
+                    swiper,
+                    extendParams: moduleExtendParams(params, allModulesParams),
+                    on: swiper.on.bind(swiper),
+                    once: swiper.once.bind(swiper),
+                    off: swiper.off.bind(swiper),
+                    emit: swiper.emit.bind(swiper)
+                });
+            }));
+            const swiperParams = utils_extend({}, defaults, allModulesParams);
+            swiper.params = utils_extend({}, swiperParams, extendedDefaults, params);
+            swiper.originalParams = utils_extend({}, swiper.params);
+            swiper.passedParams = utils_extend({}, params);
+            if (swiper.params && swiper.params.on) Object.keys(swiper.params.on).forEach((eventName => {
+                swiper.on(eventName, swiper.params.on[eventName]);
+            }));
+            if (swiper.params && swiper.params.onAny) swiper.onAny(swiper.params.onAny);
+            swiper.$ = dom;
+            Object.assign(swiper, {
+                enabled: swiper.params.enabled,
+                el,
+                classNames: [],
+                slides: dom(),
+                slidesGrid: [],
+                snapGrid: [],
+                slidesSizesGrid: [],
+                isHorizontal() {
+                    return "horizontal" === swiper.params.direction;
+                },
+                isVertical() {
+                    return "vertical" === swiper.params.direction;
+                },
+                activeIndex: 0,
+                realIndex: 0,
+                isBeginning: true,
+                isEnd: false,
+                translate: 0,
+                previousTranslate: 0,
+                progress: 0,
+                velocity: 0,
+                animating: false,
+                allowSlideNext: swiper.params.allowSlideNext,
+                allowSlidePrev: swiper.params.allowSlidePrev,
+                touchEvents: function touchEvents() {
+                    const touch = [ "touchstart", "touchmove", "touchend", "touchcancel" ];
+                    const desktop = [ "pointerdown", "pointermove", "pointerup" ];
+                    swiper.touchEventsTouch = {
+                        start: touch[0],
+                        move: touch[1],
+                        end: touch[2],
+                        cancel: touch[3]
+                    };
+                    swiper.touchEventsDesktop = {
+                        start: desktop[0],
+                        move: desktop[1],
+                        end: desktop[2]
+                    };
+                    return swiper.support.touch || !swiper.params.simulateTouch ? swiper.touchEventsTouch : swiper.touchEventsDesktop;
+                }(),
+                touchEventsData: {
+                    isTouched: void 0,
+                    isMoved: void 0,
+                    allowTouchCallbacks: void 0,
+                    touchStartTime: void 0,
+                    isScrolling: void 0,
+                    currentTranslate: void 0,
+                    startTranslate: void 0,
+                    allowThresholdMove: void 0,
+                    focusableElements: swiper.params.focusableElements,
+                    lastClickTime: utils_now(),
+                    clickTimeout: void 0,
+                    velocities: [],
+                    allowMomentumBounce: void 0,
+                    isTouchEvent: void 0,
+                    startMoving: void 0
+                },
+                allowClick: true,
+                allowTouchMove: swiper.params.allowTouchMove,
+                touches: {
+                    startX: 0,
+                    startY: 0,
+                    currentX: 0,
+                    currentY: 0,
+                    diff: 0
+                },
+                imagesToLoad: [],
+                imagesLoaded: 0
+            });
+            swiper.emit("_swiper");
+            if (swiper.params.init) swiper.init();
+            return swiper;
         }
         enable() {
-            const e = this;
-            e.enabled || ((e.enabled = !0), e.params.grabCursor && e.setGrabCursor(), e.emit("enable"));
+            const swiper = this;
+            if (swiper.enabled) return;
+            swiper.enabled = true;
+            if (swiper.params.grabCursor) swiper.setGrabCursor();
+            swiper.emit("enable");
         }
         disable() {
-            const e = this;
-            e.enabled && ((e.enabled = !1), e.params.grabCursor && e.unsetGrabCursor(), e.emit("disable"));
+            const swiper = this;
+            if (!swiper.enabled) return;
+            swiper.enabled = false;
+            if (swiper.params.grabCursor) swiper.unsetGrabCursor();
+            swiper.emit("disable");
         }
-        setProgress(e, t) {
-            const s = this;
-            e = Math.min(Math.max(e, 0), 1);
-            const i = s.minTranslate(),
-                n = (s.maxTranslate() - i) * e + i;
-            s.translateTo(n, void 0 === t ? 0 : t), s.updateActiveIndex(), s.updateSlidesClasses();
+        setProgress(progress, speed) {
+            const swiper = this;
+            progress = Math.min(Math.max(progress, 0), 1);
+            const min = swiper.minTranslate();
+            const max = swiper.maxTranslate();
+            const current = (max - min) * progress + min;
+            swiper.translateTo(current, "undefined" === typeof speed ? 0 : speed);
+            swiper.updateActiveIndex();
+            swiper.updateSlidesClasses();
         }
         emitContainerClasses() {
-            const e = this;
-            if (!e.params._emitClasses || !e.el) return;
-            const t = e.el.className.split(" ").filter((t) => 0 === t.indexOf("swiper") || 0 === t.indexOf(e.params.containerModifierClass));
-            e.emit("_containerClasses", t.join(" "));
+            const swiper = this;
+            if (!swiper.params._emitClasses || !swiper.el) return;
+            const cls = swiper.el.className.split(" ").filter((className => 0 === className.indexOf("swiper") || 0 === className.indexOf(swiper.params.containerModifierClass)));
+            swiper.emit("_containerClasses", cls.join(" "));
         }
-        getSlideClasses(e) {
-            const t = this;
-            return t.destroyed
-                ? ""
-                : e.className
-                    .split(" ")
-                    .filter((e) => 0 === e.indexOf("swiper-slide") || 0 === e.indexOf(t.params.slideClass))
-                    .join(" ");
+        getSlideClasses(slideEl) {
+            const swiper = this;
+            if (swiper.destroyed) return "";
+            return slideEl.className.split(" ").filter((className => 0 === className.indexOf("swiper-slide") || 0 === className.indexOf(swiper.params.slideClass))).join(" ");
         }
         emitSlidesClasses() {
-            const e = this;
-            if (!e.params._emitClasses || !e.el) return;
-            const t = [];
-            e.slides.each((s) => {
-                const i = e.getSlideClasses(s);
-                t.push({ slideEl: s, classNames: i }), e.emit("_slideClass", s, i);
-            }),
-                e.emit("_slideClasses", t);
+            const swiper = this;
+            if (!swiper.params._emitClasses || !swiper.el) return;
+            const updates = [];
+            swiper.slides.each((slideEl => {
+                const classNames = swiper.getSlideClasses(slideEl);
+                updates.push({
+                    slideEl,
+                    classNames
+                });
+                swiper.emit("_slideClass", slideEl, classNames);
+            }));
+            swiper.emit("_slideClasses", updates);
         }
-        slidesPerViewDynamic(e = "current", t = !1) {
-            const { params: s, slides: i, slidesGrid: n, slidesSizesGrid: a, size: l, activeIndex: r } = this;
-            let o = 1;
-            if (s.centeredSlides) {
-                let e,
-                    t = i[r].swiperSlideSize;
-                for (let s = r + 1; s < i.length; s += 1) i[s] && !e && ((t += i[s].swiperSlideSize), (o += 1), t > l && (e = !0));
-                for (let s = r - 1; s >= 0; s -= 1) i[s] && !e && ((t += i[s].swiperSlideSize), (o += 1), t > l && (e = !0));
-            } else if ("current" === e) for (let e = r + 1; e < i.length; e += 1) (t ? n[e] + a[e] - n[r] < l : n[e] - n[r] < l) && (o += 1);
-            else for (let e = r - 1; e >= 0; e -= 1) n[r] - n[e] < l && (o += 1);
-            return o;
+        slidesPerViewDynamic(view, exact) {
+            if (void 0 === view) view = "current";
+            if (void 0 === exact) exact = false;
+            const swiper = this;
+            const {params, slides, slidesGrid, slidesSizesGrid, size: swiperSize, activeIndex} = swiper;
+            let spv = 1;
+            if (params.centeredSlides) {
+                let slideSize = slides[activeIndex].swiperSlideSize;
+                let breakLoop;
+                for (let i = activeIndex + 1; i < slides.length; i += 1) if (slides[i] && !breakLoop) {
+                    slideSize += slides[i].swiperSlideSize;
+                    spv += 1;
+                    if (slideSize > swiperSize) breakLoop = true;
+                }
+                for (let i = activeIndex - 1; i >= 0; i -= 1) if (slides[i] && !breakLoop) {
+                    slideSize += slides[i].swiperSlideSize;
+                    spv += 1;
+                    if (slideSize > swiperSize) breakLoop = true;
+                }
+            } else if ("current" === view) for (let i = activeIndex + 1; i < slides.length; i += 1) {
+                const slideInView = exact ? slidesGrid[i] + slidesSizesGrid[i] - slidesGrid[activeIndex] < swiperSize : slidesGrid[i] - slidesGrid[activeIndex] < swiperSize;
+                if (slideInView) spv += 1;
+            } else for (let i = activeIndex - 1; i >= 0; i -= 1) {
+                const slideInView = slidesGrid[activeIndex] - slidesGrid[i] < swiperSize;
+                if (slideInView) spv += 1;
+            }
+            return spv;
         }
         update() {
-            const e = this;
-            if (!e || e.destroyed) return;
-            const { snapGrid: t, params: s } = e;
-            function i() {
-                const t = e.rtlTranslate ? -1 * e.translate : e.translate,
-                    s = Math.min(Math.max(t, e.maxTranslate()), e.minTranslate());
-                e.setTranslate(s), e.updateActiveIndex(), e.updateSlidesClasses();
+            const swiper = this;
+            if (!swiper || swiper.destroyed) return;
+            const {snapGrid, params} = swiper;
+            if (params.breakpoints) swiper.setBreakpoint();
+            swiper.updateSize();
+            swiper.updateSlides();
+            swiper.updateProgress();
+            swiper.updateSlidesClasses();
+            function setTranslate() {
+                const translateValue = swiper.rtlTranslate ? -1 * swiper.translate : swiper.translate;
+                const newTranslate = Math.min(Math.max(translateValue, swiper.maxTranslate()), swiper.minTranslate());
+                swiper.setTranslate(newTranslate);
+                swiper.updateActiveIndex();
+                swiper.updateSlidesClasses();
             }
-            let n;
-            s.breakpoints && e.setBreakpoint(),
-                e.updateSize(),
-                e.updateSlides(),
-                e.updateProgress(),
-                e.updateSlidesClasses(),
-                e.params.freeMode && e.params.freeMode.enabled
-                    ? (i(), e.params.autoHeight && e.updateAutoHeight())
-                    : ((n = ("auto" === e.params.slidesPerView || e.params.slidesPerView > 1) && e.isEnd && !e.params.centeredSlides ? e.slideTo(e.slides.length - 1, 0, !1, !0) : e.slideTo(e.activeIndex, 0, !1, !0)), n || i()),
-                s.watchOverflow && t !== e.snapGrid && e.checkOverflow(),
-                e.emit("update");
+            let translated;
+            if (swiper.params.freeMode && swiper.params.freeMode.enabled) {
+                setTranslate();
+                if (swiper.params.autoHeight) swiper.updateAutoHeight();
+            } else {
+                if (("auto" === swiper.params.slidesPerView || swiper.params.slidesPerView > 1) && swiper.isEnd && !swiper.params.centeredSlides) translated = swiper.slideTo(swiper.slides.length - 1, 0, false, true); else translated = swiper.slideTo(swiper.activeIndex, 0, false, true);
+                if (!translated) setTranslate();
+            }
+            if (params.watchOverflow && snapGrid !== swiper.snapGrid) swiper.checkOverflow();
+            swiper.emit("update");
         }
-        changeDirection(e, t = !0) {
-            const s = this,
-                i = s.params.direction;
-            return (
-                e || (e = "horizontal" === i ? "vertical" : "horizontal"),
-                e === i ||
-                ("horizontal" !== e && "vertical" !== e) ||
-                (s.$el.removeClass(`${s.params.containerModifierClass}${i}`).addClass(`${s.params.containerModifierClass}${e}`),
-                    s.emitContainerClasses(),
-                    (s.params.direction = e),
-                    s.slides.each((t) => {
-                        "vertical" === e ? (t.style.width = "") : (t.style.height = "");
-                    }),
-                    s.emit("changeDirection"),
-                    t && s.update()),
-                s
-            );
+        changeDirection(newDirection, needUpdate) {
+            if (void 0 === needUpdate) needUpdate = true;
+            const swiper = this;
+            const currentDirection = swiper.params.direction;
+            if (!newDirection) newDirection = "horizontal" === currentDirection ? "vertical" : "horizontal";
+            if (newDirection === currentDirection || "horizontal" !== newDirection && "vertical" !== newDirection) return swiper;
+            swiper.$el.removeClass(`${swiper.params.containerModifierClass}${currentDirection}`).addClass(`${swiper.params.containerModifierClass}${newDirection}`);
+            swiper.emitContainerClasses();
+            swiper.params.direction = newDirection;
+            swiper.slides.each((slideEl => {
+                if ("vertical" === newDirection) slideEl.style.width = ""; else slideEl.style.height = "";
+            }));
+            swiper.emit("changeDirection");
+            if (needUpdate) swiper.update();
+            return swiper;
         }
-        changeLanguageDirection(e) {
-            const t = this;
-            (t.rtl && "rtl" === e) ||
-                (!t.rtl && "ltr" === e) ||
-                ((t.rtl = "rtl" === e),
-                    (t.rtlTranslate = "horizontal" === t.params.direction && t.rtl),
-                    t.rtl ? (t.$el.addClass(`${t.params.containerModifierClass}rtl`), (t.el.dir = "rtl")) : (t.$el.removeClass(`${t.params.containerModifierClass}rtl`), (t.el.dir = "ltr")),
-                    t.update());
+        changeLanguageDirection(direction) {
+            const swiper = this;
+            if (swiper.rtl && "rtl" === direction || !swiper.rtl && "ltr" === direction) return;
+            swiper.rtl = "rtl" === direction;
+            swiper.rtlTranslate = "horizontal" === swiper.params.direction && swiper.rtl;
+            if (swiper.rtl) {
+                swiper.$el.addClass(`${swiper.params.containerModifierClass}rtl`);
+                swiper.el.dir = "rtl";
+            } else {
+                swiper.$el.removeClass(`${swiper.params.containerModifierClass}rtl`);
+                swiper.el.dir = "ltr";
+            }
+            swiper.update();
         }
-        mount(e) {
-            const t = this;
-            if (t.mounted) return !0;
-            const s = D(e || t.params.el);
-            if (!(e = s[0])) return !1;
-            e.swiper = t;
-            const i = () => `.${(t.params.wrapperClass || "").trim().split(" ").join(".")}`;
-            let n = (() => {
-                if (e && e.shadowRoot && e.shadowRoot.querySelector) {
-                    const t = D(e.shadowRoot.querySelector(i()));
-                    return (t.children = (e) => s.children(e)), t;
+        mount(el) {
+            const swiper = this;
+            if (swiper.mounted) return true;
+            const $el = dom(el || swiper.params.el);
+            el = $el[0];
+            if (!el) return false;
+            el.swiper = swiper;
+            const getWrapperSelector = () => `.${(swiper.params.wrapperClass || "").trim().split(" ").join(".")}`;
+            const getWrapper = () => {
+                if (el && el.shadowRoot && el.shadowRoot.querySelector) {
+                    const res = dom(el.shadowRoot.querySelector(getWrapperSelector()));
+                    res.children = options => $el.children(options);
+                    return res;
                 }
-                return s.children ? s.children(i()) : D(s).children(i());
-            })();
-            if (0 === n.length && t.params.createElements) {
-                const e = x().createElement("div");
-                (n = D(e)),
-                    (e.className = t.params.wrapperClass),
-                    s.append(e),
-                    s.children(`.${t.params.slideClass}`).each((e) => {
-                        n.append(e);
-                    });
+                if (!$el.children) return dom($el).children(getWrapperSelector());
+                return $el.children(getWrapperSelector());
+            };
+            let $wrapperEl = getWrapper();
+            if (0 === $wrapperEl.length && swiper.params.createElements) {
+                const document = ssr_window_esm_getDocument();
+                const wrapper = document.createElement("div");
+                $wrapperEl = dom(wrapper);
+                wrapper.className = swiper.params.wrapperClass;
+                $el.append(wrapper);
+                $el.children(`.${swiper.params.slideClass}`).each((slideEl => {
+                    $wrapperEl.append(slideEl);
+                }));
             }
-            return (
-                Object.assign(t, {
-                    $el: s,
-                    el: e,
-                    $wrapperEl: n,
-                    wrapperEl: n[0],
-                    mounted: !0,
-                    rtl: "rtl" === e.dir.toLowerCase() || "rtl" === s.css("direction"),
-                    rtlTranslate: "horizontal" === t.params.direction && ("rtl" === e.dir.toLowerCase() || "rtl" === s.css("direction")),
-                    wrongRTL: "-webkit-box" === n.css("display"),
-                }),
-                !0
-            );
+            Object.assign(swiper, {
+                $el,
+                el,
+                $wrapperEl,
+                wrapperEl: $wrapperEl[0],
+                mounted: true,
+                rtl: "rtl" === el.dir.toLowerCase() || "rtl" === $el.css("direction"),
+                rtlTranslate: "horizontal" === swiper.params.direction && ("rtl" === el.dir.toLowerCase() || "rtl" === $el.css("direction")),
+                wrongRTL: "-webkit-box" === $wrapperEl.css("display")
+            });
+            return true;
         }
-        init(e) {
-            const t = this;
-            return (
-                t.initialized ||
-                !1 === t.mount(e) ||
-                (t.emit("beforeInit"),
-                    t.params.breakpoints && t.setBreakpoint(),
-                    t.addClasses(),
-                    t.params.loop && t.loopCreate(),
-                    t.updateSize(),
-                    t.updateSlides(),
-                    t.params.watchOverflow && t.checkOverflow(),
-                    t.params.grabCursor && t.enabled && t.setGrabCursor(),
-                    t.params.preloadImages && t.preloadImages(),
-                    t.params.loop ? t.slideTo(t.params.initialSlide + t.loopedSlides, 0, t.params.runCallbacksOnInit, !1, !0) : t.slideTo(t.params.initialSlide, 0, t.params.runCallbacksOnInit, !1, !0),
-                    t.attachEvents(),
-                    (t.initialized = !0),
-                    t.emit("init"),
-                    t.emit("afterInit")),
-                t
-            );
+        init(el) {
+            const swiper = this;
+            if (swiper.initialized) return swiper;
+            const mounted = swiper.mount(el);
+            if (false === mounted) return swiper;
+            swiper.emit("beforeInit");
+            if (swiper.params.breakpoints) swiper.setBreakpoint();
+            swiper.addClasses();
+            if (swiper.params.loop) swiper.loopCreate();
+            swiper.updateSize();
+            swiper.updateSlides();
+            if (swiper.params.watchOverflow) swiper.checkOverflow();
+            if (swiper.params.grabCursor && swiper.enabled) swiper.setGrabCursor();
+            if (swiper.params.preloadImages) swiper.preloadImages();
+            if (swiper.params.loop) swiper.slideTo(swiper.params.initialSlide + swiper.loopedSlides, 0, swiper.params.runCallbacksOnInit, false, true); else swiper.slideTo(swiper.params.initialSlide, 0, swiper.params.runCallbacksOnInit, false, true);
+            swiper.attachEvents();
+            swiper.initialized = true;
+            swiper.emit("init");
+            swiper.emit("afterInit");
+            return swiper;
         }
-        destroy(e = !0, t = !0) {
-            const s = this,
-                { params: i, $el: n, $wrapperEl: a, slides: l } = s;
-            return (
-                void 0 === s.params ||
-                s.destroyed ||
-                (s.emit("beforeDestroy"),
-                    (s.initialized = !1),
-                    s.detachEvents(),
-                    i.loop && s.loopDestroy(),
-                    t &&
-                    (s.removeClasses(),
-                        n.removeAttr("style"),
-                        a.removeAttr("style"),
-                        l && l.length && l.removeClass([i.slideVisibleClass, i.slideActiveClass, i.slideNextClass, i.slidePrevClass].join(" ")).removeAttr("style").removeAttr("data-swiper-slide-index")),
-                    s.emit("destroy"),
-                    Object.keys(s.eventsListeners).forEach((e) => {
-                        s.off(e);
-                    }),
-                    !1 !== e &&
-                    ((s.$el[0].swiper = null),
-                        (function (e) {
-                            const t = e;
-                            Object.keys(t).forEach((e) => {
-                                try {
-                                    t[e] = null;
-                                } catch (e) { }
-                                try {
-                                    delete t[e];
-                                } catch (e) { }
-                            });
-                        })(s)),
-                    (s.destroyed = !0)),
-                null
-            );
+        destroy(deleteInstance, cleanStyles) {
+            if (void 0 === deleteInstance) deleteInstance = true;
+            if (void 0 === cleanStyles) cleanStyles = true;
+            const swiper = this;
+            const {params, $el, $wrapperEl, slides} = swiper;
+            if ("undefined" === typeof swiper.params || swiper.destroyed) return null;
+            swiper.emit("beforeDestroy");
+            swiper.initialized = false;
+            swiper.detachEvents();
+            if (params.loop) swiper.loopDestroy();
+            if (cleanStyles) {
+                swiper.removeClasses();
+                $el.removeAttr("style");
+                $wrapperEl.removeAttr("style");
+                if (slides && slides.length) slides.removeClass([ params.slideVisibleClass, params.slideActiveClass, params.slideNextClass, params.slidePrevClass ].join(" ")).removeAttr("style").removeAttr("data-swiper-slide-index");
+            }
+            swiper.emit("destroy");
+            Object.keys(swiper.eventsListeners).forEach((eventName => {
+                swiper.off(eventName);
+            }));
+            if (false !== deleteInstance) {
+                swiper.$el[0].swiper = null;
+                deleteProps(swiper);
+            }
+            swiper.destroyed = true;
+            return null;
         }
-        static extendDefaults(e) {
-            N(ue, e);
+        static extendDefaults(newDefaults) {
+            utils_extend(extendedDefaults, newDefaults);
         }
         static get extendedDefaults() {
-            return ue;
+            return extendedDefaults;
         }
         static get defaults() {
-            return oe;
+            return defaults;
         }
-        static installModule(e) {
-            pe.prototype.__modules__ || (pe.prototype.__modules__ = []);
-            const t = pe.prototype.__modules__;
-            "function" == typeof e && t.indexOf(e) < 0 && t.push(e);
+        static installModule(mod) {
+            if (!Swiper.prototype.__modules__) Swiper.prototype.__modules__ = [];
+            const modules = Swiper.prototype.__modules__;
+            if ("function" === typeof mod && modules.indexOf(mod) < 0) modules.push(mod);
         }
-        static use(e) {
-            return Array.isArray(e) ? (e.forEach((e) => pe.installModule(e)), pe) : (pe.installModule(e), pe);
+        static use(module) {
+            if (Array.isArray(module)) {
+                module.forEach((m => Swiper.installModule(m)));
+                return Swiper;
+            }
+            Swiper.installModule(module);
+            return Swiper;
         }
     }
-    Object.keys(de).forEach((e) => {
-        Object.keys(de[e]).forEach((t) => {
-            pe.prototype[t] = de[e][t];
+    Object.keys(prototypes).forEach((prototypeGroup => {
+        Object.keys(prototypes[prototypeGroup]).forEach((protoMethod => {
+            Swiper.prototype[protoMethod] = prototypes[prototypeGroup][protoMethod];
+        }));
+    }));
+    Swiper.use([ Resize, Observer ]);
+    const core = Swiper;
+    function create_element_if_not_defined_createElementIfNotDefined(swiper, originalParams, params, checkProps) {
+        const document = ssr_window_esm_getDocument();
+        if (swiper.params.createElements) Object.keys(checkProps).forEach((key => {
+            if (!params[key] && true === params.auto) {
+                let element = swiper.$el.children(`.${checkProps[key]}`)[0];
+                if (!element) {
+                    element = document.createElement("div");
+                    element.className = checkProps[key];
+                    swiper.$el.append(element);
+                }
+                params[key] = element;
+                originalParams[key] = element;
+            }
+        }));
+        return params;
+    }
+    function Navigation(_ref) {
+        let {swiper, extendParams, on, emit} = _ref;
+        extendParams({
+            navigation: {
+                nextEl: null,
+                prevEl: null,
+                hideOnClick: false,
+                disabledClass: "swiper-button-disabled",
+                hiddenClass: "swiper-button-hidden",
+                lockClass: "swiper-button-lock",
+                navigationDisabledClass: "swiper-navigation-disabled"
+            }
         });
-    }),
-        pe.use([
-            function ({ swiper: e, on: t, emit: s }) {
-                const i = M();
-                let n = null,
-                    a = null;
-                const l = () => {
-                    e && !e.destroyed && e.initialized && (s("beforeResize"), s("resize"));
+        swiper.navigation = {
+            nextEl: null,
+            $nextEl: null,
+            prevEl: null,
+            $prevEl: null
+        };
+        function getEl(el) {
+            let $el;
+            if (el) {
+                $el = dom(el);
+                if (swiper.params.uniqueNavElements && "string" === typeof el && $el.length > 1 && 1 === swiper.$el.find(el).length) $el = swiper.$el.find(el);
+            }
+            return $el;
+        }
+        function toggleEl($el, disabled) {
+            const params = swiper.params.navigation;
+            if ($el && $el.length > 0) {
+                $el[disabled ? "addClass" : "removeClass"](params.disabledClass);
+                if ($el[0] && "BUTTON" === $el[0].tagName) $el[0].disabled = disabled;
+                if (swiper.params.watchOverflow && swiper.enabled) $el[swiper.isLocked ? "addClass" : "removeClass"](params.lockClass);
+            }
+        }
+        function update() {
+            if (swiper.params.loop) return;
+            const {$nextEl, $prevEl} = swiper.navigation;
+            toggleEl($prevEl, swiper.isBeginning && !swiper.params.rewind);
+            toggleEl($nextEl, swiper.isEnd && !swiper.params.rewind);
+        }
+        function onPrevClick(e) {
+            e.preventDefault();
+            if (swiper.isBeginning && !swiper.params.loop && !swiper.params.rewind) return;
+            swiper.slidePrev();
+            emit("navigationPrev");
+        }
+        function onNextClick(e) {
+            e.preventDefault();
+            if (swiper.isEnd && !swiper.params.loop && !swiper.params.rewind) return;
+            swiper.slideNext();
+            emit("navigationNext");
+        }
+        function init() {
+            const params = swiper.params.navigation;
+            swiper.params.navigation = create_element_if_not_defined_createElementIfNotDefined(swiper, swiper.originalParams.navigation, swiper.params.navigation, {
+                nextEl: "swiper-button-next",
+                prevEl: "swiper-button-prev"
+            });
+            if (!(params.nextEl || params.prevEl)) return;
+            const $nextEl = getEl(params.nextEl);
+            const $prevEl = getEl(params.prevEl);
+            if ($nextEl && $nextEl.length > 0) $nextEl.on("click", onNextClick);
+            if ($prevEl && $prevEl.length > 0) $prevEl.on("click", onPrevClick);
+            Object.assign(swiper.navigation, {
+                $nextEl,
+                nextEl: $nextEl && $nextEl[0],
+                $prevEl,
+                prevEl: $prevEl && $prevEl[0]
+            });
+            if (!swiper.enabled) {
+                if ($nextEl) $nextEl.addClass(params.lockClass);
+                if ($prevEl) $prevEl.addClass(params.lockClass);
+            }
+        }
+        function destroy() {
+            const {$nextEl, $prevEl} = swiper.navigation;
+            if ($nextEl && $nextEl.length) {
+                $nextEl.off("click", onNextClick);
+                $nextEl.removeClass(swiper.params.navigation.disabledClass);
+            }
+            if ($prevEl && $prevEl.length) {
+                $prevEl.off("click", onPrevClick);
+                $prevEl.removeClass(swiper.params.navigation.disabledClass);
+            }
+        }
+        on("init", (() => {
+            if (false === swiper.params.navigation.enabled) disable(); else {
+                init();
+                update();
+            }
+        }));
+        on("toEdge fromEdge lock unlock", (() => {
+            update();
+        }));
+        on("destroy", (() => {
+            destroy();
+        }));
+        on("enable disable", (() => {
+            const {$nextEl, $prevEl} = swiper.navigation;
+            if ($nextEl) $nextEl[swiper.enabled ? "removeClass" : "addClass"](swiper.params.navigation.lockClass);
+            if ($prevEl) $prevEl[swiper.enabled ? "removeClass" : "addClass"](swiper.params.navigation.lockClass);
+        }));
+        on("click", ((_s, e) => {
+            const {$nextEl, $prevEl} = swiper.navigation;
+            const targetEl = e.target;
+            if (swiper.params.navigation.hideOnClick && !dom(targetEl).is($prevEl) && !dom(targetEl).is($nextEl)) {
+                if (swiper.pagination && swiper.params.pagination && swiper.params.pagination.clickable && (swiper.pagination.el === targetEl || swiper.pagination.el.contains(targetEl))) return;
+                let isHidden;
+                if ($nextEl) isHidden = $nextEl.hasClass(swiper.params.navigation.hiddenClass); else if ($prevEl) isHidden = $prevEl.hasClass(swiper.params.navigation.hiddenClass);
+                if (true === isHidden) emit("navigationShow"); else emit("navigationHide");
+                if ($nextEl) $nextEl.toggleClass(swiper.params.navigation.hiddenClass);
+                if ($prevEl) $prevEl.toggleClass(swiper.params.navigation.hiddenClass);
+            }
+        }));
+        const enable = () => {
+            swiper.$el.removeClass(swiper.params.navigation.navigationDisabledClass);
+            init();
+            update();
+        };
+        const disable = () => {
+            swiper.$el.addClass(swiper.params.navigation.navigationDisabledClass);
+            destroy();
+        };
+        Object.assign(swiper.navigation, {
+            enable,
+            disable,
+            update,
+            init,
+            destroy
+        });
+    }
+    window.addEventListener("load", (function(e) {
+        new core(".swiper", {
+            modules: [ Navigation ],
+            observer: true,
+            observeParents: true,
+            autoHeight: true,
+            speed: 800,
+            spaceBetween: 30,
+            slidesPerView: 2,
+            navigation: {
+                nextEl: ".slider-button-next",
+                prevEl: ".slider-button-prev"
+            },
+            breakpoints: {
+                500: {
+                    slidesPerView: 3
+                }
+            }
+        });
+        new core(".swiper-list", {
+            modules: [ Navigation ],
+            observer: true,
+            observeParents: true,
+            slidesPerView: "auto",
+            speed: 800,
+            spaceBetween: 20,
+            navigation: {
+                nextEl: ".list-button-next",
+                prevEl: ".list-button-prev"
+            }
+        });
+    }));
+    const isImg = document.querySelector(".slider-photos__img");
+    if (isImg) {
+        const imgArray = document.querySelectorAll(".slider-photos__img");
+        const mainPhoto = document.querySelector(".photos__img img");
+        imgArray.forEach((img => {
+            let srcImg = img.querySelector("img").src.split("/").pop();
+            img.dataset.img = srcImg;
+            img.addEventListener("click", (function() {
+                imgArray.forEach((removeImg => {
+                    if (removeImg.classList.contains("active")) removeImg.classList.remove("active");
+                }));
+                this.classList.add("active");
+                mainPhoto.src = "img/" + this.dataset.img;
+            }));
+        }));
+        isImg.click();
+    }
+    class Popup {
+        constructor(options) {
+            let config = {
+                logging: true,
+                init: true,
+                attributeOpenButton: "data-popup",
+                attributeCloseButton: "data-close",
+                fixElementSelector: "[data-lp]",
+                youtubeAttribute: "data-popup-youtube",
+                youtubePlaceAttribute: "data-popup-youtube-place",
+                setAutoplayYoutube: true,
+                classes: {
+                    popup: "popup",
+                    popupContent: "popup__content",
+                    popupActive: "popup_show",
+                    bodyActive: "popup-show"
                 },
-                    r = () => {
-                        e && !e.destroyed && e.initialized && s("orientationchange");
-                    };
-                t("init", () => {
-                    e.params.resizeObserver && void 0 !== i.ResizeObserver
-                        ? e &&
-                        !e.destroyed &&
-                        e.initialized &&
-                        ((n = new ResizeObserver((t) => {
-                            a = i.requestAnimationFrame(() => {
-                                const { width: s, height: i } = e;
-                                let n = s,
-                                    a = i;
-                                t.forEach(({ contentBoxSize: t, contentRect: s, target: i }) => {
-                                    (i && i !== e.el) || ((n = s ? s.width : (t[0] || t).inlineSize), (a = s ? s.height : (t[0] || t).blockSize));
-                                }),
-                                    (n === s && a === i) || l();
-                            });
-                        })),
-                            n.observe(e.el))
-                        : (i.addEventListener("resize", l), i.addEventListener("orientationchange", r));
-                }),
-                    t("destroy", () => {
-                        a && i.cancelAnimationFrame(a), n && n.unobserve && e.el && (n.unobserve(e.el), (n = null)), i.removeEventListener("resize", l), i.removeEventListener("orientationchange", r);
-                    });
-            },
-            function ({ swiper: e, extendParams: t, on: s, emit: i }) {
-                const n = [],
-                    a = M(),
-                    l = (e, t = {}) => {
-                        const s = new (a.MutationObserver || a.WebkitMutationObserver)((e) => {
-                            if (1 === e.length) return void i("observerUpdate", e[0]);
-                            const t = function () {
-                                i("observerUpdate", e[0]);
-                            };
-                            a.requestAnimationFrame ? a.requestAnimationFrame(t) : a.setTimeout(t, 0);
-                        });
-                        s.observe(e, { attributes: void 0 === t.attributes || t.attributes, childList: void 0 === t.childList || t.childList, characterData: void 0 === t.characterData || t.characterData }), n.push(s);
-                    };
-                t({ observer: !1, observeParents: !1, observeSlideChildren: !1 }),
-                    s("init", () => {
-                        if (e.params.observer) {
-                            if (e.params.observeParents) {
-                                const t = e.$el.parents();
-                                for (let e = 0; e < t.length; e += 1) l(t[e]);
-                            }
-                            l(e.$el[0], { childList: e.params.observeSlideChildren }), l(e.$wrapperEl[0], { attributes: !1 });
-                        }
-                    }),
-                    s("destroy", () => {
-                        n.forEach((e) => {
-                            e.disconnect();
-                        }),
-                            n.splice(0, n.length);
-                    });
-            },
-        ]);
-    const he = pe;
-    function me({ swiper: e, extendParams: t, on: s, emit: i }) {
-        function n(t) {
-            let s;
-            return t && ((s = D(t)), e.params.uniqueNavElements && "string" == typeof t && s.length > 1 && 1 === e.$el.find(t).length && (s = e.$el.find(t))), s;
-        }
-        function a(t, s) {
-            const i = e.params.navigation;
-            t && t.length > 0 && (t[s ? "addClass" : "removeClass"](i.disabledClass), t[0] && "BUTTON" === t[0].tagName && (t[0].disabled = s), e.params.watchOverflow && e.enabled && t[e.isLocked ? "addClass" : "removeClass"](i.lockClass));
-        }
-        function l() {
-            if (e.params.loop) return;
-            const { $nextEl: t, $prevEl: s } = e.navigation;
-            a(s, e.isBeginning && !e.params.rewind), a(t, e.isEnd && !e.params.rewind);
-        }
-        function r(t) {
-            t.preventDefault(), (!e.isBeginning || e.params.loop || e.params.rewind) && (e.slidePrev(), i("navigationPrev"));
-        }
-        function o(t) {
-            t.preventDefault(), (!e.isEnd || e.params.loop || e.params.rewind) && (e.slideNext(), i("navigationNext"));
-        }
-        function c() {
-            const t = e.params.navigation;
-            if (
-                ((e.params.navigation = (function (e, t, s, i) {
-                    const n = x();
-                    return (
-                        e.params.createElements &&
-                        Object.keys(i).forEach((a) => {
-                            if (!s[a] && !0 === s.auto) {
-                                let l = e.$el.children(`.${i[a]}`)[0];
-                                l || ((l = n.createElement("div")), (l.className = i[a]), e.$el.append(l)), (s[a] = l), (t[a] = l);
-                            }
-                        }),
-                        s
-                    );
-                })(e, e.originalParams.navigation, e.params.navigation, { nextEl: "swiper-button-next", prevEl: "swiper-button-prev" })),
-                    !t.nextEl && !t.prevEl)
-            )
-                return;
-            const s = n(t.nextEl),
-                i = n(t.prevEl);
-            s && s.length > 0 && s.on("click", o),
-                i && i.length > 0 && i.on("click", r),
-                Object.assign(e.navigation, { $nextEl: s, nextEl: s && s[0], $prevEl: i, prevEl: i && i[0] }),
-                e.enabled || (s && s.addClass(t.lockClass), i && i.addClass(t.lockClass));
-        }
-        function d() {
-            const { $nextEl: t, $prevEl: s } = e.navigation;
-            t && t.length && (t.off("click", o), t.removeClass(e.params.navigation.disabledClass)), s && s.length && (s.off("click", r), s.removeClass(e.params.navigation.disabledClass));
-        }
-        t({
-            navigation: { nextEl: null, prevEl: null, hideOnClick: !1, disabledClass: "swiper-button-disabled", hiddenClass: "swiper-button-hidden", lockClass: "swiper-button-lock", navigationDisabledClass: "swiper-navigation-disabled" },
-        }),
-            (e.navigation = { nextEl: null, $nextEl: null, prevEl: null, $prevEl: null }),
-            s("init", () => {
-                !1 === e.params.navigation.enabled ? u() : (c(), l());
-            }),
-            s("toEdge fromEdge lock unlock", () => {
-                l();
-            }),
-            s("destroy", () => {
-                d();
-            }),
-            s("enable disable", () => {
-                const { $nextEl: t, $prevEl: s } = e.navigation;
-                t && t[e.enabled ? "removeClass" : "addClass"](e.params.navigation.lockClass), s && s[e.enabled ? "removeClass" : "addClass"](e.params.navigation.lockClass);
-            }),
-            s("click", (t, s) => {
-                const { $nextEl: n, $prevEl: a } = e.navigation,
-                    l = s.target;
-                if (e.params.navigation.hideOnClick && !D(l).is(a) && !D(l).is(n)) {
-                    if (e.pagination && e.params.pagination && e.params.pagination.clickable && (e.pagination.el === l || e.pagination.el.contains(l))) return;
-                    let t;
-                    n ? (t = n.hasClass(e.params.navigation.hiddenClass)) : a && (t = a.hasClass(e.params.navigation.hiddenClass)),
-                        i(!0 === t ? "navigationShow" : "navigationHide"),
-                        n && n.toggleClass(e.params.navigation.hiddenClass),
-                        a && a.toggleClass(e.params.navigation.hiddenClass);
+                focusCatch: true,
+                closeEsc: true,
+                bodyLock: true,
+                hashSettings: {
+                    location: true,
+                    goHash: true
+                },
+                on: {
+                    beforeOpen: function() {},
+                    afterOpen: function() {},
+                    beforeClose: function() {},
+                    afterClose: function() {}
                 }
-            });
-        const u = () => {
-            e.$el.addClass(e.params.navigation.navigationDisabledClass), d();
-        };
-        Object.assign(e.navigation, {
-            enable: () => {
-                e.$el.removeClass(e.params.navigation.navigationDisabledClass), c(), l();
-            },
-            disable: u,
-            update: l,
-            init: c,
-            destroy: d,
-        });
-    }
-    if (
-        (window.addEventListener("load", function (e) {
-            new he(".swiper", { modules: [me], speed: 400, spaceBetween: 100, direction: "horizontal", navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" } });
-        }),
-            (function () {
-                function e(e) {
-                    if ("click" === e.type) {
-                        const t = e.target;
-                        if (t.closest("[data-goto]")) {
-                            const s = t.closest("[data-goto]");
-                            ((e, t = !1, s = 500, i = 0) => {
-                                const n = document.querySelector(e);
-                                if (n) {
-                                    let a = "",
-                                        l = 0;
-                                    t && ((a = "header.header"), (l = document.querySelector(a).offsetHeight));
-                                    let r = { speedAsDuration: !0, speed: s, header: a, offset: i, easing: "easeOutQuad" };
-                                    if (
-                                        (document.body.classList.remove("lock"),
-                                            document.querySelector(".header__content").classList.contains("header__content-active") && b(),
-                                            document.querySelector(".header__burger").classList.contains("header__burger-active") && b(),
-                                            "undefined" != typeof SmoothScroll)
-                                    )
-                                        new SmoothScroll().animateScroll(n, "", r);
-                                    else {
-                                        let e = n.getBoundingClientRect().top + scrollY;
-                                        (e = l ? e - l : e), (e = i ? e - i : e), window.scrollTo({ top: e, behavior: "smooth" });
-                                    }
-                                    y(`[gotoBlock]: Юхуу...едем к ${e}`);
-                                } else y(`[gotoBlock]: Ой ой..Такого блока нет на странице: ${e}`);
-                            })(s.dataset.goto ? s.dataset.goto : "", !!s.hasAttribute("data-goto-header"), s.dataset.gotoSpeed ? s.dataset.gotoSpeed : 500, s.dataset.gotoTop ? parseInt(s.dataset.gotoTop) : 0),
-                                e.preventDefault();
-                        }
-                    } else if ("watcherCallback" === e.type && e.detail) {
-                        const t = e.detail.entry,
-                            s = t.target;
-                        if ("navigator" === s.dataset.watch) {
-                            let e;
-                            if ((document.querySelector("[data-goto]._navigator-active"), s.id && document.querySelector(`[data-goto="#${s.id}"]`))) e = document.querySelector(`[data-goto="#${s.id}"]`);
-                            else if (s.classList.length)
-                                for (let t = 0; t < s.classList.length; t++) {
-                                    const i = s.classList[t];
-                                    if (document.querySelector(`[data-goto=".${i}"]`)) {
-                                        e = document.querySelector(`[data-goto=".${i}"]`);
-                                        break;
-                                    }
-                                }
-                            t.isIntersecting ? e && e.classList.add("_navigator-active") : e && e.classList.remove("_navigator-active");
-                        }
-                    }
-                }
-                document.addEventListener("click", e), document.addEventListener("watcherCallback", e);
-            })(),
-            (function (e) {
-                let t = new Image();
-                (t.onload = t.onerror = function () {
-                    !(function (e) {
-                        let t = !0 === e ? "webp" : "no-webp";
-                        document.documentElement.classList.add(t);
-                    })(2 == t.height);
-                }),
-                    (t.src = "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA");
-            })(),
-            (function () {
-                const e = document.querySelectorAll("[data-tabs]");
-                let t = [];
-                if (e.length > 0) {
-                    const n = (function () {
-                        if (location.hash) return location.hash.replace("#", "");
-                    })();
-                    n && n.startsWith("tab-") && (t = n.replace("tab-", "").split("-")),
-                        e.forEach((e, s) => {
-                            e.classList.add("_tab-init"),
-                                e.setAttribute("data-tabs-index", s),
-                                e.addEventListener("click", i),
-                                (function (e) {
-                                    let s = e.querySelectorAll("[data-tabs-titles]>*"),
-                                        i = e.querySelectorAll("[data-tabs-body]>*");
-                                    const n = e.dataset.tabsIndex,
-                                        a = t[0] == n;
-                                    if (a) {
-                                        const t = e.querySelector("[data-tabs-titles]>._tab-active");
-                                        t && t.classList.remove("_tab-active");
-                                    }
-                                    i.length &&
-                                        ((i = Array.from(i).filter((t) => t.closest("[data-tabs]") === e)),
-                                            (s = Array.from(s).filter((t) => t.closest("[data-tabs]") === e)),
-                                            i.forEach((e, i) => {
-                                                s[i].setAttribute("data-tabs-title", ""), e.setAttribute("data-tabs-item", ""), a && i == t[1] && s[i].classList.add("_tab-active"), (e.hidden = !s[i].classList.contains("_tab-active"));
-                                            }));
-                                })(e);
-                        });
-                    let a = w(e, "tabs");
-                    a &&
-                        a.length &&
-                        a.forEach((e) => {
-                            e.matchMedia.addEventListener("change", function () {
-                                s(e.itemsArray, e.matchMedia);
-                            }),
-                                s(e.itemsArray, e.matchMedia);
-                        });
-                }
-                function s(e, t) {
-                    e.forEach((e) => {
-                        let s = (e = e.item).querySelector("[data-tabs-titles]"),
-                            i = e.querySelectorAll("[data-tabs-title]"),
-                            n = e.querySelector("[data-tabs-body]"),
-                            a = e.querySelectorAll("[data-tabs-item]");
-                        (i = Array.from(i).filter((t) => t.closest("[data-tabs]") === e)),
-                            (a = Array.from(a).filter((t) => t.closest("[data-tabs]") === e)),
-                            a.forEach((a, l) => {
-                                t.matches ? (n.append(i[l]), n.append(a), e.classList.add("_tab-spoller")) : (s.append(i[l]), e.classList.remove("_tab-spoller"));
-                            });
-                    });
-                }
-                function i(e) {
-                    const t = e.target;
-                    if (t.closest("[data-tabs-title]")) {
-                        const s = t.closest("[data-tabs-title]"),
-                            i = s.closest("[data-tabs]");
-                        if (!s.classList.contains("_tab-active") && !i.querySelector("._slide")) {
-                            let e = i.querySelectorAll("[data-tabs-title]._tab-active");
-                            e.length && (e = Array.from(e).filter((e) => e.closest("[data-tabs]") === i)),
-                                e.length && e[0].classList.remove("_tab-active"),
-                                s.classList.add("_tab-active"),
-                                (function (e) {
-                                    let t = e.querySelectorAll("[data-tabs-title]"),
-                                        s = e.querySelectorAll("[data-tabs-item]");
-                                    const i = e.dataset.tabsIndex,
-                                        n = (function (e) {
-                                            if (e.hasAttribute("data-tabs-animate")) return e.dataset.tabsAnimate > 0 ? Number(e.dataset.tabsAnimate) : 500;
-                                        })(e);
-                                    if (s.length > 0) {
-                                        const a = e.hasAttribute("data-tabs-hash");
-                                        (s = Array.from(s).filter((t) => t.closest("[data-tabs]") === e)),
-                                            (t = Array.from(t).filter((t) => t.closest("[data-tabs]") === e)),
-                                            s.forEach((e, s) => {
-                                                var l;
-                                                t[s].classList.contains("_tab-active")
-                                                    ? (n ? v(e, n) : (e.hidden = !1), a && !e.closest(".popup") && ((l = (l = `tab-${i}-${s}`) ? `#${l}` : window.location.href.split("#")[0]), history.pushState("", "", l)))
-                                                    : n
-                                                        ? g(e, n)
-                                                        : (e.hidden = !0);
-                                            });
-                                    }
-                                })(i);
-                        }
-                        e.preventDefault();
-                    }
-                }
-            })(),
-            (function () {
-                const e = document.querySelectorAll("[data-spollers]");
-                if (e.length > 0) {
-                    const t = Array.from(e).filter(function (e, t, s) {
-                        return !e.dataset.spollers.split(",")[0];
-                    });
-                    t.length && i(t);
-                    let s = w(e, "spollers");
-                    function i(e, t = !1) {
-                        e.forEach((e) => {
-                            (e = t ? e.item : e), t.matches || !t ? (e.classList.add("_spoller-init"), n(e), e.addEventListener("click", a)) : (e.classList.remove("_spoller-init"), n(e, !1), e.removeEventListener("click", a));
-                        });
-                    }
-                    function n(e, t = !0) {
-                        let s = e.querySelectorAll("[data-spoller]");
-                        s.length &&
-                            ((s = Array.from(s).filter((t) => t.closest("[data-spollers]") === e)),
-                                s.forEach((e) => {
-                                    t ? (e.removeAttribute("tabindex"), e.classList.contains("_spoller-active") || (e.nextElementSibling.hidden = !0)) : (e.setAttribute("tabindex", "-1"), (e.nextElementSibling.hidden = !1));
-                                }));
-                    }
-                    function a(e) {
-                        const t = e.target;
-                        if (t.closest("[data-spoller]")) {
-                            const s = t.closest("[data-spoller]"),
-                                i = s.closest("[data-spollers]"),
-                                n = i.hasAttribute("data-one-spoller"),
-                                a = i.dataset.spollersSpeed ? parseInt(i.dataset.spollersSpeed) : 500;
-                            i.querySelectorAll("._slide").length || (n && !s.classList.contains("_spoller-active") && l(i), s.classList.toggle("_spoller-active"), S(s.nextElementSibling, a)), e.preventDefault();
-                        }
-                    }
-                    function l(e) {
-                        const t = e.querySelector("[data-spoller]._spoller-active"),
-                            s = e.dataset.spollersSpeed ? parseInt(e.dataset.spollersSpeed) : 500;
-                        t && !e.querySelectorAll("._slide").length && (t.classList.remove("_spoller-active"), g(t.nextElementSibling, s));
-                    }
-                    s &&
-                        s.length &&
-                        s.forEach((e) => {
-                            e.matchMedia.addEventListener("change", function () {
-                                i(e.itemsArray, e.matchMedia);
-                            }),
-                                i(e.itemsArray, e.matchMedia);
-                        });
-                    const r = document.querySelectorAll("[data-spoller-close]");
-                    r.length &&
-                        document.addEventListener("click", function (e) {
-                            e.target.closest("[data-spollers]") ||
-                                r.forEach((e) => {
-                                    const t = e.closest("[data-spollers]"),
-                                        s = t.dataset.spollersSpeed ? parseInt(t.dataset.spollersSpeed) : 500;
-                                    e.classList.remove("_spoller-active"), g(e.nextElementSibling, s);
-                                });
-                        });
-                }
-            })(),
-            (function (g) {
-                var v = { userAgent: "", platform: "", maxTouchPoints: 0 };
-                g || "undefined" == typeof navigator
-                    ? "string" == typeof g
-                        ? (v.userAgent = g)
-                        : g && g.userAgent && (v = { userAgent: g.userAgent, platform: g.platform, maxTouchPoints: g.maxTouchPoints || 0 })
-                    : (v = { userAgent: navigator.userAgent, platform: navigator.platform, maxTouchPoints: navigator.maxTouchPoints || 0 });
-                var S = v.userAgent,
-                    b = S.split("[FBAN");
-                void 0 !== b[1] && (S = b[0]), void 0 !== (b = S.split("Twitter"))[1] && (S = b[0]);
-                var y = (function (e) {
-                    return function (t) {
-                        return t.test(e);
-                    };
-                })(S),
-                    w = {
-                        apple: { phone: y(e) && !y(o), ipod: y(t), tablet: !y(e) && (y(s) || f(v)) && !y(o), universal: y(i), device: (y(e) || y(t) || y(s) || y(i) || f(v)) && !y(o) },
-                        amazon: { phone: y(l), tablet: !y(l) && y(r), device: y(l) || y(r) },
-                        android: { phone: (!y(o) && y(l)) || (!y(o) && y(n)), tablet: !y(o) && !y(l) && !y(n) && (y(r) || y(a)), device: (!y(o) && (y(l) || y(r) || y(n) || y(a))) || y(/\bokhttp\b/i) },
-                        windows: { phone: y(o), tablet: y(c), device: y(o) || y(c) },
-                        other: { blackberry: y(d), blackberry10: y(u), opera: y(p), firefox: y(m), chrome: y(h), device: y(d) || y(u) || y(p) || y(m) || y(h) },
-                        any: !1,
-                        phone: !1,
-                        tablet: !1,
-                    };
-                return (w.any = w.apple.device || w.android.device || w.windows.device || w.other.device), (w.phone = w.apple.phone || w.android.phone || w.windows.phone), (w.tablet = w.apple.tablet || w.android.tablet || w.windows.tablet), w;
-            })(window.navigator).phone)
-    ) {
-        document.body.classList.add("_mob");
-        let ge = document.querySelectorAll(".menu__link img"),
-            ve = document.querySelectorAll(".menu__sublink svg"),
-            Se = document.querySelector(".more");
-        if (ge)
-            for (let be = 0; be < ge.length; be++) {
-                const ye = ge[be];
-                ye.addEventListener("click", function (e) {
-                    ye.parentElement.parentElement.classList.toggle("_active");
-                });
-            }
-        if (ve)
-            for (let we = 0; we < ve.length; we++) {
-                const Te = ve[we];
-                Te.addEventListener("click", function (e) {
-                    Te.parentElement.parentElement.classList.toggle("_active");
-                });
-            }
-
-    } else document.body.classList.add("_pc");
-    if (document.querySelector(".wrapper").clientWidth <= 850) {
-        let Ce = document.getElementById("menu");
-        document.querySelector(".header__content").appendChild(Ce);
-    }
-    const fe = document.querySelector(".header__burger");
-    if (fe) {
-        const Ee = document.querySelector(".header__content");
-        fe.onclick = function () {
-            document.body.classList.toggle("lock"), Ee.classList.toggle("header__content-active"), fe.classList.toggle("header__burger-active");
-        };
-    }
-    if (document.querySelector(".header-main")) {
-        let xe = document.querySelector(".header-main");
-        if (document.body.clientWidth >= 851) {
-            let Le = document.querySelector(".main__menu").offsetHeight;
-            (xe.style.top = 77 + Le + "px"), (document.querySelector(".main").style.marginTop = xe.offsetHeight + 77 + Le + "px");
-        } else document.body.clientWidth < 851 && ((document.querySelector(".main").style.marginTop = xe.offsetHeight + 100 + 80 + "px"), (xe.style.top = "180px"), (document.querySelector(".header-main").style.position = "absolute"));
-    }
-    if (document.querySelector("#index__sum")) {
-        let Me = document.querySelector("#index__sum"),
-            Ae = document.querySelector("#index__sum-input"),
-            $e = document.querySelector("#index__range"),
-            ke = document.querySelector("#index__range-input"),
-            _e = (e) => {
-                (Me.value = e), (Ae.value = e);
             };
-        function Pe() {
-            Number(Me.value) > Me.max ? ((Me.value = Me.max), (Ae.value = Me.max)) : Number(Me.value) < Me.min ? ((Me.value = Me.min), (Ae.value = Me.min)) : (_e(Me.value), _e(Ae.value));
-        }
-        Me.addEventListener("change", () => Pe()), Me.addEventListener("input", () => _e(Me.value)), Ae.addEventListener("change", () => Pe()), Ae.addEventListener("input", () => _e(Ae.value));
-        let Oe = (e) => {
-            ($e.value = e), (ke.value = e);
-        };
-        function Ie() {
-            Number($e.value) > $e.max ? (($e.value = $e.max), (ke.value = $e.max)) : Number($e.value) < $e.min ? (($e.value = $e.min), (ke.value = $e.min)) : (Oe($e.value), Oe(ke.value));
-        }
-        $e.addEventListener("change", () => Ie()), $e.addEventListener("input", () => Oe($e.value)), ke.addEventListener("change", () => Ie()), ke.addEventListener("input", () => Oe(ke.value));
-    }
-    if (document.querySelector("#num")) {
-        let De = document.querySelector("#num"),
-            qe = document.querySelector("#range"),
-            ze = (e) => {
-                (De.value = e), (qe.value = e);
-            },
-            Be = document.querySelector("#size").innerHTML.match(/\d+/g).map(Number);
-        (qe.min = Be[0]),
-            (qe.max = Be[1]),
-            (De.min = Be[0]),
-            (De.max = Be[1]),
-            (De.value = De.min),
-            (qe.value = qe.min),
-            De.addEventListener("change", () => {
-                Number(De.value) > De.max ? ((De.value = De.max), (qe.value = qe.max), Ve()) : Number(De.value) < De.min ? ((De.value = De.min), (qe.value = qe.min), Ve()) : (ze(De.value), ze(qe.value), Ve());
-            }),
-            qe.addEventListener("input", () => ze(qe.value));
-        let Ne = document.querySelector("#num_1"),
-            Ge = document.querySelector("#range_1"),
-            He = (e) => {
-                (Ne.value = e), (Ge.value = e);
-            },
-            je = document.querySelector("#term").innerHTML.match(/\d+/g).map(Number);
-        function Ve() {
-            if (document.getElementById("calc__sum1")) {
-                const e = document.querySelector("#calc__sum1"),
-                    t = document.querySelector("#calc__sum2"),
-                    s = document.querySelector("#calc__data"),
-                    i = document.querySelector("#calc__percent"),
-                    n = document.querySelector("#agree");
-                function a() {
-                    let e = new Date();
-                    return e.setDate(e.getDate() + Number(Ge.value)), e.getMonth() + 1 < 10 ? `${e.getDate()}.0${e.getMonth() + 1}.${e.getFullYear()}` : `${e.getDate()}.${e.getMonth() + 1}.${e.getFullYear()}`;
+            this.youTubeCode;
+            this.isOpen = false;
+            this.targetOpen = {
+                selector: false,
+                element: false
+            };
+            this.previousOpen = {
+                selector: false,
+                element: false
+            };
+            this.lastClosed = {
+                selector: false,
+                element: false
+            };
+            this._dataValue = false;
+            this.hash = false;
+            this._reopen = false;
+            this._selectorOpen = false;
+            this.lastFocusEl = false;
+            this._focusEl = [ "a[href]", 'input:not([disabled]):not([type="hidden"]):not([aria-hidden])', "button:not([disabled]):not([aria-hidden])", "select:not([disabled]):not([aria-hidden])", "textarea:not([disabled]):not([aria-hidden])", "area[href]", "iframe", "object", "embed", "[contenteditable]", '[tabindex]:not([tabindex^="-"])' ];
+            this.options = {
+                ...config,
+                ...options,
+                classes: {
+                    ...config.classes,
+                    ...options?.classes
+                },
+                hashSettings: {
+                    ...config.hashSettings,
+                    ...options?.hashSettings
+                },
+                on: {
+                    ...config.on,
+                    ...options?.on
                 }
-                function l() {
-                    return Number(e.innerHTML) + ((Number(e.innerHTML) * Number(i.innerHTML.replace(/[^+\d]/g, ""))) / 100) * Number(Ne.value);
+            };
+            this.bodyLock = false;
+            this.options.init ? this.initPopups() : null;
+        }
+        initPopups() {
+            this.popupLogging(`Проснулся`);
+            this.eventsPopup();
+        }
+        eventsPopup() {
+            document.addEventListener("click", function(e) {
+                const buttonOpen = e.target.closest(`[${this.options.attributeOpenButton}]`);
+                if (buttonOpen) {
+                    e.preventDefault();
+                    this._dataValue = buttonOpen.getAttribute(this.options.attributeOpenButton) ? buttonOpen.getAttribute(this.options.attributeOpenButton) : "error";
+                    this.youTubeCode = buttonOpen.getAttribute(this.options.youtubeAttribute) ? buttonOpen.getAttribute(this.options.youtubeAttribute) : null;
+                    if ("error" !== this._dataValue) {
+                        if (!this.isOpen) this.lastFocusEl = buttonOpen;
+                        this.targetOpen.selector = `${this._dataValue}`;
+                        this._selectorOpen = true;
+                        this.open();
+                        return;
+                    } else this.popupLogging(`Ой ой, не заполнен атрибут у ${buttonOpen.classList}`);
+                    return;
                 }
-                (e.innerHTML = De.value),
-                    qe.addEventListener("change", () => (e.innerHTML = De.value)),
-                    qe.addEventListener("input", () => (e.innerHTML = De.value)),
-                    (s.innerHTML = a()),
-                    Ge.addEventListener("change", () => (s.innerHTML = a())),
-                    Ge.addEventListener("input", () => (s.innerHTML = a())),
-                    n.addEventListener("click", function () {
-                        n.classList.toggle("active"), n.classList.contains("active") ? (i.innerHTML = "От 0%") : (i.innerHTML = "От 1%"), (t.innerHTML = l());
-                    }),
-                    qe.addEventListener("change", () => (t.innerHTML = l())),
-                    qe.addEventListener("input", () => (t.innerHTML = l())),
-                    Ge.addEventListener("change", () => (t.innerHTML = l())),
-                    Ge.addEventListener("input", () => (t.innerHTML = l())),
-                    (t.innerHTML = l());
+                const buttonClose = e.target.closest(`[${this.options.attributeCloseButton}]`);
+                if (buttonClose || !e.target.closest(`.${this.options.classes.popupContent}`) && this.isOpen) {
+                    e.preventDefault();
+                    this.close();
+                    return;
+                }
+            }.bind(this));
+            document.addEventListener("keydown", function(e) {
+                if (this.options.closeEsc && 27 == e.which && "Escape" === e.code && this.isOpen) {
+                    e.preventDefault();
+                    this.close();
+                    return;
+                }
+                if (this.options.focusCatch && 9 == e.which && this.isOpen) {
+                    this._focusCatch(e);
+                    return;
+                }
+            }.bind(this));
+            if (this.options.hashSettings.goHash) {
+                window.addEventListener("hashchange", function() {
+                    if (window.location.hash) this._openToHash(); else this.close(this.targetOpen.selector);
+                }.bind(this));
+                window.addEventListener("load", function() {
+                    if (window.location.hash) this._openToHash();
+                }.bind(this));
             }
         }
-        (Ge.min = je[0]),
-            (Ge.max = je[1]),
-            (Ne.min = je[0]),
-            (Ne.max = je[1]),
-            (Ne.value = Ne.min),
-            (Ge.value = Ge.min),
-            Ne.addEventListener("change", () => {
-                Number(Ne.value) > Ne.max ? ((Ne.value = Ne.max), (Ge.value = Ge.max), Ve()) : Number(Ne.value) < Ne.min ? ((Ne.value = Ne.min), (Ge.value = Ge.min), Ve()) : (He(Ne.value), He(Ge.value), Ve());
-            }),
-            Ge.addEventListener("input", () => He(Ge.value)),
-            Ve();
-    }
-    if (
-        (document.body.clientWidth >= 920 &&
-            window.addEventListener("scroll", function (e) {
-                let t = document.querySelector(".main-content").getBoundingClientRect();
-                document.querySelector(".section-other").getBoundingClientRect().top - t.top <= window.scrollY
-                    ? ((document.querySelector(".sidebar").style.opacity = "0"),
-                        (document.querySelector(".sidebar").style.visibility = "hidden"),
-                        (document.querySelector(".header-main").style.opacity = "0"),
-                        (document.querySelector(".header-main").style.visibility = "hidden"))
-                    : ((document.querySelector(".sidebar").style.opacity = "1"),
-                        (document.querySelector(".sidebar").style.visibility = "visible"),
-                        (document.querySelector(".header-main").style.opacity = "1"),
-                        (document.querySelector(".header-main").style.visibility = "visible"));
-            }),
-            document.querySelectorAll(".section-results__buttons li button"))
-    ) {
-        const Fe = document.querySelectorAll(".section-results__buttons li button");
-        function We(e, t, s = 0) {
-            document.getElementById(e).addEventListener("click", function () {
-                const e = document.querySelectorAll(".item");
-                var s = [];
-                e.forEach((e) => {
-                    let i = e.querySelector(`[${t}]`);
-                    i.setAttribute(
-                        t,
-                        i.outerText
-                            .replace(" ", "")
-                            .replace("₽", "")
-                            .replace("%", "")
-                            .replace(/[^+\d]/g, "")
-                    ),
-                        s.push(i.getAttribute(t));
-                }),
-                    s.sort(function (e, t) {
-                        return t - e;
-                    }),
-                    e.forEach((e) => {
-                        let i = e.querySelector(`[${t}]`);
-                        for (let n = 0; n < s.length; n++) i.getAttribute(t) == s[n] && (e.style.order = n);
-                    });
-            }),
-                s && document.getElementById(`${e}`).click();
+        open(selectorValue) {
+            if (bodyLockStatus) {
+                this.bodyLock = document.documentElement.classList.contains("lock") && !this.isOpen ? true : false;
+                if (selectorValue && "string" === typeof selectorValue && "" !== selectorValue.trim()) {
+                    this.targetOpen.selector = selectorValue;
+                    this._selectorOpen = true;
+                }
+                if (this.isOpen) {
+                    this._reopen = true;
+                    this.close();
+                }
+                if (!this._selectorOpen) this.targetOpen.selector = this.lastClosed.selector;
+                if (!this._reopen) this.previousActiveElement = document.activeElement;
+                this.targetOpen.element = document.querySelector(this.targetOpen.selector);
+                if (this.targetOpen.element) {
+                    if (this.youTubeCode) {
+                        const codeVideo = this.youTubeCode;
+                        const urlVideo = `https://www.youtube.com/embed/${codeVideo}?rel=0&showinfo=0&autoplay=1`;
+                        const iframe = document.createElement("iframe");
+                        iframe.setAttribute("allowfullscreen", "");
+                        const autoplay = this.options.setAutoplayYoutube ? "autoplay;" : "";
+                        iframe.setAttribute("allow", `${autoplay}; encrypted-media`);
+                        iframe.setAttribute("src", urlVideo);
+                        if (!this.targetOpen.element.querySelector(`[${this.options.youtubePlaceAttribute}]`)) {
+                            this.targetOpen.element.querySelector(".popup__text").setAttribute(`${this.options.youtubePlaceAttribute}`, "");
+                        }
+                        this.targetOpen.element.querySelector(`[${this.options.youtubePlaceAttribute}]`).appendChild(iframe);
+                    }
+                    if (this.options.hashSettings.location) {
+                        this._getHash();
+                        this._setHash();
+                    }
+                    this.options.on.beforeOpen(this);
+                    document.dispatchEvent(new CustomEvent("beforePopupOpen", {
+                        detail: {
+                            popup: this
+                        }
+                    }));
+                    this.targetOpen.element.classList.add(this.options.classes.popupActive);
+                    document.documentElement.classList.add(this.options.classes.bodyActive);
+                    if (!this._reopen) !this.bodyLock ? bodyLock() : null; else this._reopen = false;
+                    this.targetOpen.element.setAttribute("aria-hidden", "false");
+                    this.previousOpen.selector = this.targetOpen.selector;
+                    this.previousOpen.element = this.targetOpen.element;
+                    this._selectorOpen = false;
+                    this.isOpen = true;
+                    setTimeout((() => {
+                        this._focusTrap();
+                    }), 50);
+                    this.options.on.afterOpen(this);
+                    document.dispatchEvent(new CustomEvent("afterPopupOpen", {
+                        detail: {
+                            popup: this
+                        }
+                    }));
+                    this.popupLogging(`Открыл попап`);
+                } else this.popupLogging(`Ой ой, такого попапа нет.Проверьте корректность ввода. `);
+            }
         }
-        Fe.forEach(function (e) {
-            e.addEventListener("click", function () {
-                Fe.forEach(function (e) {
-                    e.classList.remove("active");
-                }),
-                    e.classList.add("active");
-            });
-        }),
-            We("sortPopular", "data-popular", 1),
-            We("sortSum", "data-price"),
-            We("sortTime", "data-time"),
-            We("sortPercent", "data-percent"),
-            We("sortRating", "data-rating");
+        close(selectorValue) {
+            if (selectorValue && "string" === typeof selectorValue && "" !== selectorValue.trim()) this.previousOpen.selector = selectorValue;
+            if (!this.isOpen || !bodyLockStatus) return;
+            this.options.on.beforeClose(this);
+            document.dispatchEvent(new CustomEvent("beforePopupClose", {
+                detail: {
+                    popup: this
+                }
+            }));
+            if (this.youTubeCode) if (this.targetOpen.element.querySelector(`[${this.options.youtubePlaceAttribute}]`)) this.targetOpen.element.querySelector(`[${this.options.youtubePlaceAttribute}]`).innerHTML = "";
+            this.previousOpen.element.classList.remove(this.options.classes.popupActive);
+            this.previousOpen.element.setAttribute("aria-hidden", "true");
+            if (!this._reopen) {
+                document.documentElement.classList.remove(this.options.classes.bodyActive);
+                !this.bodyLock ? bodyUnlock() : null;
+                this.isOpen = false;
+            }
+            this._removeHash();
+            if (this._selectorOpen) {
+                this.lastClosed.selector = this.previousOpen.selector;
+                this.lastClosed.element = this.previousOpen.element;
+            }
+            this.options.on.afterClose(this);
+            document.dispatchEvent(new CustomEvent("afterPopupClose", {
+                detail: {
+                    popup: this
+                }
+            }));
+            setTimeout((() => {
+                this._focusTrap();
+            }), 50);
+            this.popupLogging(`Закрыл попап`);
+        }
+        _getHash() {
+            if (this.options.hashSettings.location) this.hash = this.targetOpen.selector.includes("#") ? this.targetOpen.selector : this.targetOpen.selector.replace(".", "#");
+        }
+        _openToHash() {
+            let classInHash = document.querySelector(`.${window.location.hash.replace("#", "")}`) ? `.${window.location.hash.replace("#", "")}` : document.querySelector(`${window.location.hash}`) ? `${window.location.hash}` : null;
+            const buttons = document.querySelector(`[${this.options.attributeOpenButton} = "${classInHash}"]`) ? document.querySelector(`[${this.options.attributeOpenButton} = "${classInHash}"]`) : document.querySelector(`[${this.options.attributeOpenButton} = "${classInHash.replace(".", "#")}"]`);
+            if (buttons && classInHash) this.open(classInHash);
+        }
+        _setHash() {
+            history.pushState("", "", this.hash);
+        }
+        _removeHash() {
+            history.pushState("", "", window.location.href.split("#")[0]);
+        }
+        _focusCatch(e) {
+            const focusable = this.targetOpen.element.querySelectorAll(this._focusEl);
+            const focusArray = Array.prototype.slice.call(focusable);
+            const focusedIndex = focusArray.indexOf(document.activeElement);
+            if (e.shiftKey && 0 === focusedIndex) {
+                focusArray[focusArray.length - 1].focus();
+                e.preventDefault();
+            }
+            if (!e.shiftKey && focusedIndex === focusArray.length - 1) {
+                focusArray[0].focus();
+                e.preventDefault();
+            }
+        }
+        _focusTrap() {
+            const focusable = this.previousOpen.element.querySelectorAll(this._focusEl);
+            if (!this.isOpen && this.lastFocusEl) this.lastFocusEl.focus(); else focusable[0].focus();
+        }
+        popupLogging(message) {
+            this.options.logging ? FLS(`[Попапос]: ${message}`) : null;
+        }
     }
+    flsModules.popup = new Popup({});
+    window["FLS"] = true;
+    isWebp();
+    menuInit();
+    spollers();
+    showMore();
+    formFieldsInit({
+        viewPass: true
+    });
+    formSubmit();
 })();
